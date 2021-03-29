@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "532064807245",
+    "firebase_url": "https://lp-app2-default-rtdb.firebaseio.com",
+    "project_id": "lp-app2",
+    "storage_bucket": "lp-app2.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:532064807245:android:f59f2b1181ee1186aa6f04",
+        "android_client_info": {
+          "package_name": "com.example.laspiedrasapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "532064807245-6032guva2nobf67nvfrr3mdtitplh78e.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCQkIM5DBs_IM3MkMGxksOV0b3pCBlK0mo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "532064807245-6032guva2nobf67nvfrr3mdtitplh78e.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

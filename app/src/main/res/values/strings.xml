@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">LasPiedrasApp</string>
+    <string name="invalid_mail">Ingrese un mail valido</string>
+    <string name="invalid_password">Ingrese un password mayor a 6 digitos</string>
 </resources>
