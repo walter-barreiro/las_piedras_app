@@ -1,10 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item android:title="@string/agregar_comercio_profile_menu" />
-    <item android:title="@string/agregar_servicio_profile_menu" />
-    <item android:title="@string/configurar_perfil_profile_menu" />
-    <item android:title="@string/contactenos_profile_menu" />
-    <item android:title="@string/acerca_de_profile_menu" />
-    <item android:title="@string/cerrar_sesion_profile_menu" />
+    <item
+        android:id="@+id/item_add_commerce"
+        android:title="Agregar comercio" />
+    <item
+        android:id="@+id/item_add_service"
+        android:title="Agregar servicio" />
+    <item
+        android:id="@+id/item_conf_prof"
+        android:title="Configurar perfil" />
+    <item
+        android:id="@+id/item_contact"
+        android:title="Contactenos" />
+    <item
+        android:id="@+id/item_about"
+        android:title="Acerca de" />
+    <item
+        android:id="@+id/item_logout"
+        android:title="Cerrar sesion" />
 </menu>
