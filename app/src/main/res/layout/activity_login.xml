@@ -33,7 +33,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Iniciar Sesion"
-            android:background="@color/design_default_color_background"
+            android:background="@color/blue"
             android:textColor="@android:color/white"/>
 
         <Button
@@ -42,7 +42,7 @@
             android:layout_height="wrap_content"
             android:text="Olvide mi contraseña"
             android:layout_marginTop="10dp"
-            android:background="@color/design_default_color_primary"
+            android:background="@color/colorAccent"
             android:textColor="@android:color/white"/>
 
     </LinearLayout>
