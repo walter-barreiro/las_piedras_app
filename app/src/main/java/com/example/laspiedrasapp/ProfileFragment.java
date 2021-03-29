@@ -1,5 +1,6 @@
 package com.example.laspiedrasapp;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -23,7 +24,6 @@ public class ProfileFragment extends Fragment {
     private FirebaseAuth mAuth; // Para poder obtener el id del usuario
     private FragmentProfileBinding binding; // Para usar View Binding
 
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,7 +33,6 @@ public class ProfileFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
         mAuth = FirebaseAuth.getInstance();// Inicializo el auth del usuario
         return inflater.inflate(R.layout.fragment_profile, container, false);
     }
@@ -44,10 +43,11 @@ public class ProfileFragment extends Fragment {
         binding = FragmentProfileBinding.bind(view);// Inicializo el binding
         String userId= mAuth.getCurrentUser().getUid(); // Obtengo el id del usuario logeado
         // Extraigo los datos del usuario de firebase
+        String email = mAuth.getCurrentUser().getEmail();
 
         // ----
-        // Para colocar los datos del usuario en la vista
-//        binding.name.setText("Nuevo nombre del usuario "+userId);
+        // Para colocar los datosp del usuario en la vista
+        binding.name.setText(email);
         // ----
         // Para el toolbar
         binding.toolbar.setOnMenuItemClickListener(item -> {
@@ -68,7 +68,8 @@ public class ProfileFragment extends Fragment {
                     Toast.makeText(getActivity(), "Acerca de",Toast.LENGTH_SHORT).show();
                     return true;
                 case R.id.item_logout:
-                    Toast.makeText(getActivity(), "Salir",Toast.LENGTH_SHORT).show();
+                    FirebaseAuth.getInstance().signOut(); // Para cerrar la sesion
+                    startActivity(new Intent( getActivity(), RegisterActivity.class)); // Para ir al registro
                     return true;
                 default: return super.onOptionsItemSelected(item);
 
@@ -83,7 +84,7 @@ public class ProfileFragment extends Fragment {
             }
         });
         //-----
-        // Prar ir al servicio
+        // Para ir al servicio
         binding.goCommerce.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
