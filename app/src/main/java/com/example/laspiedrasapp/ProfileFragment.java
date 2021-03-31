@@ -102,6 +102,17 @@ public class ProfileFragment extends Fragment {
         });
         //-----
 
+        binding.btnAddProduct.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openDialog();
+            }
+        });
+
+    }
+
+    private void openDialog() {
+
     }
 
     @Override

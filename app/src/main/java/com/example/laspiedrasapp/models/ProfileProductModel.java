@@ -2,4 +2,59 @@ package com.example.laspiedrasapp.models;
 
 public class ProfileProductModel {
     // Modelo de los produtos que estan en el perfil general del usuario
+    private String product_id;
+    private String product_userId;
+    private String product_name;
+    private String product_description;
+    private Float product_price;
+
+    public ProfileProductModel(String product_id, String product_userId, String product_name, String product_description, Float product_price) {
+        this.product_id = product_id;
+        this.product_userId = product_userId;
+        this.product_name = product_name;
+        this.product_description = product_description;
+        this.product_price = product_price;
+    }
+
+    public String getProduct_id() {
+        return product_id;
+    }
+
+    public void setProduct_id(String product_id) {
+        this.product_id = product_id;
+    }
+
+    public String getProduct_userId() {
+        return product_userId;
+    }
+
+    public void setProduct_userId(String product_userId) {
+        this.product_userId = product_userId;
+    }
+
+    public String getProduct_name() {
+        return product_name;
+    }
+
+    public void setProduct_name(String product_name) {
+        this.product_name = product_name;
+    }
+
+    public String getProduct_description() {
+        return product_description;
+    }
+
+    public void setProduct_description(String product_description) {
+        this.product_description = product_description;
+    }
+
+    public Float getProduct_price() {
+        return product_price;
+    }
+
+    public void setProduct_price(Float product_price) {
+        this.product_price = product_price;
+    }
+
+
 }

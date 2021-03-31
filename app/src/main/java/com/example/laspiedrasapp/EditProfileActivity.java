@@ -55,6 +55,7 @@ public class EditProfileActivity extends AppCompatActivity {
                 }
             }
         });
+        //----
 
         // Guardo los datos ingresados por el usuario
         binding.tvSave.setOnClickListener(new View.OnClickListener() {
@@ -76,6 +77,7 @@ public class EditProfileActivity extends AppCompatActivity {
                 }
             }
         });
+        //----
 
         // Vuelvo a la activity anterior sin hacer cambios
         binding.tvCancel.setOnClickListener(new View.OnClickListener() {
@@ -84,6 +86,7 @@ public class EditProfileActivity extends AppCompatActivity {
                 // Aca tengo que volver a la activity anterior
             }
         });
+        //----
     }
 
     private boolean isValid(String name, String phone) {
