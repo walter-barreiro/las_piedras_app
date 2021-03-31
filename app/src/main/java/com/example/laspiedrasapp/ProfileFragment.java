@@ -60,9 +60,11 @@ public class ProfileFragment extends Fragment {
             switch (item.getItemId()){
                 case R.id.item_add_commerce:
                     Toast.makeText(getActivity(), "Agregr comercio",Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent( getActivity(), CommerceActivity.class)); // Para ir al registro
                     return true;
                 case R.id.item_add_service:
                     Toast.makeText(getActivity(), "Agregar servicio",Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent( getActivity(), BusinessActivity.class)); // Para ir al registro
                     return true;
                 case R.id.item_conf_prof:
                     startActivity(new Intent( getActivity(), EditProfileActivity.class)); // Para ir al registro

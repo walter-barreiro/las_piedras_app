@@ -15,7 +15,9 @@
         android:usesCleartextTraffic="true"
         tools:ignore="UnusedAttribute"
         tools:targetApi="m">
-        <activity android:name=".EditProfileActivity"></activity>
+        <activity android:name=".CommerceActivity"></activity>
+        <activity android:name=".BusinessActivity" />
+        <activity android:name=".EditProfileActivity" />
         <activity android:name=".ResetPasswordActivity" />
         <activity android:name=".LoginActivity" />
         <activity android:name=".MainActivity" />

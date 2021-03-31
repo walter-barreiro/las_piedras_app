@@ -38,8 +38,10 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:text="Cancelar"
+        app:layout_constraintBottom_toBottomOf="@+id/tvSave"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0" />
 
     <TextView
         android:id="@+id/tvSave"
