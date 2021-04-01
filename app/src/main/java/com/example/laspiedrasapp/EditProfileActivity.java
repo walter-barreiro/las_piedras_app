@@ -38,12 +38,13 @@ public class EditProfileActivity extends AppCompatActivity {
 
         String userId = mAuth.getCurrentUser().getUid(); // Obtengo el id del usuario logeado
 
+        // Acac debo poner a cargar una barra de progreso
         // Recupero los datos del perfil del usuario y los coloco en los edit text
         mDatabase.child("users").child(userId).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DataSnapshot> task) {
                 if (!task.isSuccessful()) {
-                    Log.e("firebase", "Error getting data", task.getException());
+//                    Log.e("firebase", "Error getting data", task.getException());
                     Toast.makeText(EditProfileActivity.this,"Compruebe internet", Toast.LENGTH_SHORT).show();
                 }
                 else {
@@ -56,6 +57,7 @@ public class EditProfileActivity extends AppCompatActivity {
             }
         });
         //----
+        // Aca terminariade cargar la barra de progreso
 
         // Guardo los datos ingresados por el usuario
         binding.tvSave.setOnClickListener(new View.OnClickListener() {

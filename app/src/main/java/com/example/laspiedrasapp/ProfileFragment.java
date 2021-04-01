@@ -112,6 +112,10 @@ public class ProfileFragment extends Fragment {
     }
 
     private void openDialog() {
+        // Abro un dialgofragment para ingresar el nuevo producto
+        NewProductFragment newProductFragment1 = new NewProductFragment();
+        newProductFragment1.show(getActivity().getSupportFragmentManager(),"newProduct");
+        // -----
 
     }
 
