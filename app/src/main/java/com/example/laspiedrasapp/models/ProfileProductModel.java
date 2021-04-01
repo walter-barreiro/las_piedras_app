@@ -6,9 +6,13 @@ public class ProfileProductModel {
     private String product_userId;
     private String product_name;
     private String product_description;
-    private Float product_price;
+    private String product_price;
 
-    public ProfileProductModel(String product_id, String product_userId, String product_name, String product_description, Float product_price) {
+    public ProfileProductModel(){
+
+    }
+
+    public ProfileProductModel(String product_id, String product_userId, String product_name, String product_description, String product_price) {
         this.product_id = product_id;
         this.product_userId = product_userId;
         this.product_name = product_name;
@@ -48,11 +52,11 @@ public class ProfileProductModel {
         this.product_description = product_description;
     }
 
-    public Float getProduct_price() {
+    public String getProduct_price() {
         return product_price;
     }
 
-    public void setProduct_price(Float product_price) {
+    public void setProduct_price(String product_price) {
         this.product_price = product_price;
     }
 

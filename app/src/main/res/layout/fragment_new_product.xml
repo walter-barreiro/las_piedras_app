@@ -8,7 +8,7 @@
 
 
     <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/textInputEditText"
+        android:id="@+id/tvProductName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:hint="Nombre del producto"
@@ -17,33 +17,33 @@
         app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
     <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/textInputEditText2"
+        android:id="@+id/tvProductPrice"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:hint="Precio"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textInputEditText" />
+        app:layout_constraintTop_toBottomOf="@+id/tvProductName" />
 
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/materialButton"
+        android:id="@+id/btnSave"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Guardar"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/textInputEditText2"
-        app:layout_constraintTop_toBottomOf="@+id/textInputEditText2" />
+        app:layout_constraintStart_toEndOf="@+id/tvProductPrice"
+        app:layout_constraintTop_toBottomOf="@+id/tvProductPrice" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btnCancel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Cancelar"
-        app:layout_constraintBottom_toBottomOf="@+id/materialButton"
-        app:layout_constraintEnd_toStartOf="@+id/textInputEditText2"
+        app:layout_constraintBottom_toBottomOf="@+id/btnSave"
+        app:layout_constraintEnd_toStartOf="@+id/tvProductPrice"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textInputEditText2"
+        app:layout_constraintTop_toBottomOf="@+id/tvProductPrice"
         app:layout_constraintVertical_bias="0.0" />
 
     <TextView
