@@ -73,6 +73,7 @@ public class NewProductFragment extends DialogFragment {
                     //----
                     mDatabase.child("products").child(key).setValue(profileProductModel);// Guardo los datos en la coleccion con un identificador unico
                     // Guardo el id del producto en la base de datos del usuario
+                    mDatabase.child("users").child(userId).child("products").child(key).setValue(true);// Guardo los datos en la coleccion con un identificador unico
                     // Ahora tengo que salir del dialog fragment
                     dismiss();
 
