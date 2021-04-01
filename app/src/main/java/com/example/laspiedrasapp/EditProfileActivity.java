@@ -73,6 +73,7 @@ public class EditProfileActivity extends AppCompatActivity {
                     ProfileModel profile = new ProfileModel(name,phone);// creo la clase Profile con los parametros
                     mDatabase.child("users").child(userId).setValue(profile);// Guardo los datos en la coleccion
                     // Ahora tengo que salir de la actividad
+                    finish();
 
                 } else {
                     // Mostar algun mensaje de error
@@ -86,6 +87,7 @@ public class EditProfileActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // Aca tengo que volver a la activity anterior
+                finish();
             }
         });
         //----
