@@ -5,16 +5,14 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
-import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.laspiedrasapp.databinding.FragmentNewProductBinding;
-import com.example.laspiedrasapp.databinding.FragmentProfileBinding;
-import com.example.laspiedrasapp.models.ProfileModel;
 import com.example.laspiedrasapp.models.ProfileProductModel;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -51,6 +49,7 @@ public class NewProductFragment extends DialogFragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         binding = FragmentNewProductBinding.bind(view);// Inicializo el binding
+        String userId= mAuth.getCurrentUser().getUid(); // Obtengo el id del usuario logeado
 
 
 
@@ -64,11 +63,16 @@ public class NewProductFragment extends DialogFragment {
                 if( isValid(product_name,product_price) ){
                     // Hay que ver si tiene internet y avisar
                     //---
+                    String key = mDatabase.child("products").push().getKey(); // Obtengo el id del producto que voy a subir
+                    // Creo los datos que se van a subir
                     ProfileProductModel profileProductModel = new ProfileProductModel();// creo la clase Profile con los parametros
                     profileProductModel.setProduct_name(product_name);
                     profileProductModel.setProduct_price(product_price);
-                    String productId = "2";
-                    mDatabase.child("products").child(productId).setValue(profileProductModel);// Guardo los datos en la coleccion
+                    profileProductModel.setProduct_id(key);
+                    profileProductModel.setProduct_userId(userId);
+                    //----
+                    mDatabase.child("products").child(key).setValue(profileProductModel);// Guardo los datos en la coleccion con un identificador unico
+                    // Guardo el id del producto en la base de datos del usuario
                     // Ahora tengo que salir del dialog fragment
                     dismiss();
 

@@ -3,6 +3,7 @@ package com.example.laspiedrasapp.models;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.sql.Array;
 import java.sql.Timestamp;
 
 public class ProfileModel {
