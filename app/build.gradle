@@ -58,5 +58,6 @@ dependencies {
     // Para subir la imagen
     implementation 'com.theartofdev.edmodo:android-image-cropper:2.4.7'
     implementation 'com.squareup.picasso:picasso:2.5.0'
+    implementation 'id.zelory:compressor:2.1.0'
     // ---
 }
