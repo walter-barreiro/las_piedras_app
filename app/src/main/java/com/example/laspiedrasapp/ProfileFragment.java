@@ -1,6 +1,7 @@
 package com.example.laspiedrasapp;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -17,15 +18,29 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 import android.widget.Toolbar;
 
+import com.bumptech.glide.Glide;
 import com.example.laspiedrasapp.databinding.FragmentProfileBinding;
+import com.example.laspiedrasapp.models.ProfileModel;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.squareup.picasso.Picasso;
 
 public class ProfileFragment extends Fragment {
     private FirebaseAuth mAuth; // Para poder obtener el id del usuario
     private DatabaseReference mDatabase; // Para extraer los datos de firebase
     private FragmentProfileBinding binding; // Para usar View Binding
+    private ProfileModel profileModel;
+    StorageReference storageReference;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -38,6 +53,8 @@ public class ProfileFragment extends Fragment {
                              Bundle savedInstanceState) {
         mAuth = FirebaseAuth.getInstance();// Inicializo el auth del usuario
         mDatabase = FirebaseDatabase.getInstance().getReference(); // Inicializo firebase
+        storageReference = FirebaseStorage.getInstance().getReference(); // Para guardar las fotos de perfil en storage
+
         return inflater.inflate(R.layout.fragment_profile, container, false);
     }
 
@@ -50,11 +67,62 @@ public class ProfileFragment extends Fragment {
         // Extraigo los datos del usuario de firebase
         String email = mAuth.getCurrentUser().getEmail();
 
+        // Recupero los datos del perfil del usuario y los coloco en los edit text
+        mDatabase.child("users").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()){
+                    binding.name.setText(snapshot.child(userId).child("name").getValue().toString());
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+        // Para cargar la imagen de perfil
+        storageReference.child("user_prfile_images/"+userId).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
+                Picasso.with(getContext()).load(uri).into(binding.imageView); // Coloca la imagen en el imageview
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+
+            }
+        });
+
+//        Picasso.with(getContext()).load(storageReference.child("user_prfile_images/"+userId).getFile())
+//                .into(binding.imageView); // Coloca la imagen en el imageview
+
+        // Coloco la imagen de perfil en el imageView
+//        Glide.with(this)
+//                .load(storageReference.child("user_prfile_images/"+userId))
+//                .into(binding.imageView);
 
 
-        // ----
-        // Para colocar los datosp del usuario en la vista
-        binding.name.setText(email);
+
+
+//        mDatabase.child("users").child(userId).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+//            @Override
+//            public void onComplete(@NonNull Task<DataSnapshot> task) {
+//                if (!task.isSuccessful()) {
+////                    Log.e("firebase", "Error getting data", task.getException());
+//                    Toast.makeText(getContext(),"Compruebe internet", Toast.LENGTH_SHORT).show();
+//                }
+//                else {
+//                    if(task.getResult().exists()){ // Me fijo si el documento con userId existe (no es null)
+//                        profileModel = task.getResult().getValue(ProfileModel.class); // guardo la respuesta en un ProfileModel
+//                        binding.name.setText(profileModel.getName());
+//                    }else{
+//                        binding.name.setText(email);
+//                    }
+//                }
+//            }
+//        });
         // ----
         // Para el toolbar
         binding.toolbar.setOnMenuItemClickListener(item -> {

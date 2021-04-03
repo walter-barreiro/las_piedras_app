@@ -20,6 +20,8 @@ import com.example.laspiedrasapp.databinding.ActivityEditProfileBinding;
 import com.example.laspiedrasapp.models.ProfileModel;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -63,6 +65,19 @@ public class EditProfileActivity extends AppCompatActivity {
 
         String userId = mAuth.getCurrentUser().getUid(); // Obtengo el id del usuario logeado
 
+        // Recupero la imagen que esta en Storage y la coloco en el imageview
+        storageReference.child("/"+userId).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
+                Picasso.with(EditProfileActivity.this).load(uri).into(binding.imgFoto); // Coloca la imagen en el imageview
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+
+            }
+        });
+        // -----
 
 
         // Recupero los datos del perfil del usuario y los coloco en los edit text
@@ -82,6 +97,8 @@ public class EditProfileActivity extends AppCompatActivity {
                 }
             }
         });
+        //------
+
 
         // Guardo los datos ingresados por el usuario
         binding.tvSave.setOnClickListener(new View.OnClickListener() {
