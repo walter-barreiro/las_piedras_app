@@ -47,10 +47,8 @@ public class EditProfileActivity extends AppCompatActivity {
     private StorageReference storageReference; // Para el Storage
 
     private ActivityEditProfileBinding binding;
-    private Bitmap thumb_bitmap = null;
     private Uri resultUri;
 
-    private ProgressDialog loading; // Para que se muestre un loading cuando se esta subiendo la foto
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,12 +61,10 @@ public class EditProfileActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance(); // Para obtener el ususario que esta logeado
         storageReference = FirebaseStorage.getInstance().getReference().child("user_prfile_images"); // Para guardar las fotos de perfil en storage
 
-        loading = new ProgressDialog(this); // Se crea el ProgressDialog
         String userId = mAuth.getCurrentUser().getUid(); // Obtengo el id del usuario logeado
 
 
 
-        // Acac debo poner a cargar una barra de progreso
         // Recupero los datos del perfil del usuario y los coloco en los edit text
         mDatabase.child("users").child(userId).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
             @Override
@@ -86,8 +82,6 @@ public class EditProfileActivity extends AppCompatActivity {
                 }
             }
         });
-        //----
-        // Aca terminariade cargar la barra de progreso
 
         // Guardo los datos ingresados por el usuario
         binding.tvSave.setOnClickListener(new View.OnClickListener() {
@@ -104,7 +98,6 @@ public class EditProfileActivity extends AppCompatActivity {
                     mDatabase.child("users").child(userId).setValue(profile);// Guardo los datos en la coleccion
 
                     uploadImage(userId);// Subo la imagen
-
                     // Ahora tengo que salir de la actividad
                     finish();
 
@@ -206,5 +199,11 @@ public class EditProfileActivity extends AppCompatActivity {
         binding = ActivityEditProfileBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        binding = null;
     }
 }
