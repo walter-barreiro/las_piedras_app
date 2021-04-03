@@ -1,9 +1,16 @@
 package com.example.laspiedrasapp;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -11,7 +18,7 @@ import android.widget.Toast;
 
 import com.example.laspiedrasapp.databinding.ActivityEditProfileBinding;
 import com.example.laspiedrasapp.models.ProfileModel;
-import com.google.android.gms.common.internal.Objects;
+import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -20,11 +27,30 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
+import com.squareup.picasso.Picasso;
+import com.theartofdev.edmodo.cropper.CropImage;
+import com.theartofdev.edmodo.cropper.CropImageView;
+
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.IOException;
+import java.util.Objects;
+
+import id.zelory.compressor.Compressor;
 
 public class EditProfileActivity extends AppCompatActivity {
     private DatabaseReference mDatabase;
     private FirebaseAuth mAuth;
+    private StorageReference storageReference; // Para el Storage
+
     private ActivityEditProfileBinding binding;
+    private Bitmap thumb_bitmap = null;
+    private Uri resultUri;
+
+    private ProgressDialog loading; // Para que se muestre un loading cuando se esta subiendo la foto
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,8 +61,12 @@ public class EditProfileActivity extends AppCompatActivity {
 
         mDatabase = FirebaseDatabase.getInstance().getReference(); // Para la base de datos
         mAuth = FirebaseAuth.getInstance(); // Para obtener el ususario que esta logeado
+        storageReference = FirebaseStorage.getInstance().getReference().child("user_prfile_images"); // Para guardar las fotos de perfil en storage
 
+        loading = new ProgressDialog(this); // Se crea el ProgressDialog
         String userId = mAuth.getCurrentUser().getUid(); // Obtengo el id del usuario logeado
+
+
 
         // Acac debo poner a cargar una barra de progreso
         // Recupero los datos del perfil del usuario y los coloco en los edit text
@@ -72,6 +102,9 @@ public class EditProfileActivity extends AppCompatActivity {
                     //---
                     ProfileModel profile = new ProfileModel(name,phone);// creo la clase Profile con los parametros
                     mDatabase.child("users").child(userId).setValue(profile);// Guardo los datos en la coleccion
+
+                    uploadImage(userId);// Subo la imagen
+
                     // Ahora tengo que salir de la actividad
                     finish();
 
@@ -91,6 +124,76 @@ public class EditProfileActivity extends AppCompatActivity {
             }
         });
         //----
+
+
+        binding.btnSelefoto.setOnClickListener(new View.OnClickListener() { // Selecciono la imagen y me da la opcion de recortarla
+            @Override
+            public void onClick(View v) {
+                CropImage.startPickImageActivity(EditProfileActivity.this);
+            }
+        });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        /*
+        Esta funcion es llamada luego de que el usuario elija la imagen
+         */
+
+        if (requestCode==CropImage.PICK_IMAGE_CHOOSER_REQUEST_CODE && resultCode == Activity.RESULT_OK){
+            Uri imageuri = CropImage.getPickImageResultUri(this, data);
+
+            //Recortar Imagen
+            CropImage.activity(imageuri)
+                    .setGuidelines(CropImageView.Guidelines.ON)
+                    .setRequestedSize(640,480)
+                    .setAspectRatio(1,1).start(EditProfileActivity.this); // Esto es para dejar una forma por defecto
+            // ---
+        }
+
+        if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE){ // Si la imagen fue recortada
+            CropImage.ActivityResult result = CropImage.getActivityResult(data);
+
+            if (resultCode == RESULT_OK){
+                resultUri = result.getUri();
+
+                File url = new File(resultUri.getPath());
+                Picasso.with(this).load(url).into(binding.imgFoto); // Coloca la imagen en el imageview
+
+                // Hasta aca se tiene guardada la imagen en url, lista para subir a store
+            }
+        }
+    }
+
+    private void uploadImage(String name){
+//                        loading.setTitle("Subiendo Foto...");
+//                        loading.setMessage("Espere por favor...");
+//                        loading.show();
+
+                        final StorageReference ref = storageReference.child(name);
+                        UploadTask uploadTask = ref.putFile(resultUri);
+
+                        //subir imagen en storage
+                        Task<Uri> uriTask = uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
+                            @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+                            @Override
+                            public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
+                                if (!task.isSuccessful()){
+                                    throw Objects.requireNonNull(task.getException());
+                                }
+                                return ref.getDownloadUrl();
+                            }
+                        }).addOnCompleteListener(new OnCompleteListener<Uri>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Uri> task) {
+                                Uri downloaduri = task.getResult(); // Url de la foto
+//                                loading.dismiss();
+                                Toast.makeText(EditProfileActivity.this,"Imagen guardada con exito", Toast.LENGTH_LONG).show();
+
+                            }
+                        });
+
     }
 
     private boolean isValid(String name, String phone) {
