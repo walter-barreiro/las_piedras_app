@@ -11,6 +11,9 @@ public class ProfileProductModel {
     public ProfileProductModel(){
 
     }
+    public ProfileProductModel(String product_name){
+        this.product_name = product_name;
+    }
 
     public ProfileProductModel(String product_id, String product_userId, String product_name, String product_description, String product_price) {
         this.product_id = product_id;

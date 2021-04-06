@@ -8,6 +8,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -21,6 +23,7 @@ import android.widget.Toolbar;
 import com.bumptech.glide.Glide;
 import com.example.laspiedrasapp.databinding.FragmentProfileBinding;
 import com.example.laspiedrasapp.models.ProfileModel;
+import com.example.laspiedrasapp.models.ProfileProductModel;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -35,12 +38,16 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class ProfileFragment extends Fragment {
     private FirebaseAuth mAuth; // Para poder obtener el id del usuario
     private DatabaseReference mDatabase; // Para extraer los datos de firebase
     private FragmentProfileBinding binding; // Para usar View Binding
     private ProfileModel profileModel;
     StorageReference storageReference;
+    List<ProfileProductModel> elements; // Para probar el recyclerview
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -81,6 +88,9 @@ public class ProfileFragment extends Fragment {
 
             }
         });
+        // Para el recyclerview
+        initRecyclerView();
+        //---
 
         // Para cargar la imagen de perfil
         storageReference.child("user_prfile_images/"+userId).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
@@ -95,35 +105,6 @@ public class ProfileFragment extends Fragment {
             }
         });
 
-//        Picasso.with(getContext()).load(storageReference.child("user_prfile_images/"+userId).getFile())
-//                .into(binding.imageView); // Coloca la imagen en el imageview
-
-        // Coloco la imagen de perfil en el imageView
-//        Glide.with(this)
-//                .load(storageReference.child("user_prfile_images/"+userId))
-//                .into(binding.imageView);
-
-
-
-
-//        mDatabase.child("users").child(userId).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
-//            @Override
-//            public void onComplete(@NonNull Task<DataSnapshot> task) {
-//                if (!task.isSuccessful()) {
-////                    Log.e("firebase", "Error getting data", task.getException());
-//                    Toast.makeText(getContext(),"Compruebe internet", Toast.LENGTH_SHORT).show();
-//                }
-//                else {
-//                    if(task.getResult().exists()){ // Me fijo si el documento con userId existe (no es null)
-//                        profileModel = task.getResult().getValue(ProfileModel.class); // guardo la respuesta en un ProfileModel
-//                        binding.name.setText(profileModel.getName());
-//                    }else{
-//                        binding.name.setText(email);
-//                    }
-//                }
-//            }
-//        });
-        // ----
         // Para el toolbar
         binding.toolbar.setOnMenuItemClickListener(item -> {
             switch (item.getItemId()){
@@ -178,6 +159,7 @@ public class ProfileFragment extends Fragment {
             }
         });
 
+
     }
 
     private void openDialog() {
@@ -193,4 +175,37 @@ public class ProfileFragment extends Fragment {
         super.onDestroy();
         binding = null; // Para liberar memoria
     }
+
+
+    private void initRecyclerView() {
+        elements = new ArrayList<>();
+        elements.add(new ProfileProductModel("Nombre del producto"));
+        elements.add(new ProfileProductModel("Nombre del producto"));
+        elements.add(new ProfileProductModel("Nombre del producto 1"));
+        elements.add(new ProfileProductModel("Nombre del producto 2"));
+        elements.add(new ProfileProductModel("Nombre del producto 3"));
+        elements.add(new ProfileProductModel("Nombre del producto 4"));
+        elements.add(new ProfileProductModel("Nombre del producto 5"));
+        elements.add(new ProfileProductModel("Nombre del producto 6"));
+        elements.add(new ProfileProductModel("Nombre del producto 7"));
+        elements.add(new ProfileProductModel("Nombre del producto 1"));
+        elements.add(new ProfileProductModel("Nombre del producto 2"));
+        elements.add(new ProfileProductModel("Nombre del producto 3"));
+        elements.add(new ProfileProductModel("Nombre del producto 4"));
+        elements.add(new ProfileProductModel("Nombre del producto 5"));
+        elements.add(new ProfileProductModel("Nombre del producto 6"));
+        elements.add(new ProfileProductModel("Nombre del producto 7"));
+        ProfileProductAdapter profileProductAdapter = new ProfileProductAdapter(elements, getContext(), new ProfileProductAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(ProfileProductModel item) {
+
+            }
+        });
+
+        binding.rvProfileProduct.setHasFixedSize(true);
+        binding.rvProfileProduct.setLayoutManager(new LinearLayoutManager(getContext()));
+        binding.rvProfileProduct.setAdapter(profileProductAdapter);
+//        recyclerView.setLayoutManager(new GridLayoutManager(this,3));
+    }
+
 }
