@@ -7,6 +7,15 @@ public class ProfileProductModel {
     private String product_name;
     private String product_description;
     private String product_price;
+    private String product_img_url;
+
+    public String getProduct_img_url() {
+        return product_img_url;
+    }
+
+    public void setProduct_img_url(String product_img_url) {
+        this.product_img_url = product_img_url;
+    }
 
     public ProfileProductModel(){
 
