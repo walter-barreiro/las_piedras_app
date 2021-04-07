@@ -8,19 +8,25 @@ android:layout_width="wrap_content"
 android:layout_height="wrap_content"
 xmlns:app="http://schemas.android.com/apk/res-auto">
 
-<LinearLayout
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:animateLayoutChanges="true"
-    android:orientation="vertical">
+    <LinearLayout
+        android:layout_width="107dp"
+        android:layout_height="60dp"
+        android:animateLayoutChanges="true"
+        android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/tvName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Nombre"
-        android:textSize="36sp" />
+        <TextView
+            android:id="@+id/tvName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Nombre"
+            android:textSize="20dp" />
 
-</LinearLayout>
+        <TextView
+            android:id="@+id/tvItemProductPrice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Precio"/>
+
+    </LinearLayout>
 
 </androidx.cardview.widget.CardView>

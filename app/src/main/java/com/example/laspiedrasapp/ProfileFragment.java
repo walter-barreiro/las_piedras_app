@@ -50,7 +50,7 @@ public class ProfileFragment extends Fragment {
     private String userId;
     private String email;
     StorageReference storageReference;
-    List<ProfileProductModel> elements = new ArrayList<>(); // Para probar el recyclerview
+    List<ProfileProductModel> elements = new ArrayList<>(); // Para el recyclervew
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -93,10 +93,6 @@ public class ProfileFragment extends Fragment {
         // Obtengo los productos del usuario
         getProductsFromDatabase();
         // ---
-
-        // Para el recyclerview
-        initRecyclerView();
-        //---
         // Para cargar la imagen de perfil
         storageReference.child("user_prfile_images/"+userId).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
@@ -193,7 +189,7 @@ public class ProfileFragment extends Fragment {
     }
 
     private void getProductsFromDatabase(){
-        List<String> products_id = new ArrayList<>(); // Para probar el recyclerview
+//        List<String> products_id = new ArrayList<>(); // Para probar el recyclerview
         mDatabase.child("users").child(userId).child("products").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -201,25 +197,31 @@ public class ProfileFragment extends Fragment {
                 if(snapshot.exists()){
                     for (DataSnapshot ds: snapshot.getChildren()){ // ds tiene el children de products
                         String productId = ds.getKey().toString(); // obtengo los id de los productos del cliente
-
-//                        mDatabase.child("products").child(productId).addValueEventListener(new ValueEventListener() {
+//                        mDatabase.child("products").child(userId).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
 //                            @Override
-//                            public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                                if(snapshot.exists()){
-////                                    ProfileProductModel profileProductModel = new ProfileProductModel();
-////                                    profileProductModel.setProduct_name(snapshot.child("product_name").getValue().toString());
-//                                    elements.add(new ProfileProductModel("Hola"));//:snapshot.child("product_name").getValue().toString())); // agrego eloproductId a la lista de elementos
-//                                }
-//
-//                            }
-//
-//                            @Override
-//                            public void onCancelled(@NonNull DatabaseError error) {
-//
+//                            public void onComplete(@NonNull Task<DataSnapshot> task) {
+//                                    ProfileProductModel profileProductModel = task.getResult().getValue(ProfileProductModel.class);
+//                                    elements.add(profileProductModel);//:snapshot.child("product_name").getValue().toString())); // agrego eloproductId a la lista de elementos
 //                            }
 //                        });
-//                        products_id.add(ds.getKey().toString());
-                        elements.add(new ProfileProductModel(productId)); // agrego el productId a la lista de elementos
+                        mDatabase.child("products").child(productId).addValueEventListener(new ValueEventListener() { // recorro los productos para obtener los datos
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                if(snapshot.exists()){
+                                    ProfileProductModel profileProductModel = new ProfileProductModel();
+                                    profileProductModel.setProduct_name(snapshot.child("product_name").getValue().toString());
+                                    profileProductModel.setProduct_price(snapshot.child("product_price").getValue().toString());
+                                    elements.add(profileProductModel);//:snapshot.child("product_name").getValue().toString())); // agrego eloproductId a la lista de elementos
+                                    initRecyclerView();
+                                }
+
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+
+                            }
+                        });
                     }
                     initRecyclerView();
                 }

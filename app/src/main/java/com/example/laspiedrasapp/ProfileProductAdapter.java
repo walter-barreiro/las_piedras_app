@@ -48,17 +48,19 @@ public class ProfileProductAdapter  extends RecyclerView.Adapter<ProfileProductA
     public void setItems(List<ProfileProductModel> items) {mData = items;}
 
     public class ViewHolder extends RecyclerView.ViewHolder{
-        TextView name;
+        TextView name, price;
 
         ViewHolder(View itemView){
             super(itemView);
             // Aca van todos los view
             name = itemView.findViewById(R.id.tvName);
+            price = itemView.findViewById(R.id.tvItemProductPrice);
         }
 
         void bindData(final ProfileProductModel item){
             // Aca va lo que se hace con los view
             name.setText(item.getProduct_name());
+            price.setText(item.getProduct_price());
 
 
             itemView.setOnClickListener(new View.OnClickListener() {
