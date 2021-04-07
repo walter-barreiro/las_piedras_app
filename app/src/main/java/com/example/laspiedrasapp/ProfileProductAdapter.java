@@ -1,14 +1,17 @@
 package com.example.laspiedrasapp;
 
+import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.laspiedrasapp.models.ProfileProductModel;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -49,19 +52,22 @@ public class ProfileProductAdapter  extends RecyclerView.Adapter<ProfileProductA
 
     public class ViewHolder extends RecyclerView.ViewHolder{
         TextView name, price;
+        ImageView image;
 
         ViewHolder(View itemView){
             super(itemView);
             // Aca van todos los view
             name = itemView.findViewById(R.id.tvName);
             price = itemView.findViewById(R.id.tvItemProductPrice);
+            image = itemView.findViewById(R.id.ivItemProductProfile);
         }
 
         void bindData(final ProfileProductModel item){
             // Aca va lo que se hace con los view
             name.setText(item.getProduct_name());
             price.setText(item.getProduct_price());
-
+//            image.setImageURI(item.getProduct_image());
+            Picasso.with(context).load(item.getProduct_image_url()).into(image);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

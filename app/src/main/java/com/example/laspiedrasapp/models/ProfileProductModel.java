@@ -1,5 +1,7 @@
 package com.example.laspiedrasapp.models;
 
+import android.net.Uri;
+
 public class ProfileProductModel {
     // Modelo de los produtos que estan en el perfil general del usuario
     private String product_id;
@@ -7,14 +9,14 @@ public class ProfileProductModel {
     private String product_name;
     private String product_description;
     private String product_price;
-    private String product_img_url;
+    private String product_image_url;
 
-    public String getProduct_img_url() {
-        return product_img_url;
+    public String getProduct_image_url() {
+        return product_image_url;
     }
 
-    public void setProduct_img_url(String product_img_url) {
-        this.product_img_url = product_img_url;
+    public void setProduct_image_url(String product_image_url) {
+        this.product_image_url = product_image_url;
     }
 
     public ProfileProductModel(){

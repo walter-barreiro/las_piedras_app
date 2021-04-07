@@ -78,17 +78,18 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    app:layout_constraintTop_toTopOf="@id/divider"
-    android:orientation="vertical" >
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvProfileProduct"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="392dp"
+        android:orientation="vertical"
+        app:layout_constraintTop_toTopOf="@id/divider"
+        tools:layout_editor_absoluteX="0dp">
 
-</LinearLayout>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvProfileProduct"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

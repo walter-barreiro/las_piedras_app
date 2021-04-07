@@ -6,29 +6,19 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
-import android.widget.Toolbar;
 
-import com.bumptech.glide.Glide;
 import com.example.laspiedrasapp.databinding.FragmentProfileBinding;
 import com.example.laspiedrasapp.models.ProfileModel;
 import com.example.laspiedrasapp.models.ProfileProductModel;
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -49,7 +39,8 @@ public class ProfileFragment extends Fragment {
     private ProfileModel profileModel;
     private String userId;
     private String email;
-    StorageReference storageReference;
+    private Uri product_image;
+    private StorageReference storageReference;
     List<ProfileProductModel> elements = new ArrayList<>(); // Para el recyclervew
 
     @Override
@@ -197,13 +188,6 @@ public class ProfileFragment extends Fragment {
                 if(snapshot.exists()){
                     for (DataSnapshot ds: snapshot.getChildren()){ // ds tiene el children de products
                         String productId = ds.getKey().toString(); // obtengo los id de los productos del cliente
-//                        mDatabase.child("products").child(userId).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
-//                            @Override
-//                            public void onComplete(@NonNull Task<DataSnapshot> task) {
-//                                    ProfileProductModel profileProductModel = task.getResult().getValue(ProfileProductModel.class);
-//                                    elements.add(profileProductModel);//:snapshot.child("product_name").getValue().toString())); // agrego eloproductId a la lista de elementos
-//                            }
-//                        });
                         mDatabase.child("products").child(productId).addValueEventListener(new ValueEventListener() { // recorro los productos para obtener los datos
                             @Override
                             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -211,12 +195,11 @@ public class ProfileFragment extends Fragment {
                                     ProfileProductModel profileProductModel = new ProfileProductModel();
                                     profileProductModel.setProduct_name(snapshot.child("product_name").getValue().toString());
                                     profileProductModel.setProduct_price(snapshot.child("product_price").getValue().toString());
+                                    profileProductModel.setProduct_image_url(snapshot.child("product_image_url").getValue().toString());
                                     elements.add(profileProductModel);//:snapshot.child("product_name").getValue().toString())); // agrego eloproductId a la lista de elementos
                                     initRecyclerView();
                                 }
-
                             }
-
                             @Override
                             public void onCancelled(@NonNull DatabaseError error) {
 
@@ -234,6 +217,23 @@ public class ProfileFragment extends Fragment {
         });
 
     }
+
+//    public void obtenerUriProducto(String productId){
+//        // Para cargar la imagen de perfil
+//        storageReference.child("user_product_images/"+productId).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+//            @Override
+//            public void onSuccess(Uri uri) {
+//                product_image = uri;
+//            }
+//        }).addOnFailureListener(new OnFailureListener() {
+//            @Override
+//            public void onFailure(@NonNull Exception e) {
+//
+//            }
+//        });
+//
+//        // -----
+//    }
 
     @Override
     public void onDestroy() {
