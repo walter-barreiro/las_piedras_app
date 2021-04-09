@@ -203,6 +203,7 @@ public class ProfileFragment extends Fragment {
                                     profileProductModel.setProduct_name(snapshot.child("product_name").getValue().toString());
                                     profileProductModel.setProduct_price(snapshot.child("product_price").getValue().toString());
                                     profileProductModel.setProduct_image_url(snapshot.child("product_image_url").getValue().toString());
+                                    profileProductModel.setProduct_id(productId);
                                     elements.add(profileProductModel);//:snapshot.child("product_name").getValue().toString())); // agrego eloproductId a la lista de elementos
                                     initRecyclerView();
                                 }

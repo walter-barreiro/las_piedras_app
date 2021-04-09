@@ -18,8 +18,14 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.laspiedrasapp.databinding.FragmentEditProductProfileBinding;
+import com.example.laspiedrasapp.databinding.FragmentNewProductBinding;
 import com.example.laspiedrasapp.databinding.FragmentProfileBinding;
 import com.example.laspiedrasapp.models.ProfileProductModel;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
@@ -27,9 +33,15 @@ import com.theartofdev.edmodo.cropper.CropImageView;
 import static android.app.Activity.RESULT_OK;
 
 public class EditProductProfileFragment extends DialogFragment {
+
+    private FirebaseAuth mAuth; // Para poder obtener el id del usuario
+    private DatabaseReference mDatabase; // Para extraer los datos de firebase
+    private StorageReference storageReference; // Para el Storage
     private FragmentEditProductProfileBinding binding;
     private ProfileProductModel profileProductModel;
     private Uri resultUri;
+    private String productId;
+    private String userId;
 
     public EditProductProfileFragment() {
         // Required empty public constructor
@@ -46,6 +58,9 @@ public class EditProductProfileFragment extends DialogFragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View root = inflater.inflate(R.layout.fragment_edit_product_profile, container, false);
+        mAuth = FirebaseAuth.getInstance();// Inicializo el auth del usuario
+        mDatabase = FirebaseDatabase.getInstance().getReference(); // Inicializo firebase
+        storageReference = FirebaseStorage.getInstance().getReference().child("user_product_images"); // Para guardar las fotos de perfil en storage
         // Recupero el producto
         Bundle bundle = this.getArguments();
         profileProductModel = (ProfileProductModel) bundle.getSerializable("product");
@@ -62,8 +77,13 @@ public class EditProductProfileFragment extends DialogFragment {
 
         binding.tvEditProductName.setText(profileProductModel.getProduct_name());
         binding.tvEditProductPrice.setText(profileProductModel.getProduct_price());
-//        Picasso.with(getContext()).load(profileProductModel.getProduct_image_url()).into(binding.ivEdit);
         Glide.with(getContext()).load(profileProductModel.getProduct_image_url()).into(binding.ivEdit);
+
+        productId = profileProductModel.getProduct_id();
+        userId= mAuth.getCurrentUser().getUid(); // Obtengo el id del usuario logeado
+        Toast.makeText(getContext(), productId, Toast.LENGTH_SHORT).show();
+
+//        Picasso.with(getContext()).load(profileProductModel.getProduct_image_url()).into(binding.ivEdit);
 
         binding.btnEditCancel.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -75,6 +95,29 @@ public class EditProductProfileFragment extends DialogFragment {
         binding.btnEditSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // Extraigo los datos del producto
+                String product_name = binding.tvEditProductName.getText().toString();
+                String product_price = binding.tvEditProductPrice.getText().toString();
+//                String product_url = profileProductModel.getProduct_image_url();
+                // Me fijo que los datos sean validos
+                if( isValid(product_name,product_price) ){
+                    // Hay que ver si tiene internet y avisar
+                    //---
+//                    uploadImage(key);
+                    // Creo los datos que se van a subir
+                    final StorageReference ref = storageReference.child(productId);
+                    ref.putFile(resultUri).addOnSuccessListener(taskSnapshot -> ref.getDownloadUrl().addOnSuccessListener(uri -> {
+                        mDatabase.child("products").child(productId).child("product_name").setValue(product_name);// Guardo los datos en la coleccion con un identificador unico
+                        mDatabase.child("products").child(productId).child("product_price").setValue(product_price);// Guardo los datos en la coleccion con un identificador unico
+                        mDatabase.child("products").child(productId).child("product_image_url").setValue(String.valueOf(uri));// Guardo los datos en la coleccion con un identificador unico
+                        //----
+                        // Ahora tengo que salir del dialog fragment
+                        dismiss();
+                    }));
+//                    mDatabase.child("products").child(productId).child("product_price").setValue(product_price);// Guardo los datos en la coleccion con un identificador unico
+                } else {
+                    // Mostar algun mensaje de error
+                }
 
             }
         });
@@ -90,6 +133,11 @@ public class EditProductProfileFragment extends DialogFragment {
         });
 
     }
+
+    private boolean isValid(String product_name, String product_price) {
+        return true;
+    }
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
