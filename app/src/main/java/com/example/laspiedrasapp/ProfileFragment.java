@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.example.laspiedrasapp.databinding.FragmentProfileBinding;
 import com.example.laspiedrasapp.models.ProfileModel;
 import com.example.laspiedrasapp.models.ProfileProductModel;
@@ -67,11 +68,12 @@ public class ProfileFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         binding = FragmentProfileBinding.bind(view);// Inicializo el binding
         // Recupero los datos del perfil del usuario y los coloco en los edit text
-        mDatabase.child("users").addValueEventListener(new ValueEventListener() {
+        mDatabase.child("users").child(userId).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists()){
-                    binding.name.setText(snapshot.child(userId).child("name").getValue().toString());
+                    binding.name.setText(snapshot.child("name").getValue().toString());
+                    Glide.with(getContext()).load(snapshot.child("imgUrl").getValue().toString()).into(binding.imageView); // Coloca la imagen en el imageview
                 }
             }
 
@@ -85,17 +87,17 @@ public class ProfileFragment extends Fragment {
         getProductsFromDatabase();
         // ---
         // Para cargar la imagen de perfil
-        storageReference.child("user_prfile_images/"+userId).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-            @Override
-            public void onSuccess(Uri uri) {
-                Picasso.with(getContext()).load(uri).into(binding.imageView); // Coloca la imagen en el imageview
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-
-            }
-        });
+//        storageReference.child("user_prfile_images/"+userId).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+//            @Override
+//            public void onSuccess(Uri uri) {
+//                Picasso.with(getContext()).load(uri).into(binding.imageView); // Coloca la imagen en el imageview
+//            }
+//        }).addOnFailureListener(new OnFailureListener() {
+//            @Override
+//            public void onFailure(@NonNull Exception e) {
+//
+//            }
+//        });
         // -----
         // Para el toolbar
         binding.toolbar.setOnMenuItemClickListener(item -> {

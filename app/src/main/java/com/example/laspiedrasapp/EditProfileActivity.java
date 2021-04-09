@@ -16,6 +16,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.example.laspiedrasapp.databinding.ActivityEditProfileBinding;
 import com.example.laspiedrasapp.models.ProfileModel;
 import com.google.android.gms.tasks.Continuation;
@@ -66,17 +67,17 @@ public class EditProfileActivity extends AppCompatActivity {
         String userId = mAuth.getCurrentUser().getUid(); // Obtengo el id del usuario logeado
 
         // Recupero la imagen que esta en Storage y la coloco en el imageview
-        storageReference.child("/"+userId).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-            @Override
-            public void onSuccess(Uri uri) {
-                Picasso.with(EditProfileActivity.this).load(uri).into(binding.imgFoto); // Coloca la imagen en el imageview
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-
-            }
-        });
+//        storageReference.child("/"+userId).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+//            @Override
+//            public void onSuccess(Uri uri) {
+//                Picasso.with(EditProfileActivity.this).load(uri).into(binding.imgFoto); // Coloca la imagen en el imageview
+//            }
+//        }).addOnFailureListener(new OnFailureListener() {
+//            @Override
+//            public void onFailure(@NonNull Exception e) {
+//
+//            }
+//        });
         // -----
 
 
@@ -93,6 +94,7 @@ public class EditProfileActivity extends AppCompatActivity {
                         ProfileModel profileModel = task.getResult().getValue(ProfileModel.class); // guardo la respuesta en un ProfileModel
                         binding.etName.setText(profileModel.getName());
                         binding.etPhone.setText(profileModel.getPhone());
+                        Glide.with(EditProfileActivity.this).load(profileModel.getImgUrl()).into(binding.imgFoto); // Coloca la imagen en el imageview
                     }
                 }
             }
@@ -112,9 +114,16 @@ public class EditProfileActivity extends AppCompatActivity {
                     // Hay que ver si tiene internet y avisar
                     //---
                     ProfileModel profile = new ProfileModel(name,phone);// creo la clase Profile con los parametros
-                    mDatabase.child("users").child(userId).setValue(profile);// Guardo los datos en la coleccion
+                    mDatabase.child("users").child(userId).child("name").setValue(profile.getName());// Guardo los datos en la coleccion
+                    mDatabase.child("users").child(userId).child("phone").setValue(profile.getPhone());// Guardo los datos en la coleccion
+                    final StorageReference ref = storageReference.child(userId);
+                    ref.putFile(resultUri).addOnSuccessListener(taskSnapshot -> ref.getDownloadUrl().addOnSuccessListener(uri -> {
+                        profile.setImgUrl(String.valueOf(uri));
+                        // Guardo los datos en el perfil del usuario
+                        mDatabase.child("users").child(userId).child("imgUrl").setValue(profile.getImgUrl());// Guardo los datos en la coleccion
+                    }));
 
-                    uploadImage(userId);// Subo la imagen
+//                    uploadImage(userId);// Subo la imagen
                     // Ahora tengo que salir de la actividad
                     finish();
 

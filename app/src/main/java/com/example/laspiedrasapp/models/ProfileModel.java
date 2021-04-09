@@ -9,6 +9,7 @@ import java.sql.Timestamp;
 public class ProfileModel {
     private String name;
     private String phone;
+    private String imgUrl;
 
     public  ProfileModel(){
 
@@ -19,6 +20,13 @@ public class ProfileModel {
         this.phone = phone;
     }
 
+    public String getImgUrl() {
+        return imgUrl;
+    }
+
+    public void setImgUrl(String imgUrl) {
+        this.imgUrl = imgUrl;
+    }
 
     public String getName() {
         return name;
