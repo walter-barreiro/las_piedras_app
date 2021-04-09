@@ -2,7 +2,9 @@ package com.example.laspiedrasapp.models;
 
 import android.net.Uri;
 
-public class ProfileProductModel {
+import java.io.Serializable;
+
+public class ProfileProductModel implements Serializable {
     // Modelo de los produtos que estan en el perfil general del usuario
     private String product_id;
     private String product_userId;

@@ -169,7 +169,12 @@ public class ProfileFragment extends Fragment {
         ProfileProductAdapter profileProductAdapter = new ProfileProductAdapter(elements, getContext(), new ProfileProductAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(ProfileProductModel item) {
-                Toast.makeText(getContext(), "Nombre "+item.getProduct_name(), Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getContext(), "Nombre "+item.getProduct_name(), Toast.LENGTH_SHORT).show();
+                EditProductProfileFragment editProductProfileFragment = new EditProductProfileFragment();
+                Bundle bundle= new Bundle();
+                bundle.putSerializable("product",item);
+                editProductProfileFragment.setArguments(bundle);
+                editProductProfileFragment.show(getActivity().getSupportFragmentManager(),"editProduct");
 
             }
         });
