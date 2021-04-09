@@ -206,7 +206,6 @@ public class ProfileFragment extends Fragment {
                             }
                         });
                     }
-                    initRecyclerView();
                 }
             }
 
@@ -217,23 +216,6 @@ public class ProfileFragment extends Fragment {
         });
 
     }
-
-//    public void obtenerUriProducto(String productId){
-//        // Para cargar la imagen de perfil
-//        storageReference.child("user_product_images/"+productId).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-//            @Override
-//            public void onSuccess(Uri uri) {
-//                product_image = uri;
-//            }
-//        }).addOnFailureListener(new OnFailureListener() {
-//            @Override
-//            public void onFailure(@NonNull Exception e) {
-//
-//            }
-//        });
-//
-//        // -----
-//    }
 
     @Override
     public void onDestroy() {

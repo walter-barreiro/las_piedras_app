@@ -28,6 +28,7 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageActivity;
+import com.theartofdev.edmodo.cropper.CropImageView;
 
 import java.util.Objects;
 
@@ -68,8 +69,6 @@ public class NewProductFragment extends  DialogFragment {
         binding = FragmentNewProductBinding.bind(view);// Inicializo el binding
         String userId= mAuth.getCurrentUser().getUid(); // Obtengo el id del usuario logeado
 
-
-
         binding.btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -103,24 +102,23 @@ public class NewProductFragment extends  DialogFragment {
                 }
             }
         });
-
         binding.btnCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 dismiss();
             }
         });
-
-
         // Para obtener la imagen
         binding.tvProductImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                CropImage.activity().start(getContext(), NewProductFragment.this);
+                CropImage.activity()
+                    .setGuidelines(CropImageView.Guidelines.ON)
+                        .setRequestedSize(640,480)
+                        .setAspectRatio(1,1).start(getContext(), NewProductFragment.this);
             }
         });
         //----
-
     }
 
     @Override
