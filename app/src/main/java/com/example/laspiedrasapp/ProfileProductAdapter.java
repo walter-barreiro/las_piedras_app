@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.laspiedrasapp.models.ProfileProductModel;
 import com.squareup.picasso.Picasso;
 
@@ -67,8 +68,8 @@ public class ProfileProductAdapter  extends RecyclerView.Adapter<ProfileProductA
             name.setText(item.getProduct_name());
             price.setText(item.getProduct_price());
 //            image.setImageURI(item.getProduct_image());
-            Picasso.with(context).load(item.getProduct_image_url()).into(image);
-
+//            Picasso.with(context).load(item.getProduct_image_url()).into(image);
+            Glide.with(context).load(item.getProduct_image_url()).into(image);
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

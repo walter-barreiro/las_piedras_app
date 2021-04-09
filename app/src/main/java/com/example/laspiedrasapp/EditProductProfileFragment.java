@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.example.laspiedrasapp.databinding.FragmentEditProductProfileBinding;
 import com.example.laspiedrasapp.databinding.FragmentProfileBinding;
 import com.example.laspiedrasapp.models.ProfileProductModel;
@@ -61,8 +62,8 @@ public class EditProductProfileFragment extends DialogFragment {
 
         binding.tvEditProductName.setText(profileProductModel.getProduct_name());
         binding.tvEditProductPrice.setText(profileProductModel.getProduct_price());
-        Picasso.with(getContext()).load(profileProductModel.getProduct_image_url()).into(binding.ivEdit);
-
+//        Picasso.with(getContext()).load(profileProductModel.getProduct_image_url()).into(binding.ivEdit);
+        Glide.with(getContext()).load(profileProductModel.getProduct_image_url()).into(binding.ivEdit);
 
         binding.btnEditCancel.setOnClickListener(new View.OnClickListener() {
             @Override
