@@ -42,6 +42,7 @@ public class EditProductProfileFragment extends DialogFragment {
     private Uri resultUri;
     private String productId;
     private String userId;
+    private Boolean photoChanged = false;
 
     public EditProductProfileFragment() {
         // Required empty public constructor
@@ -98,23 +99,21 @@ public class EditProductProfileFragment extends DialogFragment {
                 // Extraigo los datos del producto
                 String product_name = binding.tvEditProductName.getText().toString();
                 String product_price = binding.tvEditProductPrice.getText().toString();
-//                String product_url = profileProductModel.getProduct_image_url();
                 // Me fijo que los datos sean validos
                 if( isValid(product_name,product_price) ){
                     // Hay que ver si tiene internet y avisar
                     //---
 //                    uploadImage(key);
                     // Creo los datos que se van a subir
-                    final StorageReference ref = storageReference.child(productId);
-                    ref.putFile(resultUri).addOnSuccessListener(taskSnapshot -> ref.getDownloadUrl().addOnSuccessListener(uri -> {
-                        mDatabase.child("products").child(productId).child("product_name").setValue(product_name);// Guardo los datos en la coleccion con un identificador unico
-                        mDatabase.child("products").child(productId).child("product_price").setValue(product_price);// Guardo los datos en la coleccion con un identificador unico
-                        mDatabase.child("products").child(productId).child("product_image_url").setValue(String.valueOf(uri));// Guardo los datos en la coleccion con un identificador unico
-                        //----
-                        // Ahora tengo que salir del dialog fragment
-                        dismiss();
-                    }));
-//                    mDatabase.child("products").child(productId).child("product_price").setValue(product_price);// Guardo los datos en la coleccion con un identificador unico
+                    mDatabase.child("products").child(productId).child("product_name").setValue(product_name);// Guardo los datos en la coleccion con un identificador unico
+                    mDatabase.child("products").child(productId).child("product_price").setValue(product_price);// Guardo los datos en la coleccion con un identificador unico
+                    if(photoChanged){
+                        final StorageReference ref = storageReference.child(productId);
+                        ref.putFile(resultUri).addOnSuccessListener(taskSnapshot -> ref.getDownloadUrl().addOnSuccessListener(uri -> {
+                            mDatabase.child("products").child(productId).child("product_image_url").setValue(String.valueOf(uri));// Guardo los datos en la coleccion con un identificador unico
+                        }));
+                    }
+                    dismiss();
                 } else {
                     // Mostar algun mensaje de error
                 }
@@ -145,6 +144,7 @@ public class EditProductProfileFragment extends DialogFragment {
             if (resultCode == RESULT_OK) {
                 resultUri = result.getUri();
                 binding.ivEdit.setImageURI(resultUri);
+                photoChanged = true;
             } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
                 Exception error = result.getError();
             }
