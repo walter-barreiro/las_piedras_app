@@ -51,6 +51,8 @@ public class EditProfileActivity extends AppCompatActivity {
 
     private ActivityEditProfileBinding binding;
     private Uri resultUri;
+    private Boolean verified=false;
+    private String userId;
 
 
     @Override
@@ -64,21 +66,7 @@ public class EditProfileActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance(); // Para obtener el ususario que esta logeado
         storageReference = FirebaseStorage.getInstance().getReference().child("user_prfile_images"); // Para guardar las fotos de perfil en storage
 
-        String userId = mAuth.getCurrentUser().getUid(); // Obtengo el id del usuario logeado
-
-        // Recupero la imagen que esta en Storage y la coloco en el imageview
-//        storageReference.child("/"+userId).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-//            @Override
-//            public void onSuccess(Uri uri) {
-//                Picasso.with(EditProfileActivity.this).load(uri).into(binding.imgFoto); // Coloca la imagen en el imageview
-//            }
-//        }).addOnFailureListener(new OnFailureListener() {
-//            @Override
-//            public void onFailure(@NonNull Exception e) {
-//
-//            }
-//        });
-        // -----
+        userId = mAuth.getCurrentUser().getUid(); // Obtengo el id del usuario logeado
 
 
         // Recupero los datos del perfil del usuario y los coloco en los edit text
@@ -151,6 +139,15 @@ public class EditProfileActivity extends AppCompatActivity {
                 CropImage.startPickImageActivity(EditProfileActivity.this);
             }
         });
+
+
+        binding.btnVerifyProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                CropImage.startPickImageActivity(EditProfileActivity.this);
+                verified=true;
+            }
+        });
     }
 
     @Override
@@ -176,9 +173,18 @@ public class EditProfileActivity extends AppCompatActivity {
 
             if (resultCode == RESULT_OK){
                 resultUri = result.getUri();
-
-                File url = new File(resultUri.getPath());
-                Picasso.with(this).load(url).into(binding.imgFoto); // Coloca la imagen en el imageview
+                if(verified){ // Si es la foto de verificacion
+                    verified = false;
+                    final StorageReference ref = storageReference.child(userId+"_verified");
+                    ref.putFile(resultUri).addOnSuccessListener(taskSnapshot -> ref.getDownloadUrl().addOnSuccessListener(uri -> {
+                        // Guardo los datos en el perfil del usuario
+                        mDatabase.child("users").child(userId).child("verified_photo").setValue(String.valueOf(uri));// Guardo los datos en la coleccion
+                        mDatabase.child("users").child(userId).child("verified").setValue(true);// Guardo los datos en la coleccion
+                    }));
+                } else { // Si es la otra foto
+                    File url = new File(resultUri.getPath());
+                    Picasso.with(this).load(url).into(binding.imgFoto); // Coloca la imagen en el imageview
+                }
 
                 // Hasta aca se tiene guardada la imagen en url, lista para subir a store
             }

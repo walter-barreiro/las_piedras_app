@@ -73,6 +73,12 @@ public class ProfileFragment extends Fragment {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists()){
                     binding.name.setText(snapshot.child("name").getValue().toString());
+
+                    if (snapshot.child("verified").exists()){
+                        if ( snapshot.child("verified").getValue().toString() == "true" ){
+                            binding.name.setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.ic_verified,0);
+                        }
+                    }
                     Glide.with(getContext()).load(snapshot.child("imgUrl").getValue().toString()).into(binding.imageView); // Coloca la imagen en el imageview
                 }
             }
