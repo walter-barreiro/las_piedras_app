@@ -15,7 +15,8 @@
         android:usesCleartextTraffic="true"
         tools:ignore="UnusedAttribute"
         tools:targetApi="m">
-        <activity android:name=".CommerceActivity"></activity>
+        <activity android:name=".EditCommerceActivity"></activity>
+        <activity android:name=".CommerceActivity" />
         <activity android:name=".BusinessActivity" />
         <activity android:name=".EditProfileActivity" />
         <activity android:name=".ResetPasswordActivity" />
@@ -30,7 +31,7 @@
         </activity>
         <activity
             android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
-            android:theme="@style/Base.Theme.AppCompat"/>
+            android:theme="@style/Base.Theme.AppCompat" />
     </application>
 
 </manifest>

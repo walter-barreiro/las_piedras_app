@@ -36,12 +36,12 @@ import java.util.List;
 public class ProfileFragment extends Fragment {
     private FirebaseAuth mAuth; // Para poder obtener el id del usuario
     private DatabaseReference mDatabase; // Para extraer los datos de firebase
+    private StorageReference storageReference;
     private FragmentProfileBinding binding; // Para usar View Binding
     private ProfileModel profileModel;
     private String userId;
     private String email;
     private Uri product_image;
-    private StorageReference storageReference;
     List<ProfileProductModel> elements = new ArrayList<>(); // Para el recyclervew
 
     @Override
