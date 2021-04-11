@@ -18,8 +18,6 @@ import com.bumptech.glide.Glide;
 import com.example.laspiedrasapp.databinding.FragmentProfileBinding;
 import com.example.laspiedrasapp.models.ProfileModel;
 import com.example.laspiedrasapp.models.ProfileProductModel;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -28,7 +26,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -54,15 +51,9 @@ public class ProfileFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        mAuth = FirebaseAuth.getInstance();// Inicializo el auth del usuario
-        mDatabase = FirebaseDatabase.getInstance().getReference(); // Inicializo firebase
-        storageReference = FirebaseStorage.getInstance().getReference(); // Para guardar las fotos de perfil en storage
-        userId= mAuth.getCurrentUser().getUid(); // Obtengo el id del usuario logeado
-        email = mAuth.getCurrentUser().getEmail();// Extraigo los datos del usuario de firebase
-
+        initFirebase(); // Inicializo lo de firebase
         return inflater.inflate(R.layout.fragment_profile, container, false);
     }
-
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -89,39 +80,8 @@ public class ProfileFragment extends Fragment {
 
             }
         });
-        // ---
-        profileProductAdapter = new ProfileProductAdapter(elements, getContext(), new ProfileProductAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(ProfileProductModel item) {
-//                Toast.makeText(getContext(), "Nombre "+item.getProduct_name(), Toast.LENGTH_SHORT).show();
-                EditProductProfileFragment editProductProfileFragment = new EditProductProfileFragment();
-                Bundle bundle= new Bundle();
-                bundle.putSerializable("product",item);
-                editProductProfileFragment.setArguments(bundle);
-                editProductProfileFragment.show(getActivity().getSupportFragmentManager(),"editProduct");
-
-            }
-        });
-        binding.rvProfileProduct.setHasFixedSize(true);
-//        binding.rvProfileProduct.setLayoutManager(new LinearLayoutManager(getContext()));
-        binding.rvProfileProduct.setLayoutManager(new GridLayoutManager(getContext(),2));
-        binding.rvProfileProduct.setAdapter(profileProductAdapter);
-        // Obtengo los productos del usuario
-        getProductsFromDatabase();
-        // ---
-        // Para cargar la imagen de perfil
-//        storageReference.child("user_prfile_images/"+userId).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-//            @Override
-//            public void onSuccess(Uri uri) {
-//                Picasso.with(getContext()).load(uri).into(binding.imageView); // Coloca la imagen en el imageview
-//            }
-//        }).addOnFailureListener(new OnFailureListener() {
-//            @Override
-//            public void onFailure(@NonNull Exception e) {
-//
-//            }
-//        });
-        // -----
+        initRecyclerView(); // Inicializo el recycler view
+        getProductsFromDatabase();// Obtengo los productos del usuario
         // Para el toolbar
         binding.toolbar.setOnMenuItemClickListener(item -> {
             switch (item.getItemId()){
@@ -151,23 +111,20 @@ public class ProfileFragment extends Fragment {
 
             }
         });
-        // -----
-        // Para ir a la tienda
+        // Para ir al servicio
         binding.goBusiness.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Toast.makeText(getActivity(), "Ir a mi servicio",Toast.LENGTH_SHORT).show();
             }
         });
-        //-----
-        // Para ir al servicio
+        // Para ir a la tienda
         binding.goCommerce.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Toast.makeText(getActivity(), "Ir a mi tienda",Toast.LENGTH_SHORT).show();
             }
         });
-        //-----
         // Para agergar nuevo producto
         binding.fabAddProduct.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -175,7 +132,12 @@ public class ProfileFragment extends Fragment {
                 openDialog();
             }
         });
-        // ----
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        binding = null; // Para liberar memoria
     }
 
     private void openDialog() {
@@ -186,39 +148,37 @@ public class ProfileFragment extends Fragment {
 
     }
 
-
     private void initRecyclerView() {
-//        elements = new ArrayList<>();
-//        elements.add(new ProfileProductModel("Nombre del producto"));
+        // Para cuando el usuario presione un item
+        profileProductAdapter = new ProfileProductAdapter(elements, getContext(), new ProfileProductAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(ProfileProductModel item) {
+//                Toast.makeText(getContext(), "Nombre "+item.getProduct_name(), Toast.LENGTH_SHORT).show();
+                EditProductProfileFragment editProductProfileFragment = new EditProductProfileFragment();
+                Bundle bundle= new Bundle();
+                bundle.putSerializable("product",item);
+                editProductProfileFragment.setArguments(bundle);
+                editProductProfileFragment.show(getActivity().getSupportFragmentManager(),"editProduct");
 
-//        ProfileProductAdapter profileProductAdapter = new ProfileProductAdapter(elements, getContext(), new ProfileProductAdapter.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(ProfileProductModel item) {
-////                Toast.makeText(getContext(), "Nombre "+item.getProduct_name(), Toast.LENGTH_SHORT).show();
-//                EditProductProfileFragment editProductProfileFragment = new EditProductProfileFragment();
-//                Bundle bundle= new Bundle();
-//                bundle.putSerializable("product",item);
-//                editProductProfileFragment.setArguments(bundle);
-//                editProductProfileFragment.show(getActivity().getSupportFragmentManager(),"editProduct");
-//
-//            }
-//        });
-//        binding.rvProfileProduct.setHasFixedSize(true);
-////        binding.rvProfileProduct.setLayoutManager(new LinearLayoutManager(getContext()));
-//        binding.rvProfileProduct.setLayoutManager(new GridLayoutManager(getContext(),2));
-//        binding.rvProfileProduct.setAdapter(profileProductAdapter);
+            }
+        });
+        binding.rvProfileProduct.setHasFixedSize(true);
+//        binding.rvProfileProduct.setLayoutManager(new LinearLayoutManager(getContext()));
+        binding.rvProfileProduct.setLayoutManager(new GridLayoutManager(getContext(),2));
+        binding.rvProfileProduct.setAdapter(profileProductAdapter);
+
     }
 
     private void getProductsFromDatabase(){
-//        List<String> products_id = new ArrayList<>(); // Para probar el recyclerview
+        // Voy a los productos que tiene el usuario en la base  de  datos
         mDatabase.child("users").child(userId).child("products").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 elements.clear();
                 if(snapshot.exists()){
-                    for (DataSnapshot ds: snapshot.getChildren()){ // ds tiene el children de products
+                    for (DataSnapshot ds: snapshot.getChildren()){ // ds tiene el children de products. Recorro  todos los productos y obtengo el id
                         String productId = ds.getKey().toString(); // obtengo los id de los productos del cliente
-                        mDatabase.child("products").child(productId).addValueEventListener(new ValueEventListener() { // recorro los productos para obtener los datos
+                        mDatabase.child("products").child(productId).addValueEventListener(new ValueEventListener() { // para  cada id recorro los productos para obtener los datos
                             @Override
                             public void onDataChange(@NonNull DataSnapshot snapshot) {
                                 if(snapshot.exists()){
@@ -249,9 +209,13 @@ public class ProfileFragment extends Fragment {
 
     }
 
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        binding = null; // Para liberar memoria
+    private void initFirebase() {
+        mAuth = FirebaseAuth.getInstance();// Inicializo el auth del usuario
+        mDatabase = FirebaseDatabase.getInstance().getReference(); // Inicializo firebase
+        storageReference = FirebaseStorage.getInstance().getReference(); // Para guardar las fotos de perfil en storage
+        userId= mAuth.getCurrentUser().getUid(); // Obtengo el id del usuario logeado
+        email = mAuth.getCurrentUser().getEmail();// Extraigo los datos del usuario de firebase
     }
+
+
 }
