@@ -1,17 +1,17 @@
 package com.example.laspiedrasapp;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
 import com.example.laspiedrasapp.databinding.ActivityCommerceBinding;
-import com.example.laspiedrasapp.databinding.ActivityEditCommerceBinding;
+import com.google.android.material.tabs.TabLayout;
+import com.google.android.material.tabs.TabLayoutMediator;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -22,13 +22,15 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 public class CommerceActivity extends AppCompatActivity {
-    ActivityCommerceBinding binding;
+
+    private ActivityCommerceBinding binding;
     private FirebaseAuth mAuth; // Para poder obtener el id del usuario
     private DatabaseReference mDatabase; // Para extraer los datos de firebase
     private StorageReference storageReference;
 
     private String userId;
     private Uri resultUri;
+    CommerceViewPagerAdapter commerceViewPagerAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +46,31 @@ public class CommerceActivity extends AppCompatActivity {
         setContentView(view);
 
         setValues();// Obtengo los datos de firebase y los coloco en los view
+
+                // Para la navegacion entre Productos y reseñas
+        commerceViewPagerAdapter = new CommerceViewPagerAdapter(getSupportFragmentManager(),getLifecycle());
+        commerceViewPagerAdapter.addFragment(new ProductsCommerceFragment());
+        commerceViewPagerAdapter.addFragment(new ReviewsCommerceFragment());
+        binding.vp2Commerce.setAdapter(commerceViewPagerAdapter);
+
+        new TabLayoutMediator(binding.tlCommerce, binding.vp2Commerce, new TabLayoutMediator.TabConfigurationStrategy() {
+            @Override
+            public void onConfigureTab(@NonNull TabLayout.Tab tab, int position) {
+                switch (position){
+                    case 0:
+                            tab.setText("Productos");
+                            break;
+                    case 1:
+                            tab.setText("Reseñas");
+                            break;
+                }
+
+            }
+        }).attach();
+
+        //----
+
+
 
         binding.btnCommerceEdit.setOnClickListener(new View.OnClickListener() {
             @Override
