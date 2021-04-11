@@ -46,31 +46,7 @@ public class CommerceActivity extends AppCompatActivity {
         setContentView(view);
 
         setValues();// Obtengo los datos de firebase y los coloco en los view
-
-                // Para la navegacion entre Productos y reseñas
-        commerceViewPagerAdapter = new CommerceViewPagerAdapter(getSupportFragmentManager(),getLifecycle());
-        commerceViewPagerAdapter.addFragment(new ProductsCommerceFragment());
-        commerceViewPagerAdapter.addFragment(new ReviewsCommerceFragment());
-        binding.vp2Commerce.setAdapter(commerceViewPagerAdapter);
-
-        new TabLayoutMediator(binding.tlCommerce, binding.vp2Commerce, new TabLayoutMediator.TabConfigurationStrategy() {
-            @Override
-            public void onConfigureTab(@NonNull TabLayout.Tab tab, int position) {
-                switch (position){
-                    case 0:
-                            tab.setText("Productos");
-                            break;
-                    case 1:
-                            tab.setText("Reseñas");
-                            break;
-                }
-
-            }
-        }).attach();
-
-        //----
-
-
+        initTabLayoutViewPager2();// Para la navegacion entre Productos y reseñas
 
         binding.btnCommerceEdit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -79,6 +55,26 @@ public class CommerceActivity extends AppCompatActivity {
                 startActivity(intent); // Para ir al registro
             }
         });
+    }
+
+    private void initTabLayoutViewPager2() {
+        commerceViewPagerAdapter = new CommerceViewPagerAdapter(getSupportFragmentManager(),getLifecycle());
+        commerceViewPagerAdapter.addFragment(new ProductsCommerceFragment());
+        commerceViewPagerAdapter.addFragment(new ReviewsCommerceFragment());
+        binding.vp2Commerce.setAdapter(commerceViewPagerAdapter);
+        new TabLayoutMediator(binding.tlCommerce, binding.vp2Commerce, new TabLayoutMediator.TabConfigurationStrategy() {
+            @Override
+            public void onConfigureTab(@NonNull TabLayout.Tab tab, int position) {
+                switch (position){
+                    case 0:
+                        tab.setText("Productos");
+                        break;
+                    case 1:
+                        tab.setText("Reseñas");
+                        break;
+                }
+            }
+        }).attach();
     }
 
     private void setValues() {
