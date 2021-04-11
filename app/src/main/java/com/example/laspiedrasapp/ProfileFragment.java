@@ -43,6 +43,7 @@ public class ProfileFragment extends Fragment {
     private String email;
     private Uri product_image;
     List<ProfileProductModel> elements = new ArrayList<>(); // Para el recyclervew
+    private ProfileProductAdapter profileProductAdapter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -89,6 +90,22 @@ public class ProfileFragment extends Fragment {
             }
         });
         // ---
+        profileProductAdapter = new ProfileProductAdapter(elements, getContext(), new ProfileProductAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(ProfileProductModel item) {
+//                Toast.makeText(getContext(), "Nombre "+item.getProduct_name(), Toast.LENGTH_SHORT).show();
+                EditProductProfileFragment editProductProfileFragment = new EditProductProfileFragment();
+                Bundle bundle= new Bundle();
+                bundle.putSerializable("product",item);
+                editProductProfileFragment.setArguments(bundle);
+                editProductProfileFragment.show(getActivity().getSupportFragmentManager(),"editProduct");
+
+            }
+        });
+        binding.rvProfileProduct.setHasFixedSize(true);
+//        binding.rvProfileProduct.setLayoutManager(new LinearLayoutManager(getContext()));
+        binding.rvProfileProduct.setLayoutManager(new GridLayoutManager(getContext(),2));
+        binding.rvProfileProduct.setAdapter(profileProductAdapter);
         // Obtengo los productos del usuario
         getProductsFromDatabase();
         // ---
@@ -174,22 +191,22 @@ public class ProfileFragment extends Fragment {
 //        elements = new ArrayList<>();
 //        elements.add(new ProfileProductModel("Nombre del producto"));
 
-        ProfileProductAdapter profileProductAdapter = new ProfileProductAdapter(elements, getContext(), new ProfileProductAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(ProfileProductModel item) {
-//                Toast.makeText(getContext(), "Nombre "+item.getProduct_name(), Toast.LENGTH_SHORT).show();
-                EditProductProfileFragment editProductProfileFragment = new EditProductProfileFragment();
-                Bundle bundle= new Bundle();
-                bundle.putSerializable("product",item);
-                editProductProfileFragment.setArguments(bundle);
-                editProductProfileFragment.show(getActivity().getSupportFragmentManager(),"editProduct");
-
-            }
-        });
-        binding.rvProfileProduct.setHasFixedSize(true);
-//        binding.rvProfileProduct.setLayoutManager(new LinearLayoutManager(getContext()));
-        binding.rvProfileProduct.setLayoutManager(new GridLayoutManager(getContext(),2));
-        binding.rvProfileProduct.setAdapter(profileProductAdapter);
+//        ProfileProductAdapter profileProductAdapter = new ProfileProductAdapter(elements, getContext(), new ProfileProductAdapter.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(ProfileProductModel item) {
+////                Toast.makeText(getContext(), "Nombre "+item.getProduct_name(), Toast.LENGTH_SHORT).show();
+//                EditProductProfileFragment editProductProfileFragment = new EditProductProfileFragment();
+//                Bundle bundle= new Bundle();
+//                bundle.putSerializable("product",item);
+//                editProductProfileFragment.setArguments(bundle);
+//                editProductProfileFragment.show(getActivity().getSupportFragmentManager(),"editProduct");
+//
+//            }
+//        });
+//        binding.rvProfileProduct.setHasFixedSize(true);
+////        binding.rvProfileProduct.setLayoutManager(new LinearLayoutManager(getContext()));
+//        binding.rvProfileProduct.setLayoutManager(new GridLayoutManager(getContext(),2));
+//        binding.rvProfileProduct.setAdapter(profileProductAdapter);
     }
 
     private void getProductsFromDatabase(){
@@ -211,7 +228,8 @@ public class ProfileFragment extends Fragment {
                                     profileProductModel.setProduct_image_url(snapshot.child("product_image_url").getValue().toString());
                                     profileProductModel.setProduct_id(productId);
                                     elements.add(profileProductModel);//:snapshot.child("product_name").getValue().toString())); // agrego eloproductId a la lista de elementos
-                                    initRecyclerView();
+//                                    initRecyclerView();
+                                    profileProductAdapter.notifyDataSetChanged();
                                 }
                             }
                             @Override
