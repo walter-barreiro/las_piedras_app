@@ -2,4 +2,6 @@
     <string name="app_name">LasPiedrasApp</string>
     <string name="invalid_mail">Ingrese un mail valido</string>
     <string name="invalid_password">Ingrese un password mayor a 6 digitos</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.example.laspiedrasapp.databinding.FragmentProductsCommerceBinding;
+import com.example.laspiedrasapp.databinding.FragmentProfileBinding;
 import com.example.laspiedrasapp.models.CommerceProductModel;
 import com.example.laspiedrasapp.models.ProfileProductModel;
 
@@ -46,6 +47,7 @@ public class ProductsCommerceFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        binding = FragmentProductsCommerceBinding.bind(view);// Inicializo el binding
 
 
 //        commerceProductAdapter = new CommerceProductAdapter(elements, getContext(), new CommerceProductAdapter.OnItemClickListener() {
@@ -67,6 +69,20 @@ public class ProductsCommerceFragment extends Fragment {
 //        binding.rvCommerceProduct.setAdapter(commerceProductAdapter);
 
 
+        binding.fabNewProductCommerce.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openDialog();
+            }
+        });
+
+    }
+
+    private void openDialog() {
+        // Abro un dialgofragment para ingresar el nuevo producto
+        NewProductCommerceFragment newProductCommerceFragment = new NewProductCommerceFragment();
+        newProductCommerceFragment.show(getActivity().getSupportFragmentManager(),"newProductCommerce");
+        // -----
 
     }
 }

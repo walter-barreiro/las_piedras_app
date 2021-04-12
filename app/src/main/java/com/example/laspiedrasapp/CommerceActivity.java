@@ -55,6 +55,8 @@ public class CommerceActivity extends AppCompatActivity {
                 startActivity(intent); // Para ir al registro
             }
         });
+
+
     }
 
     private void initTabLayoutViewPager2() {
