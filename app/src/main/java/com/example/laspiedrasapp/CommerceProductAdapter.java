@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.laspiedrasapp.models.CommerceProductModel;
 
 import java.util.List;
@@ -58,15 +59,14 @@ public class CommerceProductAdapter extends RecyclerView.Adapter<CommerceProduct
             // Aca van todos los view
             name = itemView.findViewById(R.id.tvProductCommerceName);
             price = itemView.findViewById(R.id.tvItemProductCommercePrice);
-//            image = itemView.findViewById(R.id.ivItemProductCommerce);
+            image = itemView.findViewById(R.id.ivItemProductCommerce);
         }
 
         void bindData(final CommerceProductModel item){
             // Aca va lo que se hace con los view
             name.setText(item.getName());
             price.setText(item.getPrice());
-//            Glide.with(context).load(item.getProduct_image_url()).into(image);
-
+            Glide.with(context).load(item.getImgUrl()).into(image);
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
