@@ -28,8 +28,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ProductsCommerceFragment extends Fragment {
-    private String PRODUCT_COLLECTION = "shops_product"; // Nombre de la coleccion que tiene los productos de los comercios
-    private String COMMERCE_COLLECTION = "shops"; // Nombre de la coleccion que tiene los datos de los comercios
+    // ToDo Hacer un dialog fragment para editar los productos
+
+    private final String PRODUCT_COLLECTION = "shops_product"; // Nombre de la coleccion que tiene los productos de los comercios
+    private final String COMMERCE_COLLECTION = "shops"; // Nombre de la coleccion que tiene los datos de los comercios
 
     private FirebaseAuth mAuth; // Para poder obtener el id del usuario
     private DatabaseReference mDatabase; // Para extraer los datos de firebase
@@ -117,13 +119,12 @@ public class ProductsCommerceFragment extends Fragment {
         commerceProductAdapter = new CommerceProductAdapter(elements, getContext(), new CommerceProductAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(CommerceProductModel item) {
-                Toast.makeText(getContext(), "Nombre "+item.getName(), Toast.LENGTH_SHORT).show();
-//                Toast.makeText(getContext(),"Elemento presionado", Toast.LENGTH_SHORT).show();
-//                EditProductProfileFragment editProductProfileFragment = new EditProductProfileFragment();
-//                Bundle bundle= new Bundle();
-//                bundle.putSerializable("product",item);
-//                editProductProfileFragment.setArguments(bundle);
-//                editProductProfileFragment.show(getActivity().getSupportFragmentManager(),"editProduct");
+//                Toast.makeText(getContext(), "Nombre "+item.getName(), Toast.LENGTH_SHORT).show();
+                EditProductCommerceFragment editProductCommerceFragment = new EditProductCommerceFragment();
+                Bundle bundle= new Bundle();
+                bundle.putSerializable("product_commerce",item);
+                editProductCommerceFragment.setArguments(bundle);
+                editProductCommerceFragment.show(getActivity().getSupportFragmentManager(),"editProductCommerce");
 
             }
         });
@@ -133,8 +134,6 @@ public class ProductsCommerceFragment extends Fragment {
         binding.rvCommerceProduct.setAdapter(commerceProductAdapter);
     }
 
-    
-    
     
     private void openDialog() {
         // Abro un dialgofragment para ingresar el nuevo producto

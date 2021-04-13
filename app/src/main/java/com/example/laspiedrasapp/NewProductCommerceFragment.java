@@ -99,6 +99,7 @@ public class NewProductCommerceFragment extends DialogFragment {
                     CommerceProductModel commerceProductModel = new CommerceProductModel();// Creo el modelo del producto del comercio
                     commerceProductModel.setName(product_name);
                     commerceProductModel.setPrice(product_price);
+                    commerceProductModel.setId(key);
                     mDatabase.child(PRODUCT_COLLECTION).child(key).setValue(commerceProductModel);// Guardo los datos en la coleccion con un identificador unico
                     mDatabase.child(COMMERCE_COLLECTION).child(userId).child("products").child(key).setValue(true);// Guardo los datos en la coleccion con un identificador unico
                     final StorageReference ref = storageReference.child(key);

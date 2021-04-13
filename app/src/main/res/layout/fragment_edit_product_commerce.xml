@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:app="http://schemas.android.com/apk/res-auto"
+xmlns:tools="http://schemas.android.com/tools"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+tools:context=".EditProductCommerceFragment">
+
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/tvEditProductCommerceName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="Nombre del producto"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvEditProductCommerceImage" />
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/tvEditProductCommercePrice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="Precio"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvEditProductCommerceName" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnEditCommerceSave"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Guardar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/tvEditProductCommercePrice"
+        app:layout_constraintTop_toBottomOf="@+id/tvEditProductCommercePrice" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnEditCommerceCancel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Cancelar"
+        app:layout_constraintEnd_toStartOf="@+id/tvEditProductCommercePrice"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvEditProductCommercePrice" />
+
+    <TextView
+        android:id="@+id/tvEditProductCommerceImage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Subir imagen"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ivEditProductCommrece" />
+
+    <ImageView
+    android:id="@+id/ivEditProductCommrece"
+    android:layout_width="116dp"
+    android:layout_height="111dp"
+    android:layout_marginTop="16dp"
+    android:scaleType="centerCrop"
+    android:src="@drawable/ic_launcher_background"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintHorizontal_bias="0.498"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

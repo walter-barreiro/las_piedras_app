@@ -1,8 +1,10 @@
 package com.example.laspiedrasapp.models;
 
+import java.io.Serializable;
+
 import javax.xml.namespace.QName;
 
-public class CommerceProductModel {
+public class CommerceProductModel implements Serializable {
     private String id;
     private String userId;
     private String name;
