@@ -7,16 +7,13 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
-import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.laspiedrasapp.databinding.FragmentNewProductBinding;
 import com.example.laspiedrasapp.databinding.FragmentNewProductCommerceBinding;
 import com.example.laspiedrasapp.models.CommerceProductModel;
-import com.example.laspiedrasapp.models.ProfileProductModel;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -29,7 +26,7 @@ import static android.app.Activity.RESULT_OK;
 
 public class NewProductCommerceFragment extends DialogFragment {
 
-    private String PRODUCT_COLLECTION = "shops_product"; // Nombre de la coleccion que tiene los productos de los comercios
+    private String PRODUCT_COMMERCE_COLLECTION = "shops_product"; // Nombre de la coleccion que tiene los productos de los comercios
     private String COMMERCE_COLLECTION = "shops"; // Nombre de la coleccion que tiene los datos de los comercios
     private String COMMERCE_PRODUCT_IMAGES_STORE = "commerce_product_images"; // Carpeta en Storage donde se guardan las imagenes de los productso
 
@@ -94,17 +91,17 @@ public class NewProductCommerceFragment extends DialogFragment {
                 String product_price = binding.tvCommerceProductPrice.getText().toString();
                 if( isValid(product_name,product_price) ){// Me fijo que los datos sean validos
                     // Hay que ver si tiene internet y avisar
-                    String key = mDatabase.child(PRODUCT_COLLECTION).push().getKey(); // Obtengo el id del producto que voy a subir
+                    String key = mDatabase.child(PRODUCT_COMMERCE_COLLECTION).push().getKey(); // Obtengo el id del producto que voy a subir
                     // Creo los datos que se van a subir
                     CommerceProductModel commerceProductModel = new CommerceProductModel();// Creo el modelo del producto del comercio
                     commerceProductModel.setName(product_name);
                     commerceProductModel.setPrice(product_price);
                     commerceProductModel.setId(key);
-                    mDatabase.child(PRODUCT_COLLECTION).child(key).setValue(commerceProductModel);// Guardo los datos en la coleccion con un identificador unico
+                    mDatabase.child(PRODUCT_COMMERCE_COLLECTION).child(key).setValue(commerceProductModel);// Guardo los datos en la coleccion con un identificador unico
                     mDatabase.child(COMMERCE_COLLECTION).child(userId).child("products").child(key).setValue(true);// Guardo los datos en la coleccion con un identificador unico
                     final StorageReference ref = storageReference.child(key);
                     ref.putFile(resultUri).addOnSuccessListener(taskSnapshot -> ref.getDownloadUrl().addOnSuccessListener(uri -> {
-                        mDatabase.child(PRODUCT_COLLECTION).child(key).child("imgUrl").setValue(String.valueOf(uri));// Guardo la url de la foto del producto
+                        mDatabase.child(PRODUCT_COMMERCE_COLLECTION).child(key).child("imgUrl").setValue(String.valueOf(uri));// Guardo la url de la foto del producto
                     }));
                     dismiss();
                 } else {

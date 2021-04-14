@@ -85,7 +85,9 @@ public class CommerceActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists()){
                     binding.tvCommcerceName.setText(snapshot.child("name").getValue().toString());
-                    Glide.with(CommerceActivity.this).load(snapshot.child("banner_url").getValue().toString()).into(binding.ivCommcerceBanner); // Coloca la imagen en el imageview
+                    if (snapshot.child("banner_url").exists()){
+                        Glide.with(CommerceActivity.this).load(snapshot.child("banner_url").getValue().toString()).into(binding.ivCommcerceBanner); // Coloca la imagen en el imageview
+                    }
                 }
             }
             @Override

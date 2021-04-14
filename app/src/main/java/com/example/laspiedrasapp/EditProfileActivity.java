@@ -45,6 +45,7 @@ import java.util.Objects;
 import id.zelory.compressor.Compressor;
 
 public class EditProfileActivity extends AppCompatActivity {
+    private final String USERS_COLLECTIONS = MainActivity.getUSERS_COLLECTIONS();
     private DatabaseReference mDatabase;
     private FirebaseAuth mAuth;
     private StorageReference storageReference; // Para el Storage
@@ -102,13 +103,13 @@ public class EditProfileActivity extends AppCompatActivity {
                     // Hay que ver si tiene internet y avisar
                     //---
                     ProfileModel profile = new ProfileModel(name,phone);// creo la clase Profile con los parametros
-                    mDatabase.child("users").child(userId).child("name").setValue(profile.getName());// Guardo los datos en la coleccion
-                    mDatabase.child("users").child(userId).child("phone").setValue(profile.getPhone());// Guardo los datos en la coleccion
+                    mDatabase.child(USERS_COLLECTIONS).child(userId).child("name").setValue(profile.getName());// Guardo los datos en la coleccion
+                    mDatabase.child(USERS_COLLECTIONS).child(userId).child("phone").setValue(profile.getPhone());// Guardo los datos en la coleccion
                     final StorageReference ref = storageReference.child(userId);
                     ref.putFile(resultUri).addOnSuccessListener(taskSnapshot -> ref.getDownloadUrl().addOnSuccessListener(uri -> {
                         profile.setImgUrl(String.valueOf(uri));
                         // Guardo los datos en el perfil del usuario
-                        mDatabase.child("users").child(userId).child("imgUrl").setValue(profile.getImgUrl());// Guardo los datos en la coleccion
+                        mDatabase.child(USERS_COLLECTIONS).child(userId).child("imgUrl").setValue(profile.getImgUrl());// Guardo los datos en la coleccion
                     }));
 
 //                    uploadImage(userId);// Subo la imagen
@@ -178,8 +179,8 @@ public class EditProfileActivity extends AppCompatActivity {
                     final StorageReference ref = storageReference.child(userId+"_verified");
                     ref.putFile(resultUri).addOnSuccessListener(taskSnapshot -> ref.getDownloadUrl().addOnSuccessListener(uri -> {
                         // Guardo los datos en el perfil del usuario
-                        mDatabase.child("users").child(userId).child("verified_photo").setValue(String.valueOf(uri));// Guardo los datos en la coleccion
-                        mDatabase.child("users").child(userId).child("verified").setValue(true);// Guardo los datos en la coleccion
+                        mDatabase.child(USERS_COLLECTIONS).child(userId).child("verified_photo").setValue(String.valueOf(uri));// Guardo los datos en la coleccion
+                        mDatabase.child(USERS_COLLECTIONS).child(userId).child("verified").setValue(true);// Guardo los datos en la coleccion
                     }));
                 } else { // Si es la otra foto
                     File url = new File(resultUri.getPath());
@@ -213,7 +214,6 @@ public class EditProfileActivity extends AppCompatActivity {
                             @Override
                             public void onComplete(@NonNull Task<Uri> task) {
                                 Uri downloaduri = task.getResult(); // Url de la foto
-//                                loading.dismiss();
                                 Toast.makeText(EditProfileActivity.this,"Imagen guardada con exito", Toast.LENGTH_LONG).show();
 
                             }

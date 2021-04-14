@@ -1,5 +1,6 @@
 package com.example.laspiedrasapp;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -71,7 +72,9 @@ public class ProfileFragment extends Fragment {
                             binding.name.setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.ic_verified,0);
                         }
                     }
-                    Glide.with(getContext()).load(snapshot.child("imgUrl").getValue().toString()).into(binding.imageView); // Coloca la imagen en el imageview
+                    if (snapshot.child("imgUrl").exists()){
+                        Glide.with(getContext()).load(snapshot.child("imgUrl").getValue().toString()).into(binding.imageView); // Coloca la imagen en el imageview
+                    }
                 }
             }
 

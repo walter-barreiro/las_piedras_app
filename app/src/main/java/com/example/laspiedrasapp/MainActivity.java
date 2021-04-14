@@ -17,6 +17,12 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class MainActivity extends AppCompatActivity {
+    // Realtime Database
+    private static final String USERS_COLLECTIONS = "users"; // Donde se van a guardar los datos y los id de  los productos de los usuarios generales
+
+    public static String getUSERS_COLLECTIONS() {
+        return USERS_COLLECTIONS;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
