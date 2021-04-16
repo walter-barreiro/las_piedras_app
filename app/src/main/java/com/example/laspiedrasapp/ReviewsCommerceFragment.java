@@ -76,6 +76,7 @@ public class ReviewsCommerceFragment extends Fragment {
         binding.rvCommerceReviews.setLayoutManager(new LinearLayoutManager(getContext()));
         binding.rvCommerceReviews.setAdapter(reviewCommerceAdapter);
     }
+
     private void getReviewsFromDatabase(){
 
         mDatabase.child("shops").child(userId).child("reviews").addValueEventListener(new ValueEventListener() {
@@ -83,8 +84,7 @@ public class ReviewsCommerceFragment extends Fragment {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 elements.clear();
                 if(snapshot.exists()){
-                    for (DataSnapshot ds: snapshot.getChildren()){ // ds tiene el children de products. Recorro  todos los productos y obtengo el id
-                        String productId = ds.getKey().toString(); // obtengo los id de los productos del cliente
+                    for (DataSnapshot ds: snapshot.getChildren()){
                         ReviewCommerceModel reviewCommerceModel = new ReviewCommerceModel();
                         reviewCommerceModel.setReview(ds.child("review").getValue().toString());
                         elements.add(reviewCommerceModel);
