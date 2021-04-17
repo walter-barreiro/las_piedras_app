@@ -45,6 +45,7 @@ public class CommerceActivity extends AppCompatActivity {
         View view = binding.getRoot();
         setContentView(view);
 
+        binding.vp2Commerce.setUserInputEnabled(false);
         setValues();// Obtengo los datos de firebase y los coloco en los view
         initTabLayoutViewPager2();// Para la navegacion entre Productos y reseñas
 

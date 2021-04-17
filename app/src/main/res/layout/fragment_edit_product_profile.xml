@@ -46,6 +46,16 @@
     app:layout_constraintTop_toBottomOf="@+id/tvEditProductPrice"
     app:layout_constraintVertical_bias="0.0" />
 
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnEditDelete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Eliminar"
+        app:layout_constraintEnd_toEndOf="@+id/tvEditProductPrice"
+        app:layout_constraintStart_toStartOf="@+id/tvEditProductPrice"
+        app:layout_constraintTop_toBottomOf="@+id/tvEditProductPrice" />
+
+
 <TextView
     android:id="@+id/tvEditProductImage"
     android:layout_width="wrap_content"

@@ -20,7 +20,6 @@ import com.google.android.material.tabs.TabLayoutMediator;
  * create an instance of this fragment.
  */
 public class MainFragment extends Fragment {
-    // ToDo hacer el adapter del ViewPager2
     private FragmentMainBinding binding;
     private MainViewPagerAdapter mainViewPagerAdapter;
 
@@ -45,6 +44,7 @@ public class MainFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         binding = FragmentMainBinding.bind(view);
         initTabLayoutViewPager2();
+        binding.vp2MainFragment.setUserInputEnabled(false); // Para desactivar el swiping
     }
 
     private void initTabLayoutViewPager2() {

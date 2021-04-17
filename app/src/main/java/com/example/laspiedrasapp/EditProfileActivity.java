@@ -45,7 +45,7 @@ import java.util.Objects;
 import id.zelory.compressor.Compressor;
 
 public class EditProfileActivity extends AppCompatActivity {
-    private final String USERS_COLLECTIONS = MainActivity.getUSERS_COLLECTIONS();
+    private final String USERS_COLLECTIONS = MainActivity.getUsersCollections();
     private DatabaseReference mDatabase;
     private FirebaseAuth mAuth;
     private StorageReference storageReference; // Para el Storage

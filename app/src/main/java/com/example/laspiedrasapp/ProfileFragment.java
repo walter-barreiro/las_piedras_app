@@ -180,18 +180,14 @@ public class ProfileFragment extends Fragment {
                 elements.clear();
                 if(snapshot.exists()){
                     for (DataSnapshot ds: snapshot.getChildren()){ // ds tiene el children de products. Recorro  todos los productos y obtengo el id
-                        String productId = ds.getKey().toString(); // obtengo los id de los productos del cliente
+                        String productId = ds.getKey(); // obtengo los id de los productos del cliente
                         mDatabase.child("products").child(productId).addValueEventListener(new ValueEventListener() { // para  cada id recorro los productos para obtener los datos
                             @Override
                             public void onDataChange(@NonNull DataSnapshot snapshot) {
                                 if(snapshot.exists()){
                                     ProfileProductModel profileProductModel = new ProfileProductModel();
-                                    profileProductModel.setProduct_name(snapshot.child("product_name").getValue().toString());
-                                    profileProductModel.setProduct_price(snapshot.child("product_price").getValue().toString());
-                                    profileProductModel.setProduct_image_url(snapshot.child("product_image_url").getValue().toString());
-                                    profileProductModel.setProduct_id(productId);
-                                    elements.add(profileProductModel);//:snapshot.child("product_name").getValue().toString())); // agrego eloproductId a la lista de elementos
-//                                    initRecyclerView();
+                                    profileProductModel = snapshot.getValue(ProfileProductModel.class);
+                                    elements.add(profileProductModel);
                                     profileProductAdapter.notifyDataSetChanged();
                                 }
                             }

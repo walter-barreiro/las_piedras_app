@@ -130,6 +130,15 @@ public class EditProductProfileFragment extends DialogFragment {
             }
         });
 
+        binding.btnEditDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mDatabase.child("products").child(productId).removeValue();
+                mDatabase.child("users").child(userId).child("products").child(productId).removeValue();
+                dismiss();
+            }
+        });
+
     }
 
     private boolean isValid(String product_name, String product_price) {

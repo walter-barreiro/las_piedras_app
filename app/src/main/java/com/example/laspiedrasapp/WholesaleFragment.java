@@ -6,6 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -33,7 +34,6 @@ import java.util.List;
  * create an instance of this fragment.
  */
 public class WholesaleFragment extends Fragment {
-    // ToDo Descargar los productos de la base de datos y llenar el recycler view
     // ToDo agregar un onClick a cada elemento y que se abra un DialogFragment para elegir cantidad y agregar al carrito
     private FragmentWholesaleBinding binding;
     private final String WHOLESALE_PRODUCTS_COLLECTION = "wholesale_products";
@@ -41,7 +41,7 @@ public class WholesaleFragment extends Fragment {
     private DatabaseReference mDatabase; // Para extraer los datos de firebase
     private WholesaleProductAdapter wholesaleProductAdapter;
     private List<WholesaleProductModel> elements = new ArrayList<>();
-    private WholesaleProductModel wholesaleProductModel = new WholesaleProductModel();
+    private WholesaleProductModel wholesaleProductModel;
 
 
     @Override
@@ -64,19 +64,18 @@ public class WholesaleFragment extends Fragment {
         binding = FragmentWholesaleBinding.bind(view);
         initRecyclerView();
 
-
-
-
         mDatabase.child(WHOLESALE_PRODUCTS_COLLECTION).addValueEventListener(new ValueEventListener() {
         @Override
         public void onDataChange(@NonNull DataSnapshot snapshot) {
             elements.clear();
             if(snapshot.exists()){
-                for (DataSnapshot ds: snapshot.getChildren()){ // ds tiene el children de products. Recorro  todos los productos y obtengo el id
-                    String title = ds.child("title").getValue().toString();
-                    wholesaleProductModel.setTitle(title);
-                    elements.add(wholesaleProductModel);
-                    wholesaleProductAdapter.notifyDataSetChanged();
+                for (DataSnapshot ds: snapshot.getChildren()){
+                    if (ds.exists()){
+                        wholesaleProductModel = new WholesaleProductModel();
+                        wholesaleProductModel = ds.getValue(WholesaleProductModel.class);
+                        elements.add(wholesaleProductModel);
+                        wholesaleProductAdapter.notifyDataSetChanged();
+                    }
                 }
             }
         }
@@ -104,8 +103,8 @@ public class WholesaleFragment extends Fragment {
             }
         });
         binding.rvWholesale.setHasFixedSize(true);
-//        binding.rvProfileProduct.setLayoutManager(new LinearLayoutManager(getContext()));
-        binding.rvWholesale.setLayoutManager(new GridLayoutManager(getContext(),2));
+        binding.rvWholesale.setLayoutManager(new LinearLayoutManager(getContext()));
+//        binding.rvWholesale.setLayoutManager(new GridLayoutManager(getContext(),2));
         binding.rvWholesale.setAdapter(wholesaleProductAdapter);
 
     }
