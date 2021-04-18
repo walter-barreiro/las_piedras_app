@@ -5,11 +5,11 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import com.firebase.ui.auth.AuthUI;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -27,16 +27,13 @@ import com.google.firebase.auth.FirebaseAuthException;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 
-import java.util.Arrays;
-import java.util.List;
-
 
 public class RegisterActivity extends AppCompatActivity {
 
     private EditText mEditTextEmail;
     private EditText mEditTextPassword;
     private Button mButtonRegister;
-    private Button mButtonSendToLogin;
+    private TextView mAlredyHaveAccount;
     private GoogleSignInClient mGoogleSignInClient;
     public  SignInButton mButtonSignIn;
 
@@ -59,7 +56,7 @@ public class RegisterActivity extends AppCompatActivity {
         mEditTextEmail = (EditText) findViewById(R.id.editTextEmail);
         mEditTextPassword = (EditText) findViewById(R.id.editTextPassword);
         mButtonRegister = (Button) findViewById(R.id.btnRegister);
-        mButtonSendToLogin = (Button) findViewById(R.id.btnSendToLogin);
+        mAlredyHaveAccount = (TextView) findViewById(R.id.alredyHaveAccount);
         mButtonSignIn = findViewById(R.id.btnSignin);
 
 
@@ -85,7 +82,7 @@ public class RegisterActivity extends AppCompatActivity {
             }
         });
      // BOTON QUE ME LLEVA A LoginActivity PARA LOGUEAR ("mButtonSendToLogin")
-        mButtonSendToLogin.setOnClickListener(new View.OnClickListener() {
+        mAlredyHaveAccount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
