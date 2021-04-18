@@ -5,7 +5,8 @@ import java.io.Serializable;
 public class WholesaleProductModel implements Serializable {
     private String id;
     private String title;
-    private String price;
+    private String unitPrice;
+    private String wholesalePrice;
     private String description;
     private String imgUrl;
     private String purchased; // cantidad de comprados
@@ -15,22 +16,31 @@ public class WholesaleProductModel implements Serializable {
 
     }
 
-    public WholesaleProductModel(String id, String title, String price, String description, String imgUrl, String purchased, String minimumAmount) {
+    public WholesaleProductModel(String id, String title, String unitPrice, String wholesalePrice, String description, String imgUrl, String purchased, String minimumAmount) {
         this.id = id;
         this.title = title;
-        this.price = price;
+        this.unitPrice = unitPrice;
+        this.wholesalePrice = wholesalePrice;
         this.description = description;
         this.imgUrl = imgUrl;
         this.purchased = purchased;
         this.minimumAmount = minimumAmount;
     }
 
-    public String getPrice() {
-        return price;
+    public String getUnitPrice() {
+        return unitPrice;
     }
 
-    public void setPrice(String price) {
-        this.price = price;
+    public void setUnitPrice(String unitPrice) {
+        this.unitPrice = unitPrice;
+    }
+
+    public String getWholesalePrice() {
+        return wholesalePrice;
+    }
+
+    public void setWholesalePrice(String wholesalePrice) {
+        this.wholesalePrice = wholesalePrice;
     }
 
     public String getId() {

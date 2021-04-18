@@ -7,6 +7,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -103,7 +104,7 @@ public class WholesaleFragment extends Fragment {
             }
         });
         binding.rvWholesale.setHasFixedSize(true);
-        binding.rvWholesale.setLayoutManager(new LinearLayoutManager(getContext()));
+        binding.rvWholesale.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.HORIZONTAL,false));
 //        binding.rvWholesale.setLayoutManager(new GridLayoutManager(getContext(),2));
         binding.rvWholesale.setAdapter(wholesaleProductAdapter);
 
