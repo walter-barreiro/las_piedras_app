@@ -46,14 +46,6 @@ public class MainFragment extends Fragment {
         binding = FragmentMainBinding.bind(view);
         initTabLayoutViewPager2();
         binding.vp2MainFragment.setUserInputEnabled(false); // Para desactivar el swiping
-
-        binding.irCarrito.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), ShoppingCartActivity.class);
-                startActivity(intent);
-            }
-        });
     }
 
     private void initTabLayoutViewPager2() {
