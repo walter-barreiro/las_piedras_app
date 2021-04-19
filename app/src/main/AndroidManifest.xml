@@ -15,19 +15,20 @@
         android:usesCleartextTraffic="true"
         tools:ignore="UnusedAttribute"
         tools:targetApi="m">
-        <activity android:name=".EditCommerceActivity"></activity>
-        <activity android:name=".CommerceActivity" />
-        <activity android:name=".BusinessActivity" />
-        <activity android:name=".EditProfileActivity" />
-        <activity android:name=".ResetPasswordActivity" />
-        <activity android:name=".RegisterActivity" />
-        <activity android:name=".MainActivity" />
         <activity android:name=".LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".EditCommerceActivity"/>
+        <activity android:name=".CommerceActivity" />
+        <activity android:name=".BusinessActivity" />
+        <activity android:name=".EditProfileActivity" />
+        <activity android:name=".ResetPasswordActivity" />
+        <activity android:name=".RegisterActivity" />
+        <activity android:name=".MainActivity" />
+
         <activity
             android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
             android:theme="@style/Base.Theme.AppCompat" />
