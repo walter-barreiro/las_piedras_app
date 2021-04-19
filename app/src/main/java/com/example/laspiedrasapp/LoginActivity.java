@@ -7,19 +7,21 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class LoginActivity extends AppCompatActivity {
 
     private EditText mEditTexEmail;
     private EditText mEditTextPassword;
     private Button mButtonLogin;
-    private Button mButtonResetPassword;
+    private TextView mTextViewResetPassword;
 
     //VARIABLE DE LOS DATOS QUE VAMOS A LOGUEAR
     private String email = "";
@@ -37,7 +39,7 @@ public class LoginActivity extends AppCompatActivity {
         mEditTexEmail = (EditText) findViewById(R.id.editTextEmail);
         mEditTextPassword = (EditText) findViewById(R.id.editTextPassword);
         mButtonLogin = (Button) findViewById(R.id.btnLogin);
-        mButtonResetPassword = (Button) findViewById(R.id.btnSendToResetPassword);
+        mTextViewResetPassword = (TextView) findViewById(R.id.forgotPassword);
 
 
 
@@ -57,7 +59,7 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        mButtonResetPassword.setOnClickListener(new View.OnClickListener() {
+        mTextViewResetPassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(LoginActivity.this , ResetPasswordActivity.class));
@@ -79,5 +81,14 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
+    }
+    protected void onStart() {
+
+        super.onStart();
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        if(currentUser!=null){
+            Intent intent = new Intent(getApplicationContext(),MainActivity.class);
+            startActivity(intent);
+        }
     }
 }
