@@ -15,7 +15,9 @@
         android:usesCleartextTraffic="true"
         tools:ignore="UnusedAttribute"
         tools:targetApi="m">
-        <activity android:name=".EditBusinessActivity"></activity>
+        <activity android:name=".PaymentActivity"></activity>
+        <activity android:name=".ShoppingCartActivity" />
+        <activity android:name=".EditBusinessActivity" />
         <activity android:name=".EditCommerceActivity" />
         <activity android:name=".CommerceActivity" />
         <activity android:name=".BusinessActivity" />

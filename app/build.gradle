@@ -66,4 +66,5 @@ dependencies {
 
     implementation 'com.firebaseui:firebase-ui-storage:6.4.0' // Para bajar la imagen de storage
 
+    compile 'io.card:android-sdk:5.5.1' // Para usar tarjeta de credito o debito
 }

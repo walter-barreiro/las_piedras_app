@@ -90,4 +90,9 @@ public class WholesaleProductModel implements Serializable {
     public void setMinimumAmount(String minimumAmount) {
         this.minimumAmount = minimumAmount;
     }
+
+    @Override
+    public String toString() {
+        return this.title +": $"+this.getWholesalePrice();
+    }
 }
