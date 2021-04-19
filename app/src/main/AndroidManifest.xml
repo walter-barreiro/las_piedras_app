@@ -21,12 +21,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".RegisterActivity" />
         <activity android:name=".EditCommerceActivity"/>
         <activity android:name=".CommerceActivity" />
         <activity android:name=".BusinessActivity" />
         <activity android:name=".EditProfileActivity" />
         <activity android:name=".ResetPasswordActivity" />
-        <activity android:name=".RegisterActivity" />
         <activity android:name=".MainActivity" />
 
         <activity

@@ -33,6 +33,10 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+
+        TextView btn = findViewById(R.id.textViewSignUp);
+        btn.setOnClickListener(v -> startActivity(new Intent(LoginActivity.this, RegisterActivity.class)));
+
         mAuth = FirebaseAuth.getInstance();
 
         mEditTexEmail = (EditText) findViewById(R.id.editTextEmail);
