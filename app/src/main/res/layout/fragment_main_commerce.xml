@@ -5,10 +5,19 @@
     android:layout_height="match_parent"
     tools:context=".MainCommerceFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+
+    <androidx.appcompat.widget.SearchView
+        android:id="@+id/svMainCommerce"
+        android:layout_gravity="fill"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Hola desde el MainCommmerceFragment" />
+        android:layout_height="wrap_content"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvMainCommerce"
+        android:layout_gravity="center"
+        android:layout_below="@id/svMainCommerce"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
 
 </FrameLayout>
