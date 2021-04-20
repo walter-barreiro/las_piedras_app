@@ -5,7 +5,7 @@
     android:id="@+id/cont_bpc"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainProductsFragment">
+    tools:context=".fragments.MainProductsFragment">
 
     <androidx.appcompat.widget.SearchView
         android:id="@+id/searchProductFrag"

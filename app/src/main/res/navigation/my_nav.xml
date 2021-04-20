@@ -6,22 +6,22 @@
 
     <fragment
         android:id="@+id/mainFragment"
-        android:name="com.example.laspiedrasapp.MainFragment"
+        android:name="com.example.laspiedrasapp.fragments.MainFragment"
         android:label="fragment_main"
         tools:layout="@layout/fragment_main" />
     <fragment
         android:id="@+id/storeFragment"
-        android:name="com.example.laspiedrasapp.StoreFragment"
+        android:name="com.example.laspiedrasapp.fragments.StoreFragment"
         android:label="fragment_store"
         tools:layout="@layout/fragment_store" />
     <fragment
         android:id="@+id/wholesaleFragment"
-        android:name="com.example.laspiedrasapp.WholesaleFragment"
+        android:name="com.example.laspiedrasapp.fragments.WholesaleFragment"
         android:label="fragment_wholesale"
         tools:layout="@layout/fragment_wholesale" />
     <fragment
         android:id="@+id/profileFragment"
-        android:name="com.example.laspiedrasapp.ProfileFragment"
+        android:name="com.example.laspiedrasapp.fragments.ProfileFragment"
         android:label="fragment_profile"
         tools:layout="@layout/fragment_profile" />
 </navigation>
