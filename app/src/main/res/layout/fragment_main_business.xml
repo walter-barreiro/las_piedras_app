@@ -6,9 +6,16 @@
     tools:context=".MainBusinessFragment">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <androidx.appcompat.widget.SearchView
+        android:id="@+id/svMainBusiness"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Hola desde el MainBusinessFragment" />
+        android:layout_height="wrap_content"
+        android:layout_gravity="fill"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvMainBusiness"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"/>
 
 </FrameLayout>

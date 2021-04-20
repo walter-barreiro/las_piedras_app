@@ -2,11 +2,23 @@ package com.example.laspiedrasapp;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.example.laspiedrasapp.databinding.FragmentMainBusinessBinding;
+import com.example.laspiedrasapp.models.BusinessModel;
+import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -14,6 +26,11 @@ import android.view.ViewGroup;
  * create an instance of this fragment.
  */
 public class MainBusinessFragment extends Fragment {
+
+    private FirebaseAuth mAuth;
+    private DatabaseReference mDatabase;
+    private FragmentMainBusinessBinding binding;
+    private MainBusinessAdapter mainBusinessAdapter;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -59,6 +76,69 @@ public class MainBusinessFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        mAuth = FirebaseAuth.getInstance();
+        mDatabase = FirebaseDatabase.getInstance().getReference("business");
         return inflater.inflate(R.layout.fragment_main_business, container, false);
     }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        binding = FragmentMainBusinessBinding.bind(view);
+
+        initRecyclerView();
+        searchViewListeners();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        mainBusinessAdapter.startListening();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        mainBusinessAdapter.stopListening();
+    }
+
+    private void initRecyclerView() {
+        binding.rvMainBusiness.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.HORIZONTAL,false));
+        FirebaseRecyclerOptions<BusinessModel> options = new FirebaseRecyclerOptions.Builder<BusinessModel>()
+                .setQuery(mDatabase, BusinessModel.class).build();
+        mainBusinessAdapter = new MainBusinessAdapter(options, getContext());
+        binding.rvMainBusiness.setAdapter(mainBusinessAdapter);
+    }
+
+    private void searchViewListeners() {
+        binding.svMainBusiness.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                searchQuery(query);
+                return false;
+            }
+
+
+            @Override
+            public boolean onQueryTextChange(String s) {
+                return false;
+            }
+        });
+
+        binding.svMainBusiness.setOnCloseListener(() -> {
+           searchQuery("");
+            return false;
+        });
+    }
+
+    private void searchQuery(String s) {
+        binding.rvMainBusiness.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.HORIZONTAL, false));
+        FirebaseRecyclerOptions<BusinessModel> options = new FirebaseRecyclerOptions.Builder<BusinessModel>()
+                .setQuery(mDatabase.orderByChild("profession").startAt(s).endAt(s+"\uf8ff"), BusinessModel.class).build();
+        mainBusinessAdapter = new MainBusinessAdapter(options, getContext());
+        mainBusinessAdapter.startListening();
+        binding.rvMainBusiness.setAdapter(mainBusinessAdapter);
+    }
+
+
 }
