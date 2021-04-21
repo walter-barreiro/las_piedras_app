@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.laspiedrasapp.R;
-import com.example.laspiedrasapp.models.ProductoModel;
+import com.example.laspiedrasapp.models.ProfileProductModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,13 +20,13 @@ import java.util.List;
 
 public class AdapterProductoFiltrado extends RecyclerView.Adapter<AdapterProductoFiltrado.ViewHolderpruebas> implements View.OnClickListener{
     final LayoutInflater inflater;
-    final List<ProductoModel> model;
+    final List<ProfileProductModel> model;
     private Context context;
 
     //Listener
     private View.OnClickListener listener;
 
-    public AdapterProductoFiltrado(Context context, ArrayList<ProductoModel> model) {
+    public AdapterProductoFiltrado(Context context, ArrayList<ProfileProductModel> model) {
         this.inflater = LayoutInflater.from(context);
         this.model = model;
         this.context = context;
@@ -47,14 +47,16 @@ public class AdapterProductoFiltrado extends RecyclerView.Adapter<AdapterProduct
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolderpruebas holder, int position) {
-        ProductoModel pr = model.get(position);
+        ProfileProductModel pr = model.get(position);
 
         //holder.uid.setText(String.valueOf(pr.getUid()));
-        holder.nombres.setText(pr.getNombre());
-        holder.precio.setText(String.valueOf(pr.getPrecio()));
-        holder.cantidad.setText(String.valueOf(pr.getCantidad()));
-        holder.categoria.setText(pr.getCategoria());
-        Glide.with(context).load(pr.getImage()).into(holder.image);
+        holder.nombre.setText(pr.getProduct_name());
+        holder.precio.setText(pr.getProduct_price());
+        holder.descripcion.setText(pr.getProduct_description());
+        holder.categoria.setText(pr.getProduct_category());
+        holder.stock.setText(pr.getProduct_stock());
+        Glide.with(holder.image.getContext()).load(pr.getProduct_image_url()).into(holder.image);
+
     }
 
     //@Override
@@ -70,18 +72,20 @@ public class AdapterProductoFiltrado extends RecyclerView.Adapter<AdapterProduct
     }
 
     public static class ViewHolderpruebas extends RecyclerView.ViewHolder{
-        final TextView nombres;
+        final TextView nombre;
         final TextView precio;
-        final TextView cantidad;
+        final TextView descripcion;
         final TextView categoria;
+        final TextView stock;
         final ImageView image;
 
         public ViewHolderpruebas(@NonNull View itemView) {
             super(itemView);
-            nombres = itemView.findViewById(R.id.nombre_p);
+            nombre = itemView.findViewById(R.id.nombre_p);
             precio = itemView.findViewById(R.id.precio_p);
-            cantidad = itemView.findViewById(R.id.cantidad_p);
+            descripcion = itemView.findViewById(R.id.descripcion_p);
             categoria = itemView.findViewById(R.id.categoria_p);
+            stock = itemView.findViewById(R.id.stock_p);
             image = itemView.findViewById(R.id.image_p);
 
         }

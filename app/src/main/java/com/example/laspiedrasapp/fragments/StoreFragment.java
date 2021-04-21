@@ -18,7 +18,7 @@ import com.example.laspiedrasapp.adapters.AdapterBusquedas;
 import com.example.laspiedrasapp.adapters.AdapterCategoria;
 import com.example.laspiedrasapp.databinding.FragmentStoreBinding;
 import com.example.laspiedrasapp.models.CategoriaModel;
-import com.example.laspiedrasapp.models.ProductoModel;
+import com.example.laspiedrasapp.models.ProfileProductModel;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -64,9 +64,9 @@ public class StoreFragment extends Fragment {
     }
 
     private void cargaProductos() {
-        FirebaseRecyclerOptions<ProductoModel> options =
-                new FirebaseRecyclerOptions.Builder<ProductoModel>()
-                        .setQuery(FirebaseDatabase.getInstance().getReference().child("Productos/items"), ProductoModel.class)
+        FirebaseRecyclerOptions<ProfileProductModel> options =
+                new FirebaseRecyclerOptions.Builder<ProfileProductModel>()
+                        .setQuery(FirebaseDatabase.getInstance().getReference().child("products"), ProfileProductModel.class)
                         .build();
         adapter = new AdapterBusquedas(options);
         recview.setAdapter(adapter);
@@ -166,9 +166,9 @@ public class StoreFragment extends Fragment {
     }
     private void buscar(String s)
     {
-        FirebaseRecyclerOptions<ProductoModel> options =
-                new FirebaseRecyclerOptions.Builder<ProductoModel>()
-                        .setQuery(FirebaseDatabase.getInstance().getReference().child("Productos/items").orderByChild("nombre").startAt(s).endAt(s+"\uf8ff"), ProductoModel.class)
+        FirebaseRecyclerOptions<ProfileProductModel> options =
+                new FirebaseRecyclerOptions.Builder<ProfileProductModel>()
+                        .setQuery(FirebaseDatabase.getInstance().getReference().child("products").orderByChild("product_name").startAt(s).endAt(s+"\uf8ff"), ProfileProductModel.class)
                         .build();
 
         adapter=new AdapterBusquedas(options);

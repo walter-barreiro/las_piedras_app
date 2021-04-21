@@ -20,7 +20,7 @@ import com.example.laspiedrasapp.adapters.AdapterBusquedas;
 import com.example.laspiedrasapp.adapters.AdapterProductoFiltrado;
 import com.example.laspiedrasapp.databinding.FragmentBusquedaCategoriaBinding;
 import com.example.laspiedrasapp.models.CategoriaModel;
-import com.example.laspiedrasapp.models.ProductoModel;
+import com.example.laspiedrasapp.models.ProfileProductModel;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -36,7 +36,7 @@ public class BusquedaCategoria extends Fragment{
     DatabaseReference ref; //  Contendrá referencia a la DB de Firebase
     Query mQuery;          //  Aqui se guardan las consultas
     String cate;           //  Contendrá los datos de la categoria Seleccionada (pasados desde StoreFragment)
-    ArrayList<ProductoModel> filtro_categoria = new ArrayList<ProductoModel>();  // Lista usada para mostrar Productos filtrados por categoria
+    ArrayList<ProfileProductModel> filtro_categoria = new ArrayList<ProfileProductModel>();  // Lista usada para mostrar Productos filtrados por categoria
     RecyclerView RVSelectCat; // RecyclerView usado con FireBaseAdapter
     AdapterBusquedas adaptadorFireBase;  // adaptador de buscar y filtrar "REALTIME FIREBASE"
     AdapterProductoFiltrado adaptProdFilt; //Adaptador
@@ -64,9 +64,9 @@ public class BusquedaCategoria extends Fragment{
 
     //-------------------------------FIREBASEADAPTER-----------------------------------
     private void cargaProductosDentroCategorias() {
-        FirebaseRecyclerOptions<ProductoModel> options =
-                new FirebaseRecyclerOptions.Builder<ProductoModel>()
-                        .setQuery(FirebaseDatabase.getInstance().getReference().child("Productos/items").orderByChild("categoria").equalTo(cate), ProductoModel.class)
+        FirebaseRecyclerOptions<ProfileProductModel> options =
+                new FirebaseRecyclerOptions.Builder<ProfileProductModel>()
+                        .setQuery(FirebaseDatabase.getInstance().getReference().child("products").orderByChild("product_category").equalTo(cate), ProfileProductModel.class)
                         .build();
         adaptadorFireBase = new AdapterBusquedas(options);
         RVSelectCat.setAdapter(adaptadorFireBase);
@@ -100,11 +100,11 @@ public class BusquedaCategoria extends Fragment{
     }
     private void buscar(String s)
     {
-        FirebaseRecyclerOptions<ProductoModel> options =
-                new FirebaseRecyclerOptions.Builder<ProductoModel>()
+        FirebaseRecyclerOptions<ProfileProductModel> options =
+                new FirebaseRecyclerOptions.Builder<ProfileProductModel>()
                         .setQuery(FirebaseDatabase.getInstance().getReference()
-                        .child("Productos/items").orderByChild("nombre")
-                        .startAt(s).endAt(s+"\uf8ff"), ProductoModel.class)
+                        .child("products").orderByChild("product_name")
+                        .startAt(s).endAt(s+"\uf8ff"), ProfileProductModel.class)
                         .build();
 
         adaptadorFireBase=new AdapterBusquedas(options);
@@ -115,7 +115,7 @@ public class BusquedaCategoria extends Fragment{
     //-----------------------------------------------------------------------------------------------------------------------
 
     private void mostrarListaCategoriasRecibida() {
-        ref= FirebaseDatabase.getInstance().getReference().child("Productos/items");
+        ref= FirebaseDatabase.getInstance().getReference().child("products");
 
 
         //Recibo datos de StoreFragment por Serializable
@@ -123,7 +123,7 @@ public class BusquedaCategoria extends Fragment{
         CategoriaModel catMod = (CategoriaModel) bundle.getSerializable("cat");
         cate = catMod.getTitle();
         Log.i("Mensaje Recibido", "Mi mensaje fue recibido: "+catMod.getTitle());
-        mQuery = ref.orderByChild("categoria").equalTo(catMod.getTitle()); //Filtro que traiga todos los items con la condicion filtrada
+        mQuery = ref.orderByChild("product_category").equalTo(catMod.getTitle()); //Filtro que traiga todos los items con la condicion filtrada
         ListarProductos();                 //cargar la lista de los Productos consultados en RealTimeDB
     }
 
@@ -133,7 +133,7 @@ public class BusquedaCategoria extends Fragment{
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists()){
                     for(DataSnapshot snap : snapshot.getChildren()) {
-                        ProductoModel pr = snap.getValue(ProductoModel.class);
+                        ProfileProductModel pr = snap.getValue(ProfileProductModel.class);
                         filtro_categoria.add(pr);
                     }
                     adaptProdFilt.notifyDataSetChanged();
