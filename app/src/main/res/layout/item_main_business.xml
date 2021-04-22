@@ -30,12 +30,16 @@
                 android:id="@+id/tvItemBusinnesProfession"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="20sp"/>
+                android:textSize="22sp"
+                android:textStyle="bold"
+                android:textColor="@color/black"/>
             <TextView
                 android:id="@+id/tvItemBusinnesDescription"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="20sp"/>
+                android:textSize="16sp"
+                android:textColor="@color/black"
+                android:textStyle="bold"/>
 
         </LinearLayout>
 

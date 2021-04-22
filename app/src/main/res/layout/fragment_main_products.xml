@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/cont_bpc"
     android:layout_width="match_parent"
@@ -9,15 +8,18 @@
 
     <androidx.appcompat.widget.SearchView
         android:id="@+id/searchProductFrag"
-        android:layout_width="250dp"
+        android:layout_width="390dp"
         android:layout_height="50dp"
-        android:layout_margin="10dp"
-        />
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/input_rt" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvMainProdFrag"
         android:layout_below="@+id/searchProductFrag"
         android:paddingTop="50dp"
+        android:paddingLeft="30dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
     </androidx.recyclerview.widget.RecyclerView>

@@ -71,8 +71,8 @@ public class EditProfileActivity extends AppCompatActivity {
                 else {
                     if(task.getResult().exists()){ // Me fijo si el documento con userId existe (no es null)
                         ProfileModel profileModel = task.getResult().getValue(ProfileModel.class); // guardo la respuesta en un ProfileModel
-                        binding.etName.setText(profileModel.getName());
-                        binding.etPhone.setText(profileModel.getPhone());
+                        binding.textInputEditTextName.setText(profileModel.getName());
+                        binding.textInputEditTextPhone.setText(profileModel.getPhone());
                         Glide.with(EditProfileActivity.this).load(profileModel.getImgUrl()).into(binding.imgFoto); // Coloca la imagen en el imageview
                     }
                 }
@@ -86,8 +86,8 @@ public class EditProfileActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // Extraigo los datos ingresados de los ususarios
-                String name = binding.etName.getText().toString();
-                String phone = binding.etPhone.getText().toString();
+                String name = binding.textInputEditTextName.getText().toString();
+                String phone = binding.textInputEditTextPhone.getText().toString();
                 // Me fijo que los datos sean validos
                 if( isValid(name,phone) ){
                     // Hay que ver si tiene internet y avisar

@@ -52,13 +52,13 @@ public class EditBusinessActivity extends AppCompatActivity {
 
         // ToDo recuperar datos del perfil de usuario y colocarlos en los editText y la imagen
 
-        binding.btnEditBusinessSave.setOnClickListener(new View.OnClickListener() {
+        binding.tvBusinessSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Toast.makeText(EditBusinessActivity.this, "Guardar", Toast.LENGTH_SHORT).show();
                 // ToDo guardar los datos en BUSINESS_COLLECTION y agregar business=created en USERS_PROFILE
                 // Extraigo los datos ingresados de los ususarios
-                String profession = binding.etEditBusinessProfession.getText().toString();
+                String profession = binding.tinputEditTextProfession.getText().toString();
                 // Me fijo que los datos sean validos
                 if( isDataValid() ){
                     // Hay que ver si tiene internet y avisar
@@ -83,7 +83,7 @@ public class EditBusinessActivity extends AppCompatActivity {
             }
         });
 
-        binding.btnEditBusinessCancel.setOnClickListener(new View.OnClickListener() {
+        binding.tvBusinessCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
@@ -104,7 +104,7 @@ public class EditBusinessActivity extends AppCompatActivity {
 
     private void setValues() {
 
-        binding.etEditBusinessProfession.setText(business.getProfession());
+        binding.tinputEditTextProfession.setText(business.getProfession());
     }
 
     public boolean isDataValid(){

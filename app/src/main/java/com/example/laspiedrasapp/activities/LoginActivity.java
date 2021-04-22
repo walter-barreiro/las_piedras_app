@@ -23,6 +23,7 @@ public class LoginActivity extends AppCompatActivity {
     private EditText mEditTextPassword;
     private Button mButtonLogin;
     private TextView mTextViewResetPassword;
+    private TextView mTextViewSignUp;
 
     //VARIABLE DE LOS DATOS QUE VAMOS A LOGUEAR
     private String email = "";
@@ -41,8 +42,14 @@ public class LoginActivity extends AppCompatActivity {
         mEditTextPassword = (EditText) findViewById(R.id.editTextPassword);
         mButtonLogin = (Button) findViewById(R.id.btnLogin);
         mTextViewResetPassword = (TextView) findViewById(R.id.forgotPassword);
+        mTextViewSignUp = (TextView) findViewById(R.id.textViewSignUp);
 
-
+        mTextViewSignUp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(LoginActivity.this, RegisterActivity.class));
+            }
+        });
 
         mButtonLogin.setOnClickListener(new View.OnClickListener(){
             @Override

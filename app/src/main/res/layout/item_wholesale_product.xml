@@ -30,17 +30,23 @@
 
             <TextView
                 android:id="@+id/tvItemWholesaleName"
+                android:textColor="@color/black"
+                android:textStyle="bold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="20dp" />
 
             <TextView
                 android:id="@+id/tvItemWholesalePrice"
+                android:textStyle="bold"
+                android:textColor="@color/black"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 />
             <TextView
                 android:id="@+id/tvItemUnitPrice"
+                android:textColor="@color/black"
+                android:textStyle="bold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 />
@@ -49,17 +55,23 @@
                 android:id="@+id/tvItemWholesalePurchased"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textColor="@color/black"
+                android:textStyle="bold"
                 />
             <TextView
                 android:id="@+id/tvItemWholesaleMinAmount"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:textColor="@color/black"
                 />
 
             <TextView
                 android:id="@+id/tvItemWholesaleDescription"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:textColor="@color/black"
                 />
 
         </LinearLayout>
@@ -73,7 +85,9 @@
                 android:id="@+id/btnLessWholesale"
                 android:layout_width="63dp"
                 android:layout_height="wrap_content"
-                android:text="-" />
+                android:background="@drawable/bt_pf"
+                android:text="-"
+                android:textColor="@color/colorWhite"/>
             <TextView
                 android:id="@+id/tvQuantityWholesale"
                 android:layout_width="wrap_content"
@@ -86,7 +100,9 @@
                 android:id="@+id/btnPlusWholesale"
                 android:layout_width="63dp"
                 android:layout_height="wrap_content"
-                android:text="+" />
+                android:text="+"
+                android:textColor="@color/colorWhite"
+                android:background="@drawable/bt_pf"/>
 
             <Button
                 android:id="@+id/btnItemWholesaleAddToCart"
@@ -94,7 +110,9 @@
                 android:layout_marginLeft="20dp"
                 android:layout_height="wrap_content"
                 android:text="Agregar al carrito"
-                android:textSize="10dp" />
+                android:textSize="10dp"
+                android:textColor="@color/colorWhite"
+                android:background="@drawable/bt_pf"/>
         </LinearLayout>
     </LinearLayout>
 
