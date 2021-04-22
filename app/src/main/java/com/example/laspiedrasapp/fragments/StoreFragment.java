@@ -20,19 +20,30 @@ import com.example.laspiedrasapp.databinding.FragmentStoreBinding;
 import com.example.laspiedrasapp.models.CategoriaModel;
 import com.example.laspiedrasapp.models.ProfileProductModel;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+
+import static android.content.ContentValues.TAG;
 
 public class StoreFragment extends Fragment {
     RecyclerView recview; //de Firebase
     FragmentStoreBinding binding;
-    DatabaseReference ref; // Para extraer los datos de firebase  (Categorias)
+    //    DatabaseReference ref; // Para extraer los datos de firebase  (Categorias)
     List<CategoriaModel> elements = new ArrayList<>(); //
     AdapterBusquedas adapter;  // adaptador de buscar y filtrar
     AdapterCategoria adaptCat;
@@ -64,9 +75,9 @@ public class StoreFragment extends Fragment {
     }
 
     private void cargaProductos() {
-        FirebaseRecyclerOptions<ProfileProductModel> options =
-                new FirebaseRecyclerOptions.Builder<ProfileProductModel>()
-                        .setQuery(FirebaseDatabase.getInstance().getReference().child("products"), ProfileProductModel.class)
+        FirestoreRecyclerOptions<ProfileProductModel> options =
+                new FirestoreRecyclerOptions.Builder<ProfileProductModel>()
+                        .setQuery(FirebaseFirestore.getInstance().collection("products"), ProfileProductModel.class)
                         .build();
         adapter = new AdapterBusquedas(options);
         recview.setAdapter(adapter);
@@ -90,28 +101,29 @@ public class StoreFragment extends Fragment {
         binding.rv.setVisibility(View.GONE);
     }
     private void getCategorysFromDatabase() {
-        ref = FirebaseDatabase.getInstance().getReference().child("categoria");
-        // categorias de productos
-        ref.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                elements.clear();
-                if (snapshot.exists()) {
-                    for (DataSnapshot snap : snapshot.getChildren()) {
-                        CategoriaModel cat = snap.getValue(CategoriaModel.class);
-                        elements.add(cat);
+        FirebaseFirestore ref = FirebaseFirestore.getInstance();
+        ref.collection("categoria")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot snap: task.getResult()) {
+                                //Log.d(TAG, doc.getId() + " => " + doc.getData());
+                                CategoriaModel cat  = snap.toObject(CategoriaModel.class);
+                                //CategoriaModel cat = (CategoriaModel) snap.getData();
+                                elements.add(cat);
+                            }
+                            adaptCat.notifyDataSetChanged();
+                        } else {
+                            Log.d(TAG, "Error getting documents: ", task.getException());
+                        }
+
                     }
-                }
-                adaptCat.notifyDataSetChanged();
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-            }
-        });
+                });
     }
-
-    private void initRecyclerView() {
+//
+        private void initRecyclerView() {
         // Para cuando el usuario presione un item
         adaptCat = new AdapterCategoria(elements, getContext(), new AdapterCategoria.OnItemClickListener() {
             @Override
@@ -166,9 +178,9 @@ public class StoreFragment extends Fragment {
     }
     private void buscar(String s)
     {
-        FirebaseRecyclerOptions<ProfileProductModel> options =
-                new FirebaseRecyclerOptions.Builder<ProfileProductModel>()
-                        .setQuery(FirebaseDatabase.getInstance().getReference().child("products").orderByChild("product_name").startAt(s).endAt(s+"\uf8ff"), ProfileProductModel.class)
+        FirestoreRecyclerOptions<ProfileProductModel> options =
+                new FirestoreRecyclerOptions.Builder<ProfileProductModel>()
+                        .setQuery(FirebaseFirestore.getInstance().collection("products").orderBy("product_name").startAt(s).endAt(s+"\uf8ff"), ProfileProductModel.class)
                         .build();
 
         adapter=new AdapterBusquedas(options);
@@ -177,5 +189,4 @@ public class StoreFragment extends Fragment {
     }
 
 }
-
 

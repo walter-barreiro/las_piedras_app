@@ -22,23 +22,35 @@ import com.example.laspiedrasapp.databinding.FragmentBusquedaCategoriaBinding;
 import com.example.laspiedrasapp.models.CategoriaModel;
 import com.example.laspiedrasapp.models.ProfileProductModel;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 
+import static android.content.ContentValues.TAG;
+
 public class BusquedaCategoria extends Fragment{
-    FragmentBusquedaCategoriaBinding binding; //Binding (para simplificar)
-    DatabaseReference ref; //  Contendrá referencia a la DB de Firebase
-    Query mQuery;          //  Aqui se guardan las consultas
-    String cate;           //  Contendrá los datos de la categoria Seleccionada (pasados desde StoreFragment)
-    ArrayList<ProfileProductModel> filtro_categoria = new ArrayList<ProfileProductModel>();  // Lista usada para mostrar Productos filtrados por categoria
+    FragmentBusquedaCategoriaBinding binding;
+    CollectionReference ref;
+    Query query;
+    CategoriaModel catMod;
+    String cate;
+    ArrayList<ProfileProductModel> filtro_categoria = new ArrayList<ProfileProductModel>();
     RecyclerView RVSelectCat; // RecyclerView usado con FireBaseAdapter
-    AdapterBusquedas adaptadorFireBase;  // adaptador de buscar y filtrar "REALTIME FIREBASE"
+    AdapterBusquedas adaptadorFireStore;  // adaptador de buscar y filtrar "REALTIME FIREBASE"
     AdapterProductoFiltrado adaptProdFilt; //Adaptador
 
 
@@ -61,27 +73,28 @@ public class BusquedaCategoria extends Fragment{
         cargaProductosDentroCategorias();  //Sublista de Productos filtrados segun su Categoria
         filtrarBusqueda();               //Buscador dentro de Sublista filtrada segun su categoria
     }
-
-    //-------------------------------FIREBASEADAPTER-----------------------------------
+    //-------------------------------FIRESTORE-----------------------------------
     private void cargaProductosDentroCategorias() {
-        FirebaseRecyclerOptions<ProfileProductModel> options =
-                new FirebaseRecyclerOptions.Builder<ProfileProductModel>()
-                        .setQuery(FirebaseDatabase.getInstance().getReference().child("products").orderByChild("product_category").equalTo(cate), ProfileProductModel.class)
-                        .build();
-        adaptadorFireBase = new AdapterBusquedas(options);
-        RVSelectCat.setAdapter(adaptadorFireBase);
+        FirebaseFirestore reference = FirebaseFirestore.getInstance();
+        query = reference.collection("products").orderBy("product_category").whereEqualTo("product_category",cate);
+        FirestoreRecyclerOptions<ProfileProductModel> options =
+                new FirestoreRecyclerOptions.Builder<ProfileProductModel>()
+                        .setQuery(query, ProfileProductModel.class).build();
+
+        adaptadorFireStore = new AdapterBusquedas(options);
+        RVSelectCat.setAdapter(adaptadorFireStore);
     }
 
     @Override
     public void onStart() {
         super.onStart();
-        adaptadorFireBase.startListening();
+        adaptadorFireStore.startListening();
     }
 
     @Override
     public void onStop() {
         super.onStop();
-        adaptadorFireBase.stopListening();
+        adaptadorFireStore.stopListening();
     }
 
     private void filtrarBusqueda() {
@@ -100,59 +113,55 @@ public class BusquedaCategoria extends Fragment{
     }
     private void buscar(String s)
     {
-        FirebaseRecyclerOptions<ProfileProductModel> options =
-                new FirebaseRecyclerOptions.Builder<ProfileProductModel>()
-                        .setQuery(FirebaseDatabase.getInstance().getReference()
-                        .child("products").orderByChild("product_name")
+        FirestoreRecyclerOptions<ProfileProductModel> options =
+                new FirestoreRecyclerOptions.Builder<ProfileProductModel>()
+                        .setQuery(FirebaseFirestore.getInstance()
+                        .collection("products").orderBy("product_name").whereEqualTo("product_category",cate)
                         .startAt(s).endAt(s+"\uf8ff"), ProfileProductModel.class)
                         .build();
 
-        adaptadorFireBase=new AdapterBusquedas(options);
-        adaptadorFireBase.startListening();
-        RVSelectCat.setAdapter(adaptadorFireBase);
+        adaptadorFireStore=new AdapterBusquedas(options);
+        adaptadorFireStore.startListening();
+        RVSelectCat.setAdapter(adaptadorFireStore);
     }
-
     //-----------------------------------------------------------------------------------------------------------------------
 
     private void mostrarListaCategoriasRecibida() {
-        ref= FirebaseDatabase.getInstance().getReference().child("products");
-
+        ref= FirebaseFirestore.getInstance().collection("products");
 
         //Recibo datos de StoreFragment por Serializable
         Bundle bundle = this.getArguments();
-        CategoriaModel catMod = (CategoriaModel) bundle.getSerializable("cat");
+        catMod = (CategoriaModel) bundle.getSerializable("cat");
         cate = catMod.getTitle();
         Log.i("Mensaje Recibido", "Mi mensaje fue recibido: "+catMod.getTitle());
-        mQuery = ref.orderByChild("product_category").equalTo(catMod.getTitle()); //Filtro que traiga todos los items con la condicion filtrada
+        ref.orderBy("product_category").equals(catMod.getTitle()); //Filtro que traiga todos los items con la condicion filtrada
         ListarProductos();                 //cargar la lista de los Productos consultados en RealTimeDB
     }
 
     private void ListarProductos() {
-        mQuery.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.exists()){
-                    for(DataSnapshot snap : snapshot.getChildren()) {
-                        ProfileProductModel pr = snap.getValue(ProfileProductModel.class);
-                        filtro_categoria.add(pr);
+        FirebaseFirestore ref = FirebaseFirestore.getInstance();
+        ref.collection("products")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot snap: task.getResult()) {
+                                ProfileProductModel cat  = snap.toObject(ProfileProductModel.class);
+                                filtro_categoria.add(cat);
+                            }
+                        } else {
+                            Log.d(TAG, "Error getting documents: ", task.getException());
+                        }
                     }
-                    adaptProdFilt.notifyDataSetChanged();
-                }
-            }
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-            }
-        });
+                });
         integracionConAdaptador();//mostrar data
     }
-
     @SuppressLint("NewApi")
     private void integracionConAdaptador() {
         RVSelectCat.setLayoutManager(new LinearLayoutManager(getContext()));
         adaptProdFilt = new AdapterProductoFiltrado(getContext(), filtro_categoria);
         RVSelectCat.setAdapter(adaptProdFilt);
     }
-
-    //----------------------------------------------------------------------------------------------------------------------------------
 
 }

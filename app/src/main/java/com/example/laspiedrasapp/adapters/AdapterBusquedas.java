@@ -13,13 +13,15 @@ import com.example.laspiedrasapp.R;
 import com.example.laspiedrasapp.models.ProfileProductModel;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
+import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
 
-public class AdapterBusquedas extends FirebaseRecyclerAdapter<ProfileProductModel, AdapterBusquedas.myviewholder>
+public class AdapterBusquedas extends FirestoreRecyclerAdapter<ProfileProductModel, AdapterBusquedas.myviewholder>
 {
-    public AdapterBusquedas(@NonNull FirebaseRecyclerOptions<ProfileProductModel> options) {
+    public AdapterBusquedas(@NonNull FirestoreRecyclerOptions<ProfileProductModel> options) {
         super(options);
     }
 
@@ -38,8 +40,8 @@ public class AdapterBusquedas extends FirebaseRecyclerAdapter<ProfileProductMode
     @Override
     public myviewholder onCreateViewHolder(@NonNull ViewGroup parent, int viewType)
     {
-       View view= LayoutInflater.from(parent.getContext()).inflate(R.layout.lista_productos,parent,false);
-       return new myviewholder(view);
+        View view= LayoutInflater.from(parent.getContext()).inflate(R.layout.lista_productos,parent,false);
+        return new myviewholder(view);
     }
 
 
