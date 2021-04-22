@@ -18,9 +18,12 @@ import com.example.laspiedrasapp.adapters.MainBusinessAdapter;
 import com.example.laspiedrasapp.databinding.FragmentMainBusinessBinding;
 import com.example.laspiedrasapp.models.BusinessModel;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -30,7 +33,7 @@ import com.google.firebase.database.FirebaseDatabase;
 public class MainBusinessFragment extends Fragment {
 
     private FirebaseAuth mAuth;
-    private DatabaseReference mDatabase;
+    private CollectionReference mDatabase;
     private FragmentMainBusinessBinding binding;
     private MainBusinessAdapter mainBusinessAdapter;
 
@@ -47,15 +50,6 @@ public class MainBusinessFragment extends Fragment {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment MainBusinessFragment.
-     */
-    // TODO: Rename and change types and number of parameters
     public static MainBusinessFragment newInstance(String param1, String param2) {
         MainBusinessFragment fragment = new MainBusinessFragment();
         Bundle args = new Bundle();
@@ -79,7 +73,7 @@ public class MainBusinessFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         mAuth = FirebaseAuth.getInstance();
-        mDatabase = FirebaseDatabase.getInstance().getReference("business");
+        mDatabase = FirebaseFirestore.getInstance().collection("business");
         return inflater.inflate(R.layout.fragment_main_business, container, false);
     }
 
@@ -106,7 +100,7 @@ public class MainBusinessFragment extends Fragment {
 
     private void initRecyclerView() {
         binding.rvMainBusiness.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.HORIZONTAL,false));
-        FirebaseRecyclerOptions<BusinessModel> options = new FirebaseRecyclerOptions.Builder<BusinessModel>()
+        FirestoreRecyclerOptions<BusinessModel> options = new FirestoreRecyclerOptions.Builder<BusinessModel>()
                 .setQuery(mDatabase, BusinessModel.class).build();
         mainBusinessAdapter = new MainBusinessAdapter(options, getContext());
         binding.rvMainBusiness.setAdapter(mainBusinessAdapter);
@@ -135,8 +129,8 @@ public class MainBusinessFragment extends Fragment {
 
     private void searchQuery(String s) {
         binding.rvMainBusiness.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.HORIZONTAL, false));
-        FirebaseRecyclerOptions<BusinessModel> options = new FirebaseRecyclerOptions.Builder<BusinessModel>()
-                .setQuery(mDatabase.orderByChild("profession").startAt(s).endAt(s+"\uf8ff"), BusinessModel.class).build();
+        FirestoreRecyclerOptions<BusinessModel> options = new FirestoreRecyclerOptions.Builder<BusinessModel>()
+                .setQuery(mDatabase.orderBy("profession").startAt(s).endAt(s+"\uf8ff"), BusinessModel.class).build();
         mainBusinessAdapter = new MainBusinessAdapter(options, getContext());
         mainBusinessAdapter.startListening();
         binding.rvMainBusiness.setAdapter(mainBusinessAdapter);

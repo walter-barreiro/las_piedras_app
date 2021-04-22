@@ -15,11 +15,13 @@ import com.example.laspiedrasapp.R;
 import com.example.laspiedrasapp.models.BusinessModel;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
+import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 
-public class MainBusinessAdapter extends FirebaseRecyclerAdapter<BusinessModel, MainBusinessAdapter.MainBusinessViewHolder> {
+public class MainBusinessAdapter extends FirestoreRecyclerAdapter<BusinessModel, MainBusinessAdapter.MainBusinessViewHolder> {
     private Context context;
 
-    public MainBusinessAdapter(@NonNull FirebaseRecyclerOptions<BusinessModel> options, Context context){
+    public MainBusinessAdapter(@NonNull FirestoreRecyclerOptions<BusinessModel> options, Context context){
         super(options);
         this.context = context;
     }

@@ -13,12 +13,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.laspiedrasapp.R;
 import com.example.laspiedrasapp.models.CommerceProductModel;
-import com.firebase.ui.database.FirebaseRecyclerAdapter;
-import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
+import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 
-public class CommerceMainProductAdapter extends FirebaseRecyclerAdapter<CommerceProductModel, CommerceMainProductAdapter.myviewholder>
+
+public class CommerceMainProductAdapter extends FirestoreRecyclerAdapter<CommerceProductModel, CommerceMainProductAdapter.myviewholder>
 {
-    public CommerceMainProductAdapter(@NonNull FirebaseRecyclerOptions<CommerceProductModel> options) {
+    public CommerceMainProductAdapter(@NonNull FirestoreRecyclerOptions<CommerceProductModel> options) {
         super(options);
     }
 

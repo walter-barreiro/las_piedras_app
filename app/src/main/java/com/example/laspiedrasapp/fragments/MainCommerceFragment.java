@@ -18,13 +18,16 @@ import com.example.laspiedrasapp.adapters.MainCommerceAdapter;
 import com.example.laspiedrasapp.databinding.FragmentMainCommerceBinding;
 import com.example.laspiedrasapp.models.CommerceModel;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 public class MainCommerceFragment extends Fragment {
     private FirebaseAuth mAuth; // Para poder obtener el id del usuario
-    private DatabaseReference mDatabase; // Para extraer los datos de firebase
+    private CollectionReference mDatabase; // Para extraer los datos de firebase
     private FragmentMainCommerceBinding binding;
     private MainCommerceAdapter mainCommerceAdapter;
 
@@ -42,7 +45,7 @@ public class MainCommerceFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         mAuth = FirebaseAuth.getInstance();// Inicializo el auth del usuario
-        mDatabase = FirebaseDatabase.getInstance().getReference("shops"); // Inicializo firebase
+        mDatabase = FirebaseFirestore.getInstance().collection("shops"); // Inicializo firebase
         return inflater.inflate(R.layout.fragment_main_commerce, container, false);
     }
 
@@ -69,7 +72,7 @@ public class MainCommerceFragment extends Fragment {
 
     private void initRecyclerView(){
         binding.rvMainCommerce.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.HORIZONTAL,false));
-        FirebaseRecyclerOptions<CommerceModel> options = new FirebaseRecyclerOptions.Builder<CommerceModel>()
+        FirestoreRecyclerOptions<CommerceModel> options = new FirestoreRecyclerOptions.Builder<CommerceModel>()
                 .setQuery(mDatabase, CommerceModel.class).build();
         mainCommerceAdapter = new MainCommerceAdapter(options,getContext());
         binding.rvMainCommerce.setAdapter(mainCommerceAdapter);
@@ -99,8 +102,8 @@ public class MainCommerceFragment extends Fragment {
     }
     private void searchQuery(String s) {
         binding.rvMainCommerce.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.HORIZONTAL,false));
-        FirebaseRecyclerOptions<CommerceModel> options = new FirebaseRecyclerOptions.Builder<CommerceModel>()
-                .setQuery(mDatabase.orderByChild("name").startAt(s).endAt(s+"\uf8ff"), CommerceModel.class).build();
+        FirestoreRecyclerOptions<CommerceModel> options = new FirestoreRecyclerOptions.Builder<CommerceModel>()
+                .setQuery(mDatabase.orderBy("name").startAt(s).endAt(s+"\uf8ff"), CommerceModel.class).build();
         mainCommerceAdapter = new MainCommerceAdapter(options,getContext());
         mainCommerceAdapter.startListening();
         binding.rvMainCommerce.setAdapter(mainCommerceAdapter);

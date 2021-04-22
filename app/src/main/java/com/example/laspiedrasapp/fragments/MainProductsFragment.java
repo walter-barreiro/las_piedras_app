@@ -20,8 +20,9 @@ import com.example.laspiedrasapp.adapters.CommerceMainProductAdapter;
 import com.example.laspiedrasapp.databinding.FragmentMainProductsBinding;
 import com.example.laspiedrasapp.models.CommerceProductModel;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.firebase.database.FirebaseDatabase;
-
+import com.google.firebase.firestore.FirebaseFirestore;
 
 
 public class MainProductsFragment extends Fragment {
@@ -49,7 +50,6 @@ public class MainProductsFragment extends Fragment {
         binding = FragmentMainProductsBinding.bind(view);// Inicializo el binding
 
         RV = (RecyclerView) binding.rvMainProdFrag;
-        //RV.setLayoutManager(new LinearLayoutManager(getContext()));
         RV.setLayoutManager(new GridLayoutManager(getContext(),3));
 
         listarProductosCommerce();
@@ -57,9 +57,9 @@ public class MainProductsFragment extends Fragment {
     }
 
     private void listarProductosCommerce() {
-        FirebaseRecyclerOptions<CommerceProductModel> options =
-                new FirebaseRecyclerOptions.Builder<CommerceProductModel>()
-                        .setQuery(FirebaseDatabase.getInstance().getReference("shops_product"), CommerceProductModel.class)
+        FirestoreRecyclerOptions<CommerceProductModel> options =
+                new FirestoreRecyclerOptions.Builder<CommerceProductModel>()
+                        .setQuery(FirebaseFirestore.getInstance().collection("shops_product"), CommerceProductModel.class)
                         .build();
         adaptador = new CommerceMainProductAdapter(options);
         adaptador.startListening();
@@ -102,9 +102,9 @@ public class MainProductsFragment extends Fragment {
     }
     private void buscar(String s)
     {
-        FirebaseRecyclerOptions<CommerceProductModel> options =
-                new FirebaseRecyclerOptions.Builder<CommerceProductModel>()
-                        .setQuery(FirebaseDatabase.getInstance().getReference("shops_product").orderByChild("name").startAt(s).endAt(s+"\uf8ff"), CommerceProductModel.class)
+        FirestoreRecyclerOptions<CommerceProductModel> options =
+                new FirestoreRecyclerOptions.Builder<CommerceProductModel>()
+                        .setQuery(FirebaseFirestore.getInstance().collection("shops_product").orderBy("name").startAt(s).endAt(s+"\uf8ff"), CommerceProductModel.class)
                         .build();
 
         adaptador=new CommerceMainProductAdapter(options);
