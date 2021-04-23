@@ -65,6 +65,8 @@ public class EditBusinessActivity extends AppCompatActivity {
                     //---
 //                    BusinessModel businessModel = new BusinessModel();// creo la clase
                     mDatabase.child(BUSINESS_COLLECTION).child(userId).child("profession").setValue(profession);// Guardo los datos en la coleccion
+                    mDatabase.child(BUSINESS_COLLECTION).child(userId).child("id").setValue(userId);// Guardo los datos en la coleccion
+
                     if (resultUri!=null){
                         final StorageReference ref = storageReference.child(userId);
                         ref.putFile(resultUri).addOnSuccessListener(taskSnapshot -> ref.getDownloadUrl().addOnSuccessListener(uri -> {

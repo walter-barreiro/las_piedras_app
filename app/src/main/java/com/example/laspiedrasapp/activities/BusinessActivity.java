@@ -48,6 +48,13 @@ public class BusinessActivity extends AppCompatActivity {
         initFirebase();
 
 
+        // Recupero los datos del profesional, si el usuario toco el boton de Ir a perfil
+        String businessId = getIntent().getStringExtra("businessId");
+        if(businessId!=null){
+            userId = businessId;
+            binding.btnEditBusiness.setVisibility(View.GONE);
+        }
+
         initRecyclerView();// Inicializo el recyclerview
         // ToDo recuperar datos de usuario y si no los hay entonces dibujo datos por defecto
         getValuesFromFirebase(); // Obtiene los datos de firebase y los guarda en business
