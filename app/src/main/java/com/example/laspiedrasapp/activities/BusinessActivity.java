@@ -84,13 +84,15 @@ public class BusinessActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists()){
-                    String profession = snapshot.child("profession").getValue().toString();
-                    binding.tvProfesion.setText(profession);
-                    business.setProfession(profession);
+                    business = snapshot.getValue(BusinessModel.class);
+                    binding.tvProfesion.setText(business.getProfession());
+                    binding.tvLocation.setText(business.getLocation());
+                    binding.tvName.setText(business.getName());
+                    binding.tvDescription.setText(business.getDescription());
+
                     if (snapshot.child("imgUrl").exists()){
                         String imgUrl = snapshot.child("imgUrl").getValue().toString();
                         Glide.with(BusinessActivity.this).load(imgUrl).into(binding.ivBusinessImage); // Coloca la imagen en el imageview
-                        business.setImgUrl(imgUrl);
                     }
                 }
             }

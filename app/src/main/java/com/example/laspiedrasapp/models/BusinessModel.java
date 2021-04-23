@@ -8,9 +8,10 @@ public class BusinessModel implements Serializable {
     private String profession;
     private String imgUrl;
     private String description;
-//    private String location;
-//    private Date createdAt;
-//    private Date updateAt;
+    private String name;
+    private String location;
+//    private String createdAt;
+//    private String updateAt;
 
     public BusinessModel(){
 
@@ -53,5 +54,21 @@ public class BusinessModel implements Serializable {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
     }
 }

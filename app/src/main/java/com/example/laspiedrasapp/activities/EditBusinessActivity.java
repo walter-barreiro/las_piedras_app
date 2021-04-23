@@ -1,5 +1,6 @@
 package com.example.laspiedrasapp.activities;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -10,11 +11,16 @@ import android.view.View;
 import android.widget.Toast;
 
 
+import com.bumptech.glide.Glide;
 import com.example.laspiedrasapp.databinding.ActivityEditBusinessBinding;
 import com.example.laspiedrasapp.models.BusinessModel;
+import com.example.laspiedrasapp.models.ProfileModel;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.theartofdev.edmodo.cropper.CropImage;
@@ -40,33 +46,33 @@ public class EditBusinessActivity extends AppCompatActivity {
         View view = binding.getRoot();
         setContentView(view);
 
-        mAuth = FirebaseAuth.getInstance();// Inicializo el auth del usuario
-        mDatabase = FirebaseDatabase.getInstance().getReference(); // Inicializo firebase
-        storageReference = FirebaseStorage.getInstance().getReference().child("business_profile_photo"); // Para guardar las fotos de perfil en storage
-        userId= mAuth.getCurrentUser().getUid(); // Obtengo el id del usuario logeado
+        initFirebase();
 
         Intent intent = this.getIntent();
         business = (BusinessModel) intent.getSerializableExtra("business");
-        setValues();
-        Toast.makeText(this,business.getProfession(), Toast.LENGTH_SHORT).show();
-
-        // ToDo recuperar datos del perfil de usuario y colocarlos en los editText y la imagen
+        if(business!=null){
+            setValues();
+        }
 
         binding.tvBusinessSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(EditBusinessActivity.this, "Guardar", Toast.LENGTH_SHORT).show();
-                // ToDo guardar los datos en BUSINESS_COLLECTION y agregar business=created en USERS_PROFILE
-                // Extraigo los datos ingresados de los ususarios
-                String profession = binding.tinputEditTextProfession.getText().toString();
-                // Me fijo que los datos sean validos
-                if( isDataValid() ){
-                    // Hay que ver si tiene internet y avisar
-                    //---
-//                    BusinessModel businessModel = new BusinessModel();// creo la clase
-                    mDatabase.child(BUSINESS_COLLECTION).child(userId).child("profession").setValue(profession);// Guardo los datos en la coleccion
-                    mDatabase.child(BUSINESS_COLLECTION).child(userId).child("id").setValue(userId);// Guardo los datos en la coleccion
 
+                String profession = binding.tinputEditTextProfession.getText().toString();
+                String location = binding.textInputEditTextUbication.getText().toString();
+                String description = binding.textInputEditTextDescription1.getText().toString();
+                String name = binding.textInputEditTextName1.getText().toString();
+
+                if(isDataValid(profession,location,description,name)){
+//                    BusinessModel businessModel = new BusinessModel();// creo la clase
+
+                    mDatabase.child(BUSINESS_COLLECTION).child(userId).child("profession").setValue(profession);
+                    mDatabase.child(BUSINESS_COLLECTION).child(userId).child("id").setValue(userId);
+                    mDatabase.child(BUSINESS_COLLECTION).child(userId).child("name").setValue(name);
+                    mDatabase.child(BUSINESS_COLLECTION).child(userId).child("description").setValue(description);
+                    mDatabase.child(BUSINESS_COLLECTION).child(userId).child("location").setValue(location);
+
+                    // Guardo la foto
                     if (resultUri!=null){
                         final StorageReference ref = storageReference.child(userId);
                         ref.putFile(resultUri).addOnSuccessListener(taskSnapshot -> ref.getDownloadUrl().addOnSuccessListener(uri -> {
@@ -76,11 +82,9 @@ public class EditBusinessActivity extends AppCompatActivity {
                         }));
 
                     }
-                    // Ahora tengo que salir de la actividad
                     finish();
-
                 } else {
-                    // Mostar algun mensaje de error
+                    Toast.makeText(EditBusinessActivity.this, "Debe completar todos los campos", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -105,12 +109,21 @@ public class EditBusinessActivity extends AppCompatActivity {
     }
 
     private void setValues() {
-
         binding.tinputEditTextProfession.setText(business.getProfession());
+        binding.textInputEditTextName1.setText(business.getName());
+        binding.textInputEditTextDescription1.setText(business.getDescription());
+        binding.textInputEditTextUbication.setText(business.getLocation());
+        Glide.with(EditBusinessActivity.this).load(business.getImgUrl()).into(binding.ivEditBusimessImage); // Coloca la imagen en el imageview
+    }
+    private void initFirebase(){
+        mAuth = FirebaseAuth.getInstance();// Inicializo el auth del usuario
+        mDatabase = FirebaseDatabase.getInstance().getReference(); // Inicializo firebase
+        storageReference = FirebaseStorage.getInstance().getReference().child("business_profile_photo"); // Para guardar las fotos de perfil en storage
+        userId= mAuth.getCurrentUser().getUid(); // Obtengo el id del usuario logeado
     }
 
-    public boolean isDataValid(){
-        return true;
+    public boolean isDataValid(String profession, String location, String description,String name){
+        return !profession.isEmpty() && !location.isEmpty() && !description.isEmpty() && !name.isEmpty();
     }
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
