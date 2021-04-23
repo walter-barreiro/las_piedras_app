@@ -5,6 +5,7 @@ import java.io.Serializable;
 import javax.xml.namespace.QName;
 
 public class CommerceProductModel implements Serializable {
+    // Todo Agregar el ownerId.
     private String id;
     private String userId;
     private String name;

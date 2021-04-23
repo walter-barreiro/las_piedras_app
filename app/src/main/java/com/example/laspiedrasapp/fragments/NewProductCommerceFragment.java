@@ -94,9 +94,11 @@ public class NewProductCommerceFragment extends DialogFragment {
                     // Hay que ver si tiene internet y avisar
                     String key = mDatabase.child(PRODUCT_COMMERCE_COLLECTION).push().getKey(); // Obtengo el id del producto que voy a subir
                     // Creo los datos que se van a subir
+                    // ToDo Agregar el id del comercio al producto, en este caso es el userId
                     CommerceProductModel commerceProductModel = new CommerceProductModel();// Creo el modelo del producto del comercio
                     commerceProductModel.setName(product_name);
                     commerceProductModel.setPrice(product_price);
+//                    commerceProductModel.setOunerId(userId);
                     commerceProductModel.setId(key);
                     mDatabase.child(PRODUCT_COMMERCE_COLLECTION).child(key).setValue(commerceProductModel);// Guardo los datos en la coleccion con un identificador unico
                     mDatabase.child(COMMERCE_COLLECTION).child(userId).child("products").child(key).setValue(true);// Guardo los datos en la coleccion con un identificador unico
