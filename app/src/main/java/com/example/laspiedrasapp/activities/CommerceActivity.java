@@ -68,6 +68,30 @@ public class CommerceActivity extends AppCompatActivity {
         });
 
 
+        binding.btnCommerceLocation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//                final String[] latitude = new String[1];
+//                final String[] longitude = new String[1];
+//                mDatabase.child("shops").child(ownerId).child("coordinates").addValueEventListener(new ValueEventListener() {
+//                    @Override
+//                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                        latitude[0] = snapshot.child("latitud").getValue().toString();
+//                        longitude[0] = snapshot.child("longitud").getValue().toString();
+//                    }
+//
+//                    @Override
+//                    public void onCancelled(@NonNull DatabaseError error) {
+//
+//                    }
+//                });
+//                Uri gmmIntentUri = Uri.parse("google.navigation:q="+latitude[0]+","+longitude[0]);
+//                Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
+//                mapIntent.setPackage("com.google.android.apps.maps");
+//                startActivity(mapIntent);
+            }
+        });
+
     }
 
     private void initTabLayoutViewPager2() {

@@ -2,16 +2,25 @@ package com.example.laspiedrasapp.activities;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.laspiedrasapp.databinding.ActivityEditCommerceBinding;
 import com.example.laspiedrasapp.models.CommerceModel;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -20,11 +29,16 @@ import com.google.firebase.storage.StorageReference;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class EditCommerceActivity extends AppCompatActivity {
     private FirebaseAuth mAuth; // Para poder obtener el id del usuario
     private DatabaseReference mDatabase; // Para extraer los datos de firebase
     private StorageReference storageReference;
     ActivityEditCommerceBinding binding;
+    private FusedLocationProviderClient fusedLocationClient;
+
 
 
     private String userId;
@@ -40,6 +54,7 @@ public class EditCommerceActivity extends AppCompatActivity {
         mDatabase = FirebaseDatabase.getInstance().getReference(); // Inicializo firebase
         storageReference = FirebaseStorage.getInstance().getReference(); // Para guardar las fotos de perfil en storage
         userId= mAuth.getCurrentUser().getUid(); // Obtengo el id del usuario logeado
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
 
         setContentView(view);
 
@@ -61,6 +76,13 @@ public class EditCommerceActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 finish();
+            }
+        });
+
+        binding.btnEditCommerceAddLocation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                subirLatLongFirebase();
             }
         });
 
@@ -125,6 +147,32 @@ public class EditCommerceActivity extends AppCompatActivity {
         }
     }
 
+    private void subirLatLongFirebase() {
+        // Compruebo los permisos y pido que los prendan
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(EditCommerceActivity.this, new String[]{
+                    Manifest.permission.ACCESS_COARSE_LOCATION,
+                    Manifest.permission.ACCESS_FINE_LOCATION},1);
 
+            return;
+        }
+        //Obtengo las coordenadas y las guardo en la base de datos
+        fusedLocationClient.getLastLocation()
+                .addOnSuccessListener(this, new OnSuccessListener<Location>() {
+                    @Override
+                    public void onSuccess(Location location) {
+                        if (location != null) {
+                            Log.e("Latitud: ", + location.getLatitude() + "Longitud: " + location.getLongitude());
+
+                            Map<String,Object> latlang = new HashMap<>();
+                            latlang.put("latitud",location.getLatitude());
+                            latlang.put("longitud", location.getLongitude());
+                            mDatabase.child("shops").child(userId).child("coordinates").setValue(latlang);
+
+                            Toast.makeText(EditCommerceActivity.this, "Uicación guardada: ", Toast.LENGTH_LONG).show();;
+                        }
+                    }
+                });
+    }
 
 }
