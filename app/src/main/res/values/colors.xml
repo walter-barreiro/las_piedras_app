@@ -9,9 +9,9 @@
     <color name="orange">#FF7F00</color>
     <color name="red">#FF0000</color>
 
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#3262C4</color>
-    <color name="colorAccent">#FF4081</color>
+    <color name="colorPrimary">#2196F3</color>
+    <color name="colorPrimaryDark">#1976D2</color>
+    <color name="colorAccent">#03A9F4</color>
 
     <color name="colorWhite">#FFFFFF</color>
     <color name="colorRed">#C11515</color>

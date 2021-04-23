@@ -6,64 +6,176 @@
     android:layout_height="match_parent"
     tools:context=".activities.EditBusinessActivity">
 
-    <Button
-        android:id="@+id/btnEditBusinessSave"
+    <TextView
+        android:id="@+id/tvBusinessCancel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Guardar"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/btnEditBusinessCancel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="24dp"
         android:text="Cancelar"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:textSize="18dp"
+        app:layout_constraintBottom_toBottomOf="@+id/tvSave"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <TextView
+        android:id="@+id/tvBusinessSave"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="32dp"
+        android:text="Guardar"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:textSize="18dp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/ivEditBusimessImage"
         android:layout_width="115dp"
         android:layout_height="117dp"
-        android:layout_marginTop="28dp"
+        android:layout_marginTop="24dp"
         android:src="@drawable/ic_launcher_background"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/tvBusinessSave"
+        app:layout_constraintStart_toEndOf="@+id/tvBusinessCancel"
+        app:layout_constraintTop_toBottomOf="@+id/tvBusinessCancel"
         app:shapeAppearanceOverlay="@style/round_image" />
 
-    <EditText
-        android:id="@+id/etEditBusinessProfession"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:hint="Profesion"
-        app:layout_constraintStart_toStartOf="@+id/ivEditBusimessImage"
-        app:layout_constraintTop_toBottomOf="@+id/ivEditBusimessImage" />
+    <LinearLayout
+        android:id="@+id/linearLayout2"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="180dp"
+        android:orientation="vertical"
+        app:layout_constraintTop_toBottomOf="@+id/ivEditBusimessImage"
+        tools:layout_editor_absoluteX="0dp">
 
-    <EditText
-        android:id="@+id/etEditBusinessName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:hint="Nombre compelto"
-        app:layout_constraintStart_toStartOf="@+id/ivEditBusimessImage"
-        app:layout_constraintTop_toBottomOf="@+id/etEditBusinessProfession" />
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textInputLayoutProfession"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="32dp"
+            android:layout_marginEnd="32dp"
+            android:hint="Profesión"
+            app:counterEnabled="true"
+            app:counterMaxLength="50"
+            app:endIconMode="clear_text"
+            app:helperText="Obligatorio*"
+            app:helperTextTextColor="@color/red"
+            app:hintTextColor="@color/black"
+            app:startIconDrawable="@drawable/ic_assignment">
 
-    <EditText
-        android:id="@+id/etEditBusinessLocation"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:hint="Ubicacion"
-        app:layout_constraintStart_toStartOf="@+id/ivEditBusimessImage"
-        app:layout_constraintTop_toBottomOf="@+id/etEditBusinessName" />
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/tinputEditTextProfession"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:maxLength="51"
+                android:textColor="@color/black"
+                android:textColorHint="@color/black"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:hintTextColor="@color/black" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-    <EditText
-        android:id="@+id/tvEditBusinessDescription"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:hint="Descripcion"
-        app:layout_constraintStart_toStartOf="@+id/ivEditBusimessImage"
-        app:layout_constraintTop_toBottomOf="@+id/etEditBusinessLocation" />
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textInputLayoutName1"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="32dp"
+            android:layout_marginEnd="32dp"
+            android:hint="Nombre Completo"
+            android:textStyle="bold"
+            app:counterEnabled="true"
+            app:counterMaxLength="10"
+            app:endIconMode="clear_text"
+            app:helperText="Obligatorio*"
+            app:helperTextTextColor="@color/red"
+            app:hintTextColor="@color/black"
+            app:startIconDrawable="@drawable/ic_person">
 
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/textInputEditTextName1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:maxLength="11"
+                android:textColor="@color/black"
+                android:textColorHint="@color/black"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:hintTextColor="@color/black" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textInputLayoutUbication"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="32dp"
+            android:layout_marginEnd="32dp"
+            android:hint="Ubicacion"
+            android:textStyle="bold"
+            app:counterEnabled="true"
+            app:counterMaxLength="10"
+            app:endIconMode="clear_text"
+            app:helperText="Obligatorio*"
+            app:helperTextTextColor="@color/red"
+            app:hintTextColor="@color/black"
+            app:startIconDrawable="@drawable/ic_location">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/textInputEditTextUbication"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:maxLength="11"
+                android:textColor="@color/black"
+                android:textColorHint="@color/black"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:hintTextColor="@color/black" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textInputLayoutDescription1"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="32dp"
+            android:layout_marginEnd="32dp"
+            android:hint="Descripción"
+            android:textStyle="bold"
+            app:counterEnabled="true"
+            app:counterMaxLength="10"
+            app:endIconMode="clear_text"
+            app:helperText="Obligatorio*"
+            app:helperTextTextColor="@color/red"
+            app:hintTextColor="@color/black"
+            app:startIconDrawable="@drawable/ic_text">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/textInputEditTextDescription1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:maxLength="11"
+                android:textColor="@color/black"
+                android:textColorHint="@color/black"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:hintTextColor="@color/black" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

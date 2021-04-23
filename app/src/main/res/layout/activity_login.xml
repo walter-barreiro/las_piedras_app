@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bb1"
+    android:background="@drawable/bb4"
     tools:context=".activities.LoginActivity">
 
     <TextView
@@ -89,7 +89,7 @@
         android:layout_marginTop="24dp"
         android:background="@drawable/btn_bg"
         android:text="Iniciar"
-        android:textColor="@color/black"
+        android:textColor="@color/colorWhite"
         android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="@+id/editTextPassword"
@@ -122,7 +122,7 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:text=" Regístrate"
-            android:textColor="@color/colorNaranja"
+            android:textColor="@color/colorRed"
             android:textSize="18sp"
             android:textStyle="bold" />
 

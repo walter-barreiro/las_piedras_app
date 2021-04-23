@@ -50,7 +50,7 @@ public class MainProductsFragment extends Fragment {
 
         RV = (RecyclerView) binding.rvMainProdFrag;
         //RV.setLayoutManager(new LinearLayoutManager(getContext()));
-        RV.setLayoutManager(new GridLayoutManager(getContext(),3));
+        RV.setLayoutManager(new GridLayoutManager(getContext(),2));
 
         listarProductosCommerce();
         filtrarBusqueda();

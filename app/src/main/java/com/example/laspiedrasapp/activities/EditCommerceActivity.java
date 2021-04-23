@@ -69,7 +69,7 @@ public class EditCommerceActivity extends AppCompatActivity {
 
     private void saveCommcerce() {
         // Extraigo los datos ingresados de los ususarios
-        String name = binding.etEditCommcerceName.getText().toString();
+        String name = binding.tinputCommcerceName.getText().toString();
         //---
 
         if( isValid(name) ){ // Me fijo que los datos sean validos

@@ -11,32 +11,40 @@ xmlns:app="http://schemas.android.com/apk/res-auto">
 <LinearLayout
     android:layout_width="wrap_content"
     android:layout_height="match_parent"
-    android:orientation="horizontal">
+    android:orientation="vertical"
+    android:gravity="center">
 
     <ImageView
         android:id="@+id/ivItemProductCommerce"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
+        android:layout_width="140dp"
+        android:layout_height="130dp"
         android:scaleType="centerCrop"
         app:srcCompat="@drawable/ic_launcher_background" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:gravity="center">
 
         <TextView
             android:id="@+id/tvProductCommerceName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Nombre"
-            android:textSize="20dp" />
+            android:textSize="18dp"
+            android:textColor="@color/black"
+            android:textStyle="bold"/>
 
         <TextView
             android:id="@+id/tvItemProductCommercePrice"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Precio" />
+            android:text="Precio"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:textSize="14dp"/>
+
     </LinearLayout>
 
 

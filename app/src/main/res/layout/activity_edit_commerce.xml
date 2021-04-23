@@ -6,67 +6,142 @@
     android:layout_height="match_parent"
     tools:context=".activities.EditCommerceActivity">
 
+    <TextView
+        android:id="@+id/tvEditCommerceCancel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="24dp"
+        android:text="Cancelar"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:textSize="18dp"
+        app:layout_constraintBottom_toBottomOf="@+id/tvEditCommerceSave"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <TextView
+        android:id="@+id/tvEditCommerceSave"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="32dp"
+        android:text="Guardar"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:textSize="18dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
         android:id="@+id/ivEditCommcerceBanner"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/tvEditCommerceSave"
+        app:layout_constraintStart_toEndOf="@+id/tvEditCommerceCancel"
+        app:layout_constraintTop_toBottomOf="@+id/tvEditCommerceCancel"
         app:srcCompat="@drawable/ic_launcher_background" />
 
     <TextView
         android:id="@+id/tvEditCommerceBanner"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
         android:text="Editar banner"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:textSize="18dp"
+        app:layout_constraintEnd_toEndOf="@+id/ivEditCommcerceBanner"
+        app:layout_constraintStart_toStartOf="@+id/ivEditCommcerceBanner"
         app:layout_constraintTop_toBottomOf="@+id/ivEditCommcerceBanner" />
 
-    <TextView
-        android:id="@+id/tvEditCommerceCancel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Cancelar"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/tvEditCommerceSave"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="right"
-        android:text="Guardar"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <LinearLayout
+        android:id="@+id/linearLayout2"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="265dp"
+        android:layout_marginBottom="160dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"
+        tools:layout_editor_absoluteX="0dp">
 
-    <EditText
-        android:id="@+id/etEditCommcerceName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:hint="Nombre del comercio"
-        app:layout_constraintEnd_toEndOf="@+id/tvEditCommerceBanner"
-        app:layout_constraintTop_toBottomOf="@+id/tvEditCommerceBanner" />
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textInputLayoutCommcerceName"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="32dp"
+            android:layout_marginEnd="32dp"
+            android:hint="Nombre del comercio"
+            app:counterEnabled="true"
+            app:counterMaxLength="50"
+            app:endIconMode="clear_text"
+            app:helperText="Obligatorio*"
+            app:helperTextTextColor="@color/red"
+            app:hintTextColor="@color/black"
+            app:startIconDrawable="@drawable/ic_commerce">
 
-    <EditText
-        android:id="@+id/etEditCommcerceDescription"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:hint="Descripcion del comercio"
-        app:layout_constraintStart_toStartOf="@+id/etEditCommcerceName"
-        app:layout_constraintTop_toBottomOf="@+id/etEditCommcerceName" />
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/tinputCommcerceName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:maxLength="51"
+                android:textColor="@color/black"
+                android:textColorHint="@color/black"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:hintTextColor="@color/black" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textInputLayoutCommerceDescription"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="32dp"
+            android:layout_marginEnd="32dp"
+            android:hint="Descripcion del comercio"
+            android:textStyle="bold"
+            app:counterEnabled="true"
+            app:counterMaxLength="10"
+            app:endIconMode="clear_text"
+            app:helperText="Obligatorio*"
+            app:helperTextTextColor="@color/red"
+            app:hintTextColor="@color/black"
+            app:startIconDrawable="@drawable/ic_text">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/tinputCommcerceDescription"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:maxLength="11"
+                android:textColor="@color/black"
+                android:textColorHint="@color/black"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:hintTextColor="@color/black" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+    </LinearLayout>
 
     <Button
         android:id="@+id/btnEditCommerceAddLocation"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
         android:text="Agregar ubicacion"
-        app:layout_constraintStart_toStartOf="@+id/etEditCommcerceDescription"
-        app:layout_constraintTop_toBottomOf="@+id/etEditCommcerceDescription" />
+        app:layout_constraintEnd_toEndOf="@+id/linearLayout2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout2"
+        android:background="@drawable/bt_pf"
+        android:textColor="@color/colorWhite"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

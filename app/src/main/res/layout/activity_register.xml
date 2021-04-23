@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bb1"
+    android:background="@drawable/bb4"
     tools:context=".activities.RegisterActivity">
 
     <TextView
@@ -102,6 +102,7 @@
         android:text="Registro"
         android:textSize="18sp"
         android:textStyle="bold"
+        android:textColor="@color/colorWhite"
         app:layout_constraintEnd_toEndOf="@+id/editTextConformPassword"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/editTextConformPassword"
@@ -114,7 +115,7 @@
         android:layout_marginTop="16dp"
         android:shadowColor="@color/colorWhite"
         android:text="Ya tienes una Cuenta?"
-        android:textColor="@color/colorNaranja"
+        android:textColor="@color/colorRed"
         android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="@+id/btnRegister"
