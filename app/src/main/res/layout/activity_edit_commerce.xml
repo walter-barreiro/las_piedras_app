@@ -62,12 +62,11 @@
         android:id="@+id/linearLayout2"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="265dp"
-        android:layout_marginBottom="160dp"
+        android:layout_marginTop="240dp"
+        android:layout_marginBottom="130dp"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0"
+        app:layout_constraintTop_toBottomOf="@+id/tvEditCommerceBanner"
         tools:layout_editor_absoluteX="0dp">
 
         <com.google.android.material.textfield.TextInputLayout
@@ -110,7 +109,7 @@
             android:hint="Descripcion del comercio"
             android:textStyle="bold"
             app:counterEnabled="true"
-            app:counterMaxLength="10"
+            app:counterMaxLength="50"
             app:endIconMode="clear_text"
             app:helperText="Obligatorio*"
             app:helperTextTextColor="@color/red"
@@ -136,12 +135,12 @@
         android:id="@+id/btnEditCommerceAddLocation"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:text="Agregar ubicacion"
-        app:layout_constraintEnd_toEndOf="@+id/linearLayout2"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout2"
+        android:layout_marginBottom="32dp"
         android:background="@drawable/bt_pf"
-        android:textColor="@color/colorWhite"/>
+        android:text="Agregar ubicacion"
+        android:textColor="@color/colorWhite"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/linearLayout2"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
