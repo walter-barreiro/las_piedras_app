@@ -9,6 +9,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -114,7 +115,7 @@ public class ProfileFragment extends Fragment {
                     return true;
                 case R.id.item_logout:
                     FirebaseAuth.getInstance().signOut(); // Para cerrar la sesion
-                    startActivity(new Intent( getActivity(), RegisterActivity.class)); // Para ir al registro
+                    startActivity(new Intent( getActivity(), LoginActivity.class)); // Para ir al login
                     getActivity().finish(); // Para cerrar el Activity Main
                     return true;
                 default: return super.onOptionsItemSelected(item);
