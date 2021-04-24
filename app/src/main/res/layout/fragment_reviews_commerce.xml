@@ -13,44 +13,6 @@
         android:visibility="gone"
         android:text="Agregar review"/>
 
-    <RelativeLayout
-        android:id="@+id/relativeLayoutReviewCommerce"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-
-        <EditText
-            android:id="@+id/etCommerceReviewWrite"
-            android:layout_centerHorizontal="true"
-            android:visibility="gone"
-            android:inputType="textMultiLine"
-            android:lines="8"
-            android:minLines="6"
-            android:gravity="top|left"
-            android:maxLines="10"
-            android:layout_height="wrap_content"
-            android:layout_width="match_parent"
-            android:scrollbars="vertical"
-            android:hint="Escria su reseña"/>
-        <Button
-            android:id="@+id/btnCommerceReviewSave"
-            android:layout_toRightOf="@id/btnCommerceReviewCancel"
-            android:visibility="gone"
-            android:layout_below="@id/etCommerceReviewWrite"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Enviar"
-            />
-        <Button
-            android:id="@+id/btnCommerceReviewCancel"
-            android:layout_below="@id/etCommerceReviewWrite"
-            android:visibility="gone"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Cancelar"/>
-
-
-    </RelativeLayout>
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvCommerceReviews"
         android:layout_width="match_parent"
