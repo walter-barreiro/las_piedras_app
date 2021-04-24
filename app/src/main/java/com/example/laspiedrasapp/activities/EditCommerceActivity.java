@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.laspiedrasapp.databinding.ActivityEditCommerceBinding;
+import com.example.laspiedrasapp.models.BusinessModel;
 import com.example.laspiedrasapp.models.CommerceModel;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
@@ -38,6 +39,7 @@ public class EditCommerceActivity extends AppCompatActivity {
     private StorageReference storageReference;
     ActivityEditCommerceBinding binding;
     private FusedLocationProviderClient fusedLocationClient;
+    private CommerceModel commerceModel;
 
 
 
@@ -57,6 +59,16 @@ public class EditCommerceActivity extends AppCompatActivity {
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
 
         setContentView(view);
+
+
+        Intent intent = this.getIntent();
+        commerceModel = (CommerceModel) intent.getSerializableExtra("commerceModel");
+        if(commerceModel!=null){
+            setValues();
+        }
+
+
+
 
         binding.tvEditCommerceSave.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -89,6 +101,14 @@ public class EditCommerceActivity extends AppCompatActivity {
 
     }
 
+    private void setValues() {
+        binding.tinputCommcerceName.setText(commerceModel.getName());
+        binding.tinputCommcerceDescription.setText(commerceModel.getDescription());
+        Glide.with(EditCommerceActivity.this).load(commerceModel.getBanner_url()).into(binding.ivEditCommcerceBanner); // Coloca la imagen en el imageview
+
+
+    }
+
     private void saveCommcerce() {
         // Extraigo los datos ingresados de los ususarios
         String name = binding.tinputCommcerceName.getText().toString();
@@ -117,12 +137,13 @@ public class EditCommerceActivity extends AppCompatActivity {
             // Ahora tengo que salir de la actividad
             finish();
         } else {
-            // Mostar algun mensaje de error
+            Toast.makeText(this, "Debe completar todos los campos", Toast.LENGTH_SHORT).show();
         }
     }
 
-    private boolean isValid(String s, String name) {
-        return true;
+    private boolean isValid(String name,String description) {
+
+        return !name.isEmpty() && !description.isEmpty() ;
     }
 
     @Override

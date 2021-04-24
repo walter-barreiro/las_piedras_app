@@ -1,6 +1,8 @@
 package com.example.laspiedrasapp.models;
 
-public class CommerceModel {
+import java.io.Serializable;
+
+public class CommerceModel implements Serializable {
     private String name;
     private String description;
     private String banner_url;
