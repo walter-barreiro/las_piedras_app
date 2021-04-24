@@ -109,11 +109,21 @@ public class EditBusinessActivity extends AppCompatActivity {
     }
 
     private void setValues() {
-        binding.tinputEditTextProfession.setText(business.getProfession());
-        binding.textInputEditTextName1.setText(business.getName());
-        binding.textInputEditTextDescription1.setText(business.getDescription());
-        binding.textInputEditTextUbication.setText(business.getLocation());
-        Glide.with(EditBusinessActivity.this).load(business.getImgUrl()).into(binding.ivEditBusimessImage); // Coloca la imagen en el imageview
+        if(!business.getProfession().isEmpty()){
+            binding.tinputEditTextProfession.setText(business.getProfession());
+        }
+        if(!business.getName().isEmpty()) {
+            binding.textInputEditTextName1.setText(business.getName());
+        }
+        if(!business.getDescription().isEmpty()) {
+            binding.textInputEditTextDescription1.setText(business.getDescription());
+        }
+        if(!business.getLocation().isEmpty()) {
+            binding.textInputEditTextUbication.setText(business.getLocation());
+        }
+        if(!business.getImgUrl().isEmpty()) {
+            Glide.with(EditBusinessActivity.this).load(business.getImgUrl()).into(binding.ivEditBusimessImage); // Coloca la imagen en el imageview
+        }
     }
     private void initFirebase(){
         mAuth = FirebaseAuth.getInstance();// Inicializo el auth del usuario
