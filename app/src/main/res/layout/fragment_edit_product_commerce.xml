@@ -46,6 +46,17 @@ tools:context=".fragments.EditProductCommerceFragment">
         app:layout_constraintTop_toBottomOf="@+id/tvEditProductCommercePrice" />
 
     <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnEditCommerceDelete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bt_pf"
+        android:text="Eliminar"
+        android:textColor="@color/colorWhite"
+        app:layout_constraintEnd_toEndOf="@+id/tvEditProductCommercePrice"
+        app:layout_constraintStart_toStartOf="@+id/tvEditProductCommercePrice"
+        app:layout_constraintTop_toBottomOf="@+id/tvEditProductCommercePrice" />
+
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/btnEditCommerceCancel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

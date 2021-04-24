@@ -60,6 +60,16 @@ public class ReviewsCommerceFragment extends Fragment {
         binding = FragmentReviewsCommerceBinding.bind(view);
         // TODO Colocar un boton para agregar reviews que solo sea visible para personas que visiten el perfil del comerciante
 //        binding.btnAddReviewCommerce.setVisibility(View.VISIBLE);
+
+        Bundle bundle = this.getArguments();
+        String ownerId = bundle.getString("ownerId");
+        if(!ownerId.isEmpty()){
+            if(userId!=ownerId){
+                binding.btnAddReviewCommerce.setVisibility(View.VISIBLE);
+                userId = ownerId;
+            }
+        }
+
         initRecyclerView();
         getReviewsFromDatabase();
     }

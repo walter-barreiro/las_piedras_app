@@ -98,8 +98,16 @@ public class CommerceActivity extends AppCompatActivity {
 
     private void initTabLayoutViewPager2() {
         commerceViewPagerAdapter = new CommerceViewPagerAdapter(getSupportFragmentManager(),getLifecycle());
-        commerceViewPagerAdapter.addFragment(new ProductsCommerceFragment());
-        commerceViewPagerAdapter.addFragment(new ReviewsCommerceFragment());
+        // Creo el fragmento y le paso el id
+        ProductsCommerceFragment productsCommerceFragment = new ProductsCommerceFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString("ownerId",userId);
+        productsCommerceFragment.setArguments(bundle);
+        commerceViewPagerAdapter.addFragment(productsCommerceFragment);
+        //----
+        ReviewsCommerceFragment reviewsCommerceFragment =new ReviewsCommerceFragment();
+        reviewsCommerceFragment.setArguments(bundle);
+        commerceViewPagerAdapter.addFragment(reviewsCommerceFragment);
         binding.vp2Commerce.setAdapter(commerceViewPagerAdapter);
         new TabLayoutMediator(binding.tlCommerce, binding.vp2Commerce, new TabLayoutMediator.TabConfigurationStrategy() {
             @Override

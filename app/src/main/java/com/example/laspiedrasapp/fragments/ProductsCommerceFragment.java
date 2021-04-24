@@ -15,6 +15,7 @@ import com.example.laspiedrasapp.R;
 import com.example.laspiedrasapp.adapters.CommerceProductAdapter;
 import com.example.laspiedrasapp.databinding.FragmentProductsCommerceBinding;
 import com.example.laspiedrasapp.models.CommerceProductModel;
+import com.example.laspiedrasapp.models.ProfileProductModel;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -39,6 +40,7 @@ public class ProductsCommerceFragment extends Fragment {
     private CommerceProductAdapter commerceProductAdapter;
 
     private String userId;
+    private Boolean ownerIsUser=true;
 
 
     public ProductsCommerceFragment() {
@@ -65,6 +67,16 @@ public class ProductsCommerceFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         binding = FragmentProductsCommerceBinding.bind(view);// Inicializo el binding
         userId= mAuth.getCurrentUser().getUid(); // Obtengo el id del usuario logeado
+
+        Bundle bundle = this.getArguments();
+        String ownerId = bundle.getString("ownerId");
+        if(!ownerId.isEmpty()){
+            if(userId!=ownerId){
+                ownerIsUser = false;
+                binding.fabNewProductCommerce.setVisibility(View.GONE);
+            }
+            userId = ownerId;
+        }
 
         initRecyclerView();
         getProductsFromDatabase();
@@ -118,11 +130,13 @@ public class ProductsCommerceFragment extends Fragment {
             @Override
             public void onItemClick(CommerceProductModel item) {
 //                Toast.makeText(getContext(), "Nombre "+item.getName(), Toast.LENGTH_SHORT).show();
-                EditProductCommerceFragment editProductCommerceFragment = new EditProductCommerceFragment();
-                Bundle bundle= new Bundle();
-                bundle.putSerializable("product_commerce",item);
-                editProductCommerceFragment.setArguments(bundle);
-                editProductCommerceFragment.show(getActivity().getSupportFragmentManager(),"editProductCommerce");
+                if(ownerIsUser){
+                    EditProductCommerceFragment editProductCommerceFragment = new EditProductCommerceFragment();
+                    Bundle bundle= new Bundle();
+                    bundle.putSerializable("product_commerce",item);
+                    editProductCommerceFragment.setArguments(bundle);
+                    editProductCommerceFragment.show(getActivity().getSupportFragmentManager(),"editProductCommerce");
+                }
 
             }
         });

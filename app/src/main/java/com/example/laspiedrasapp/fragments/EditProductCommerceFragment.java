@@ -11,6 +11,7 @@ import androidx.fragment.app.DialogFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.laspiedrasapp.R;
@@ -117,6 +118,15 @@ public class EditProductCommerceFragment extends DialogFragment {
             }
         });
 
+        binding.btnEditCommerceDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mDatabase.child(PRODUCT_COLLECTION).child(productId).removeValue();
+                mDatabase.child("shops").child(userId).child("products").child(productId).removeValue();
+                dismiss();
+
+            }
+        });
     }
 
     private boolean isValid(String product_name, String product_price) {
