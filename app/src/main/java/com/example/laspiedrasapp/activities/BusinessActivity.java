@@ -25,10 +25,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BusinessActivity extends AppCompatActivity {
-    // ToDo hacer el recyclerview, el adaptador, el item_revew_business para mostrar las review
-    // ToDo  traer los datos del perfil profesional y dibujarlos en esta activity
-    // DONE
-    // ToDo modelo de las review:  Voy a usar el mismo modelo que el del commerce
     private final String BUSINESS_COLLECTION = "business";
     private ActivityBusinessBinding binding;
     private ReviewCommerceAdapter reviewCommerceAdapter;
@@ -36,7 +32,8 @@ public class BusinessActivity extends AppCompatActivity {
     private String userId;
     private FirebaseAuth mAuth; // Para poder obtener el id del usuario
     private DatabaseReference mDatabase; // Para extraer los datos de firebase
-    private BusinessModel business = new BusinessModel();
+    private BusinessModel business;
+    private Boolean isData=false;
 
 
     @Override
@@ -46,7 +43,6 @@ public class BusinessActivity extends AppCompatActivity {
         View view = binding.getRoot();
         setContentView(view);
         initFirebase();
-
 
         // Recupero los datos del profesional, si el usuario toco el boton de Ir a perfil
         String businessId = getIntent().getStringExtra("businessId");
@@ -65,9 +61,11 @@ public class BusinessActivity extends AppCompatActivity {
             public void onClick(View v) {
                 // Voy a la activity EditBusinessActivity y le paso el objeto con los datos del usuario
                 Intent intent = new Intent(BusinessActivity.this,EditBusinessActivity.class);
-                Bundle bundle = new Bundle();
-                bundle.putSerializable("business",business); // le paso los datos por el bundle
-                intent.putExtras(bundle);
+                if(isData){
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable("business",business); // le paso los datos por el bundle
+                    intent.putExtras(bundle);
+                }
                 startActivity(intent);
             }
         });
@@ -84,6 +82,7 @@ public class BusinessActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists()){
+                    isData = true;
                     business = snapshot.getValue(BusinessModel.class);
                     binding.tvProfesion.setText(business.getProfession());
                     binding.tvLocation.setText(business.getLocation());
