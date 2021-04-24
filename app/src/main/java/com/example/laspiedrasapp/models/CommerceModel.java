@@ -4,15 +4,17 @@ public class CommerceModel {
     private String name;
     private String description;
     private String banner_url;
+    private String ownerId;
 
     public CommerceModel(){
 
     }
 
-    public CommerceModel(String name, String description, String banner_url) {
+    public CommerceModel(String name, String description, String banner_url, String ownerId) {
         this.name = name;
         this.description = description;
         this.banner_url = banner_url;
+        this.ownerId = ownerId;
     }
 
     public String getName() {
@@ -38,4 +40,7 @@ public class CommerceModel {
     public void setBanner_url(String banner_url) {
         this.banner_url = banner_url;
     }
+
+    public String getOwnerId() { return ownerId; }
+    public void setOwnerId(String ownerId) { this.ownerId = ownerId; }
 }

@@ -134,6 +134,9 @@ public class CommerceActivity extends AppCompatActivity {
                     if (snapshot.child("banner_url").exists()){
                         Glide.with(CommerceActivity.this).load(snapshot.child("banner_url").getValue().toString()).into(binding.ivCommcerceBanner); // Coloca la imagen en el imageview
                     }
+                    if (snapshot.child("description").exists()){
+                        binding.tvCommcerceDescription.setText(snapshot.child("description").getValue().toString());
+                    }
                 }
             }
             @Override

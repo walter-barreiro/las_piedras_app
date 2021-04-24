@@ -92,14 +92,19 @@ public class EditCommerceActivity extends AppCompatActivity {
     private void saveCommcerce() {
         // Extraigo los datos ingresados de los ususarios
         String name = binding.tinputCommcerceName.getText().toString();
+        String description = binding.tinputCommcerceDescription.getText().toString();
         //---
 
-        if( isValid(name) ){ // Me fijo que los datos sean validos
+        if( isValid(name,description) ){ // Me fijo que los datos sean validos
             // Hay que ver si tiene internet y avisar
             //---
             CommerceModel commerceModel = new CommerceModel();// creo la clase Profile con los parametros
             commerceModel.setName(name);
+            commerceModel.setDescription(description);
+            commerceModel.setOwnerId(userId);
             mDatabase.child("shops").child(userId).child("name").setValue(commerceModel.getName());// Guardo los datos en la coleccion
+            mDatabase.child("shops").child(userId).child("ownerId").setValue(commerceModel.getOwnerId());// Guardo los datos en la coleccion
+            mDatabase.child("shops").child(userId).child("description").setValue(commerceModel.getDescription());// Guardo los datos en la coleccion
             mDatabase.child("users").child(userId).child("commerce").setValue("created");
             // Guardo el  banner si fue cambiado o agregado
             if (resultUri!=null){
@@ -116,7 +121,7 @@ public class EditCommerceActivity extends AppCompatActivity {
         }
     }
 
-    private boolean isValid(String name) {
+    private boolean isValid(String s, String name) {
         return true;
     }
 
