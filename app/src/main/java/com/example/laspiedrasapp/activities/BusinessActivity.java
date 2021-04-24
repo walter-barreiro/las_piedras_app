@@ -49,6 +49,7 @@ public class BusinessActivity extends AppCompatActivity {
         if(businessId!=null){
             userId = businessId;
             binding.btnEditBusiness.setVisibility(View.GONE);
+            binding.mtbnBusinessAddNewReview.setVisibility(View.VISIBLE);
         }
 
         initRecyclerView();// Inicializo el recyclerview
