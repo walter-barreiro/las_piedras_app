@@ -41,7 +41,7 @@ public class EditProfileActivity extends AppCompatActivity {
     private StorageReference storageReference; // Para el Storage
 
     private ActivityEditProfileBinding binding;
-    private Uri resultUri;
+    private Uri resultUri = null;
     private Boolean verified=false;
     private String userId;
 
@@ -95,19 +95,17 @@ public class EditProfileActivity extends AppCompatActivity {
                     ProfileModel profile = new ProfileModel(name,phone);// creo la clase Profile con los parametros
                     mDatabase.child(USERS_COLLECTIONS).child(userId).child("name").setValue(profile.getName());// Guardo los datos en la coleccion
                     mDatabase.child(USERS_COLLECTIONS).child(userId).child("phone").setValue(profile.getPhone());// Guardo los datos en la coleccion
-                    final StorageReference ref = storageReference.child(userId);
-                    ref.putFile(resultUri).addOnSuccessListener(taskSnapshot -> ref.getDownloadUrl().addOnSuccessListener(uri -> {
-                        profile.setImgUrl(String.valueOf(uri));
-                        // Guardo los datos en el perfil del usuario
-                        mDatabase.child(USERS_COLLECTIONS).child(userId).child("imgUrl").setValue(profile.getImgUrl());// Guardo los datos en la coleccion
-                    }));
-
-//                    uploadImage(userId);// Subo la imagen
-                    // Ahora tengo que salir de la actividad
+                    if (resultUri!=null){
+                        final StorageReference ref = storageReference.child(userId);
+                        ref.putFile(resultUri).addOnSuccessListener(taskSnapshot -> ref.getDownloadUrl().addOnSuccessListener(uri -> {
+                            profile.setImgUrl(String.valueOf(uri));
+                            // Guardo los datos en el perfil del usuario
+                            mDatabase.child(USERS_COLLECTIONS).child(userId).child("imgUrl").setValue(profile.getImgUrl());// Guardo los datos en la coleccion
+                        }));
+                    }
                     finish();
-
                 } else {
-                    // Mostar algun mensaje de error
+                    Toast.makeText(EditProfileActivity.this, "Debe completar todos los campos", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -169,6 +167,7 @@ public class EditProfileActivity extends AppCompatActivity {
                     final StorageReference ref = storageReference.child(userId+"_verified");
                     ref.putFile(resultUri).addOnSuccessListener(taskSnapshot -> ref.getDownloadUrl().addOnSuccessListener(uri -> {
                         // Guardo los datos en el perfil del usuario
+                        resultUri = null;
                         mDatabase.child(USERS_COLLECTIONS).child(userId).child("verified_photo").setValue(String.valueOf(uri));// Guardo los datos en la coleccion
                         mDatabase.child(USERS_COLLECTIONS).child(userId).child("verified").setValue(true);// Guardo los datos en la coleccion
                     }));
@@ -213,7 +212,7 @@ public class EditProfileActivity extends AppCompatActivity {
 
     private boolean isValid(String name, String phone) {
         // Para evaluar que los datos dados son validos
-        return true;
+        return !name.isEmpty() && !phone.isEmpty();
     }
 
     private void iniBinding() {
