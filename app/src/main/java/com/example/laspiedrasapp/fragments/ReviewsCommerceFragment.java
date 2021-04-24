@@ -26,6 +26,8 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.reactivex.internal.operators.observable.ObservableTimeInterval;
+
 public class ReviewsCommerceFragment extends Fragment {
     private FirebaseAuth mAuth; // Para poder obtener el id del usuario
     private DatabaseReference mDatabase; // Para extraer los datos de firebase
@@ -69,6 +71,38 @@ public class ReviewsCommerceFragment extends Fragment {
                 userId = ownerId;
             }
         }
+
+        binding.btnAddReviewCommerce.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                binding.etCommerceReviewWrite.setVisibility(View.VISIBLE);
+                binding.btnCommerceReviewCancel.setVisibility(View.VISIBLE);
+                binding.btnCommerceReviewSave.setVisibility(View.VISIBLE);
+            }
+        });
+
+        binding.btnCommerceReviewSave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                binding.etCommerceReviewWrite.setVisibility(View.GONE);
+                binding.btnCommerceReviewCancel.setVisibility(View.GONE);
+                binding.btnCommerceReviewSave.setVisibility(View.GONE);
+
+                String review = binding.etCommerceReviewWrite.getText().toString();
+                mDatabase.child("shops").child(ownerId).child("reviews").child(mAuth.getCurrentUser().getUid()).child("review").setValue(review);
+            }
+        });
+
+        binding.btnCommerceReviewCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                binding.etCommerceReviewWrite.setVisibility(View.GONE);
+                binding.btnCommerceReviewCancel.setVisibility(View.GONE);
+                binding.btnCommerceReviewSave.setVisibility(View.GONE);
+            }
+        });
+
+
 
         initRecyclerView();
         getReviewsFromDatabase();
