@@ -90,33 +90,31 @@ public class EditCommerceActivity extends AppCompatActivity {
     }
 
     private void saveCommcerce() {
-        // Extraigo los datos ingresados de los ususarios
-        String name = binding.tinputCommcerceName.getText().toString();
-        //---
 
-        if( isValid(name) ){ // Me fijo que los datos sean validos
-            // Hay que ver si tiene internet y avisar
-            //---
-            CommerceModel commerceModel = new CommerceModel();// creo la clase Profile con los parametros
-            commerceModel.setName(name);
-            mDatabase.child("shops").child(userId).child("name").setValue(commerceModel.getName());// Guardo los datos en la coleccion
-            mDatabase.child("users").child(userId).child("commerce").setValue("created");
-            // Guardo el  banner si fue cambiado o agregado
-            if (resultUri!=null){
-                final StorageReference ref = storageReference.child("shops_banners").child(userId);
-                ref.putFile(resultUri).addOnSuccessListener(taskSnapshot -> ref.getDownloadUrl().addOnSuccessListener(uri -> {
-                    // Guardo los datos en el perfil del usuario
-                    mDatabase.child("shops").child(userId).child("banner_url").setValue(String.valueOf(uri));// Guardo los datos en la coleccion
-                }));
+        String name = binding.tinputCommcerceName.getText().toString();
+        String description = binding.tinputCommcerceDescription.getText().toString();
+
+        if (isValid(name, description)){
+            CommerceModel commerceModel = new CommerceModel();
+
+            mDatabase.child("shops").child(userId).child("name").setValue(name);
+            mDatabase.child("shops").child(userId).child("description").setValue(description);
+
+            if (resultUri != null){
+                final StorageReference reference = storageReference.child(userId);
+                reference.putFile(resultUri).addOnSuccessListener(taskSnapshot -> reference.getDownloadUrl().addOnSuccessListener(uri -> {
+                    commerceModel.setBanner_url(String.valueOf(uri));
+                    mDatabase.child("shops").child(userId).child("banner_url").setValue(String.valueOf(uri));
+                        }));
             }
-            // Ahora tengo que salir de la actividad
             finish();
         } else {
-            // Mostar algun mensaje de error
+            Toast.makeText(EditCommerceActivity.this, "Debe completar todos los campos", Toast.LENGTH_SHORT).show();
         }
     }
 
-    private boolean isValid(String name) {
+
+    private boolean isValid(String s, String name) {
         return true;
     }
 

@@ -13,6 +13,8 @@ import com.example.laspiedrasapp.adapters.CommerceViewPagerAdapter;
 import com.example.laspiedrasapp.databinding.ActivityCommerceBinding;
 import com.example.laspiedrasapp.fragments.ProductsCommerceFragment;
 import com.example.laspiedrasapp.fragments.ReviewsCommerceFragment;
+import com.example.laspiedrasapp.models.BusinessModel;
+import com.example.laspiedrasapp.models.CommerceModel;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 import com.google.firebase.auth.FirebaseAuth;
@@ -34,6 +36,7 @@ public class CommerceActivity extends AppCompatActivity {
     private String userId;
     private Uri resultUri;
     CommerceViewPagerAdapter commerceViewPagerAdapter;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -125,6 +128,9 @@ public class CommerceActivity extends AppCompatActivity {
                     if (snapshot.child("banner_url").exists()){
                         Glide.with(CommerceActivity.this).load(snapshot.child("banner_url").getValue().toString()).into(binding.ivCommcerceBanner); // Coloca la imagen en el imageview
                     }
+                    if (snapshot.child("description").exists()){
+                        binding.tvCommcerceDescription.setText(snapshot.child("description").getValue().toString());
+                    }
                 }
             }
             @Override
@@ -133,6 +139,4 @@ public class CommerceActivity extends AppCompatActivity {
             }
         });
     }
-
-
 }

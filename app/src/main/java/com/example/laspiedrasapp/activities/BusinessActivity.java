@@ -1,13 +1,13 @@
 package com.example.laspiedrasapp.activities;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.bumptech.glide.Glide;
 import com.example.laspiedrasapp.adapters.ReviewCommerceAdapter;
@@ -47,7 +47,6 @@ public class BusinessActivity extends AppCompatActivity {
         setContentView(view);
         initFirebase();
 
-
         // Recupero los datos del profesional, si el usuario toco el boton de Ir a perfil
         String businessId = getIntent().getStringExtra("businessId");
         if(businessId!=null){
@@ -71,7 +70,6 @@ public class BusinessActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
     }
 
     private void setValues() {
@@ -102,7 +100,6 @@ public class BusinessActivity extends AppCompatActivity {
             }
         });
     }
-
 
     private void getReviewsFromDatabase(){
 //        reviewCommerceAdapter.notifyDataSetChanged();
@@ -148,6 +145,5 @@ public class BusinessActivity extends AppCompatActivity {
         mDatabase = FirebaseDatabase.getInstance().getReference(); // Inicializo firebase
         userId= mAuth.getCurrentUser().getUid(); // Obtengo el id del usuario logeado
     }
-
 
 }

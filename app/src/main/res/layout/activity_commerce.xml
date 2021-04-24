@@ -48,25 +48,6 @@
         app:layout_constraintStart_toStartOf="@+id/tvCommcerceName"
         app:layout_constraintTop_toBottomOf="@+id/tvCommcerceName" />
 
-    <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/mtvCommcerceAvailability"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:textSize="18dp"
-        app:layout_constraintEnd_toEndOf="@+id/tvCommcerceDescription"
-        app:layout_constraintStart_toStartOf="@+id/tvCommcerceDescription"
-        app:layout_constraintTop_toBottomOf="@+id/tvCommcerceDescription" />
-
-    <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/mtvCommerceLocation"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:textSize="18dp"
-        app:layout_constraintEnd_toEndOf="@+id/mtvCommcerceAvailability"
-        app:layout_constraintStart_toStartOf="@+id/mtvCommcerceAvailability"
-        app:layout_constraintTop_toBottomOf="@+id/mtvCommcerceAvailability" />
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tlCommerce"
@@ -99,9 +80,9 @@
         android:textColor="@color/colorWhite"
         android:textSize="10sp"
         android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="@+id/mtvCommerceLocation"
-        app:layout_constraintStart_toStartOf="@+id/mtvCommerceLocation"
-        app:layout_constraintTop_toBottomOf="@+id/mtvCommerceLocation" />
+        app:layout_constraintEnd_toEndOf="@+id/tvCommcerceDescription"
+        app:layout_constraintStart_toStartOf="@+id/tvCommcerceDescription"
+        app:layout_constraintTop_toBottomOf="@+id/tvCommcerceDescription" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

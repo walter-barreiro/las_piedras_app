@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
@@ -19,6 +20,7 @@ import com.example.laspiedrasapp.activities.BusinessActivity;
 import com.example.laspiedrasapp.activities.CommerceActivity;
 import com.example.laspiedrasapp.activities.EditProfileActivity;
 import com.example.laspiedrasapp.R;
+import com.example.laspiedrasapp.activities.LoginActivity;
 import com.example.laspiedrasapp.activities.RegisterActivity;
 import com.example.laspiedrasapp.adapters.ProfileProductAdapter;
 import com.example.laspiedrasapp.databinding.FragmentProfileBinding;
@@ -123,14 +125,18 @@ public class ProfileFragment extends Fragment {
         binding.goBusiness.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getActivity(), "Ir a mi servicio",Toast.LENGTH_SHORT).show();
+                Intent gobusiness = new Intent( getActivity() ,BusinessActivity.class);
+                startActivity(gobusiness);
+                //Toast.makeText(getActivity(), "Ir a mi servicio",Toast.LENGTH_SHORT).show();
             }
         });
         // Para ir a la tienda
         binding.goCommerce.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getActivity(), "Ir a mi tienda",Toast.LENGTH_SHORT).show();
+                Intent gocommerce = new Intent( getActivity() ,CommerceActivity.class);
+                startActivity(gocommerce);
+                //Toast.makeText(getActivity(), "Ir a mi tienda",Toast.LENGTH_SHORT).show();
             }
         });
         // Para agergar nuevo producto
@@ -140,6 +146,7 @@ public class ProfileFragment extends Fragment {
                 openDialog();
             }
         });
+
     }
 
     @Override
