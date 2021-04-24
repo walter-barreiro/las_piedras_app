@@ -12,17 +12,28 @@ public class CommerceProductModel implements Serializable {
     private String price;
     private String description;
     private String imgUrl;
+    private String ownerId;
 
     public CommerceProductModel() {
 
     }
 
-    public CommerceProductModel(String id, String userId, String name, String description, String imgUrl) {
+    public CommerceProductModel(String id, String userId, String name, String price, String description, String imgUrl, String ownerId) {
         this.id = id;
         this.userId = userId;
         this.name = name;
+        this.price = price;
         this.description = description;
         this.imgUrl = imgUrl;
+        this.ownerId = ownerId;
+    }
+
+    public String getOwnerId() {
+        return ownerId;
+    }
+
+    public void setOwnerId(String ownerId) {
+        this.ownerId = ownerId;
     }
 
     public String getPrice() {

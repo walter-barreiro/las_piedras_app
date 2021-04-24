@@ -50,10 +50,12 @@ public class CommerceActivity extends AppCompatActivity {
 
         // Todo Recivir el ownerId
 
-//        if(ownerId!=null){
-//            userId = ownerID;
-//            binding.btnCommerceEdit.setVisibility(View.GONE);
-//        }
+        String ownerId = getIntent().getStringExtra("ownerId");
+        if(ownerId!=null){
+            userId = ownerId;
+            binding.btnCommerceEdit.setVisibility(View.GONE);
+        }
+
 
         binding.vp2Commerce.setUserInputEnabled(false);
         setValues();// Obtengo los datos de firebase y los coloco en los view

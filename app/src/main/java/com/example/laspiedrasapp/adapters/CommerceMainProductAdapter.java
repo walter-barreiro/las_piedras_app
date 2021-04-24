@@ -1,5 +1,7 @@
 package com.example.laspiedrasapp.adapters;
 
+import android.content.Intent;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +14,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.laspiedrasapp.R;
+import com.example.laspiedrasapp.activities.BusinessActivity;
+import com.example.laspiedrasapp.activities.CommerceActivity;
 import com.example.laspiedrasapp.models.CommerceProductModel;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
@@ -28,6 +32,16 @@ public class CommerceMainProductAdapter extends FirebaseRecyclerAdapter<Commerce
         holder.name.setText(model.getName());
         holder.price.setText(model.getPrice());
         Glide.with(holder.imgUrl.getContext()).load(model.getImgUrl()).into(holder.imgUrl);
+        holder.imgUrl.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Bundle bundle = new Bundle();
+                bundle.putString("ownerId",model.getOwnerId());
+                Intent intent = new Intent(holder.imgUrl.getContext(), CommerceActivity.class);
+                intent.putExtras(bundle);
+                holder.imgUrl.getContext().startActivity(intent);
+            }
+        });
 
     }
 
