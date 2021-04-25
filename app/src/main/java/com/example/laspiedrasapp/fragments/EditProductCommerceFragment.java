@@ -106,7 +106,7 @@ public class EditProductCommerceFragment extends DialogFragment {
                     // Hay que ver si tiene internet y avisar
                     mDatabase.child(PRODUCT_COLLECTION).child(productId).child("name").setValue(product_name);// Guardo los datos en la coleccion con un identificador unico
                     mDatabase.child(PRODUCT_COLLECTION).child(productId).child("price").setValue(product_price);// Guardo los datos en la coleccion con un identificador unico
-                    mDatabase.child(PRODUCT_COLLECTION).child(productId).child("categoty").setValue(product_category);
+                    mDatabase.child(PRODUCT_COLLECTION).child(productId).child("category").setValue(product_category);
                     if(photoChanged){
                         final StorageReference ref = storageReference.child(productId);
                         ref.putFile(resultUri).addOnSuccessListener(taskSnapshot -> ref.getDownloadUrl().addOnSuccessListener(uri -> {

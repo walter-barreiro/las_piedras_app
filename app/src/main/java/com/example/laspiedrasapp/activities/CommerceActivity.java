@@ -81,7 +81,7 @@ public class CommerceActivity extends AppCompatActivity {
             public void onClick(View v) {
                 final String[] latitude = new String[1];
                 final String[] longitude = new String[1];
-                mDatabase.child("shops").child(ownerId).child("coordinates").addValueEventListener(new ValueEventListener() {
+                 mDatabase.child("shops").child(ownerId).child("coordinates").addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         latitude[0] = snapshot.child("latitud").getValue().toString();
