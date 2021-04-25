@@ -2,10 +2,12 @@ package com.example.laspiedrasapp.fragments;
 
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.DialogFragment;
 
 import android.view.LayoutInflater;
@@ -16,13 +18,19 @@ import com.bumptech.glide.Glide;
 import com.example.laspiedrasapp.R;
 import com.example.laspiedrasapp.databinding.FragmentEditProductProfileBinding;
 import com.example.laspiedrasapp.models.ProfileProductModel;
+import com.google.android.gms.tasks.Continuation;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
+
+import java.util.Objects;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -101,10 +109,24 @@ public class EditProductProfileFragment extends DialogFragment {
                     mDatabase.child("products").child(productId).child("product_name").setValue(product_name);// Guardo los datos en la coleccion con un identificador unico
                     mDatabase.child("products").child(productId).child("product_price").setValue(product_price);// Guardo los datos en la coleccion con un identificador unico
                     if(photoChanged){
-                        final StorageReference ref = storageReference.child(productId);
-                        ref.putFile(resultUri).addOnSuccessListener(taskSnapshot -> ref.getDownloadUrl().addOnSuccessListener(uri -> {
-                            mDatabase.child("products").child(productId).child("product_image_url").setValue(String.valueOf(uri));// Guardo los datos en la coleccion con un identificador unico
-                        }));
+
+                        StorageReference ref = storageReference.child(productId); UploadTask uploadTask = ref.putFile(resultUri);
+                        Task<Uri> uriTask = uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
+                            @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+                            @Override
+                            public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
+                                if (!task.isSuccessful()){
+                                    throw Objects.requireNonNull(task.getException());
+                                }
+                                return ref.getDownloadUrl();
+                            }
+                        }).addOnCompleteListener(new OnCompleteListener<Uri>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Uri> task) {
+                                Uri downloaduri = task.getResult(); // Url de la foto
+                                mDatabase.child("products").child(productId).child("product_image_url").setValue(String.valueOf(downloaduri));// Guardo los datos en la coleccion con un identificador unico
+                            }
+                        });
                     }
                     dismiss();
                 } else {
