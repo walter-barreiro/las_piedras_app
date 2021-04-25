@@ -2,26 +2,35 @@ package com.example.laspiedrasapp.fragments;
 
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.DialogFragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.laspiedrasapp.R;
 import com.example.laspiedrasapp.databinding.FragmentNewProductCommerceBinding;
 import com.example.laspiedrasapp.models.CommerceProductModel;
+import com.google.android.gms.tasks.Continuation;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
+
+import java.util.Objects;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -37,6 +46,7 @@ public class NewProductCommerceFragment extends DialogFragment {
     private DatabaseReference mDatabase; // Para extraer los datos de firebase
     private StorageReference storageReference; // Para el Storage
     private Uri resultUri; // Para la imagen
+    private Boolean photoSelected=false;
 
 
     public NewProductCommerceFragment() {
@@ -90,7 +100,9 @@ public class NewProductCommerceFragment extends DialogFragment {
                 // Obtengo los datos ingresados
                 String product_name = binding.tvCommerceProductName.getText().toString();
                 String product_price = binding.tvCommerceProductPrice.getText().toString();
-                if( isValid(product_name,product_price) ){// Me fijo que los datos sean validos
+
+
+                if( isValid(product_name,product_price) && photoSelected ) {// Me fijo que los datos sean validos
                     // Hay que ver si tiene internet y avisar
                     String key = mDatabase.child(PRODUCT_COMMERCE_COLLECTION).push().getKey(); // Obtengo el id del producto que voy a subir
                     // Creo los datos que se van a subir
@@ -99,17 +111,32 @@ public class NewProductCommerceFragment extends DialogFragment {
                     commerceProductModel.setPrice(product_price);
                     commerceProductModel.setId(key);
                     commerceProductModel.setOwnerId(userId);
-                    mDatabase.child(PRODUCT_COMMERCE_COLLECTION).child(key).setValue(commerceProductModel);// Guardo los datos en la coleccion con un identificador unico
                     mDatabase.child(COMMERCE_COLLECTION).child(userId).child("products").child(key).setValue(true);// Guardo los datos en la coleccion con un identificador unico
-                    if(resultUri!=null){
-                        final StorageReference ref = storageReference.child(key);
-                        ref.putFile(resultUri).addOnSuccessListener(taskSnapshot -> ref.getDownloadUrl().addOnSuccessListener(uri -> {
-                            mDatabase.child(PRODUCT_COMMERCE_COLLECTION).child(key).child("imgUrl").setValue(String.valueOf(uri));// Guardo la url de la foto del producto
-                        }));
-                    }
+
+                    StorageReference ref = storageReference.child(key);
+                    UploadTask uploadTask = ref.putFile(resultUri);
+                    Task<Uri> uriTask = uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
+                        @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+                        @Override
+                        public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
+                            if (!task.isSuccessful()){
+                                throw Objects.requireNonNull(task.getException());
+                            }
+                            return ref.getDownloadUrl();
+                        }
+                    }).addOnCompleteListener(new OnCompleteListener<Uri>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Uri> task) {
+                            Uri downloaduri = task.getResult(); // Url de la foto
+                            commerceProductModel.setImgUrl(String.valueOf(downloaduri));
+                            mDatabase.child(PRODUCT_COMMERCE_COLLECTION).child(key).setValue(commerceProductModel);// Guardo los datos en la coleccion con un identificador unico
+                            dismiss();
+                        }
+                    });
+
                     dismiss();
                 } else {
-                    // Mostar algun mensaje de error
+                    Toast.makeText(getContext(), "Debe completar todos los campos", Toast.LENGTH_SHORT).show();
                 }
 
             }
@@ -119,13 +146,14 @@ public class NewProductCommerceFragment extends DialogFragment {
     }
 
     private boolean isValid(String product_name, String product_price) {
-        return true;
+        return !product_name.isEmpty() && !product_price.isEmpty();
     }
 
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
             CropImage.ActivityResult result = CropImage.getActivityResult(data);
             if (resultCode == RESULT_OK) {
+                photoSelected = true;
                 resultUri = result.getUri();
                 binding.ivCommerceImage.setImageURI(resultUri);
             } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
