@@ -10,12 +10,14 @@ public class CategoriaModel implements Serializable {
     private String id;
     private String image;
     private String title;
+    private String category;
 
 
-    public CategoriaModel(String id, String image, String title) {
+    public CategoriaModel(String id, String image, String title, String category) {
         this.id = id;
         this.image = image;
         this.title = title;
+        this.category = category;
     }
 
     public String getId() {
@@ -42,5 +44,11 @@ public class CategoriaModel implements Serializable {
         this.title = title;
     }
 
+    public String getCategory() {
+        return category;
+    }
 
+    public void setCategory(String category) {
+        this.category = category;
+    }
 }
