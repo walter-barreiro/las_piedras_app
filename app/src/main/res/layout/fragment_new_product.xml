@@ -22,25 +22,38 @@
 
 
     <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/tvProductPrice"
+        android:id="@+id/tvEdiProductCategory"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:hint="Precio"
+        android:layout_marginTop="16dp"
+        android:hint="Categoria"
         android:textColor="@color/black"
-        android:textSize="14dp"
+        android:textSize="18dp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="@+id/tvProductName"
         app:layout_constraintStart_toStartOf="@+id/tvProductName"
         app:layout_constraintTop_toBottomOf="@+id/tvProductName" />
 
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/tvProductPrice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:hint="Precio"
+        android:textColor="@color/black"
+        android:textSize="14dp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@+id/tvEdiProductCategory"
+        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintStart_toStartOf="@+id/tvEdiProductCategory"
+        app:layout_constraintTop_toBottomOf="@+id/tvEdiProductCategory" />
+
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btnSave"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="32dp"
-        android:background="@drawable/bt_pf"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
         android:text="Guardar"
         android:textColor="@color/colorWhite"
         app:layout_constraintEnd_toEndOf="parent"
@@ -51,9 +64,8 @@
         android:id="@+id/btnCancel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="8dp"
-        android:background="@drawable/bt_pf"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
         android:text="Cancelar"
         android:textColor="@color/colorWhite"
         app:layout_constraintEnd_toStartOf="@+id/tvProductPrice"
@@ -84,14 +96,5 @@
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        app:layout_constraintEnd_toEndOf="@+id/btnSave"
-        app:layout_constraintStart_toStartOf="@+id/btnCancel"
-        app:layout_constraintTop_toBottomOf="@+id/btnCancel" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

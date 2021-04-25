@@ -20,6 +20,19 @@
         app:layout_constraintStart_toStartOf="@+id/ivEdit"
         app:layout_constraintTop_toBottomOf="@+id/tvEditProductImage" />
 
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/tvEditProductCategory"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:hint="Categoria"
+        android:textColor="@color/black"
+        android:textSize="18dp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@+id/tvEditProductName"
+        app:layout_constraintStart_toStartOf="@+id/tvEditProductName"
+        app:layout_constraintTop_toBottomOf="@+id/tvEditProductName" />
+
 
     <com.google.android.material.textfield.TextInputEditText
         android:id="@+id/tvEditProductPrice"
@@ -27,40 +40,40 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:hint="Precio"
+        android:textColor="@color/black"
         android:textSize="14dp"
         android:textStyle="bold"
-        android:textColor="@color/black"
-        app:layout_constraintEnd_toEndOf="@+id/tvEditProductName"
-        app:layout_constraintStart_toStartOf="@+id/tvEditProductName"
-        app:layout_constraintTop_toBottomOf="@+id/tvEditProductName" />
+        app:layout_constraintEnd_toEndOf="@+id/tvEditProductCategory"
+        app:layout_constraintStart_toStartOf="@+id/tvEditProductCategory"
+        app:layout_constraintTop_toBottomOf="@+id/tvEditProductCategory" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btnEditSave"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
         android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
+        android:layout_marginEnd="8dp"
         android:text="Guardar"
-        android:background="@drawable/bt_pf"
         android:textColor="@color/colorWhite"
+        android:textSize="8sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/tvEditProductPrice"
+        app:layout_constraintStart_toEndOf="@+id/btnEditDelete"
         app:layout_constraintTop_toBottomOf="@+id/tvEditProductPrice" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btnEditCancel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
+        android:layout_marginEnd="4dp"
         android:text="Cancelar"
-        android:background="@drawable/bt_pf"
         android:textColor="@color/colorWhite"
-        app:layout_constraintBottom_toBottomOf="@+id/btnEditSave"
-        app:layout_constraintEnd_toStartOf="@+id/tvEditProductPrice"
+        android:textSize="8sp"
+        app:layout_constraintEnd_toStartOf="@+id/btnEditDelete"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvEditProductPrice"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toBottomOf="@+id/tvEditProductPrice" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btnEditDelete"
@@ -68,11 +81,11 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:text="Eliminar"
-        android:background="@drawable/bt_pf"
         android:textColor="@color/colorWhite"
-        app:layout_constraintEnd_toStartOf="@+id/btnEditSave"
-        app:layout_constraintHorizontal_bias="0.63"
-        app:layout_constraintStart_toEndOf="@+id/btnEditCancel"
+        android:textSize="8sp"
+        app:layout_constraintEnd_toEndOf="@+id/tvEditProductPrice"
+        app:layout_constraintHorizontal_bias="0.622"
+        app:layout_constraintStart_toStartOf="@+id/tvEditProductPrice"
         app:layout_constraintTop_toBottomOf="@+id/tvEditProductPrice" />
 
     <TextView
@@ -99,5 +112,7 @@
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

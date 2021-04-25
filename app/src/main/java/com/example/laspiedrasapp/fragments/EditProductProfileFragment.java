@@ -72,6 +72,7 @@ public class EditProductProfileFragment extends DialogFragment {
 
         binding.tvEditProductName.setText(profileProductModel.getProduct_name());
         binding.tvEditProductPrice.setText(profileProductModel.getProduct_price());
+        binding.tvEditProductCategory.setText(profileProductModel.getProduct_category());
         Glide.with(getContext()).load(profileProductModel.getProduct_image_url()).into(binding.ivEdit);
 
         productId = profileProductModel.getProduct_id();
@@ -92,14 +93,16 @@ public class EditProductProfileFragment extends DialogFragment {
                 // Extraigo los datos del producto
                 String product_name = binding.tvEditProductName.getText().toString();
                 String product_price = binding.tvEditProductPrice.getText().toString();
+                String product_category = binding.tvEditProductCategory.getText().toString();
                 // Me fijo que los datos sean validos
-                if( isValid(product_name,product_price) ){
+                if (isValid(product_name,product_price, product_category)){
                     // Hay que ver si tiene internet y avisar
                     //---
 //                    uploadImage(key);
                     // Creo los datos que se van a subir
                     mDatabase.child("products").child(productId).child("product_name").setValue(product_name);// Guardo los datos en la coleccion con un identificador unico
                     mDatabase.child("products").child(productId).child("product_price").setValue(product_price);// Guardo los datos en la coleccion con un identificador unico
+                    mDatabase.child("products").child(productId).child("product_category").setValue(product_category);
                     if(photoChanged){
                         final StorageReference ref = storageReference.child(productId);
                         ref.putFile(resultUri).addOnSuccessListener(taskSnapshot -> ref.getDownloadUrl().addOnSuccessListener(uri -> {
@@ -135,9 +138,13 @@ public class EditProductProfileFragment extends DialogFragment {
 
     }
 
-    private boolean isValid(String product_name, String product_price) {
+    private boolean isValid(String product_name, String product_price, String product_category) {
         return true;
     }
+
+    /*private boolean isValid(String productName, String product_name, String product_price, String product_category) {
+        return true;
+    }*/
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {

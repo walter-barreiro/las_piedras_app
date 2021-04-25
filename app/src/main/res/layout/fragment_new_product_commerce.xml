@@ -22,26 +22,38 @@ tools:context=".fragments.NewProductCommerceFragment">
         app:layout_constraintTop_toBottomOf="@+id/tvCommerceProductImage" />
 
     <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/tvCommerceProductPrice"
+        android:id="@+id/tvEditCommerceProductCategory"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:hint="Precio"
+        android:layout_marginTop="16dp"
+        android:hint="Categoria"
         android:textColor="@color/black"
-        android:textSize="14dp"
+        android:textSize="18dp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="@+id/tvCommerceProductName"
         app:layout_constraintStart_toStartOf="@+id/tvCommerceProductName"
         app:layout_constraintTop_toBottomOf="@+id/tvCommerceProductName" />
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/tvCommerceProductPrice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:hint="Precio"
+        android:textColor="@color/black"
+        android:textSize="14dp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@+id/tvEditCommerceProductCategory"
+        app:layout_constraintStart_toStartOf="@+id/tvEditCommerceProductCategory"
+        app:layout_constraintTop_toBottomOf="@+id/tvEditCommerceProductCategory" />
 
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btnCommerceSave"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="32dp"
-        android:background="@drawable/bt_pf"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
         android:text="Guardar"
         android:textColor="@color/colorWhite"
         app:layout_constraintEnd_toEndOf="parent"
@@ -52,16 +64,13 @@ tools:context=".fragments.NewProductCommerceFragment">
         android:id="@+id/btnCommerceCancel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="8dp"
-        android:background="@drawable/bt_pf"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
         android:text="Cancelar"
         android:textColor="@color/colorWhite"
-        app:layout_constraintBottom_toBottomOf="@+id/btnSave"
         app:layout_constraintEnd_toStartOf="@+id/tvCommerceProductPrice"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvCommerceProductPrice"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toBottomOf="@+id/tvCommerceProductPrice" />
 
     <TextView
         android:id="@+id/tvCommerceProductImage"
@@ -87,14 +96,5 @@ tools:context=".fragments.NewProductCommerceFragment">
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        app:layout_constraintEnd_toEndOf="@+id/btnCommerceSave"
-        app:layout_constraintStart_toStartOf="@+id/btnCommerceCancel"
-        app:layout_constraintTop_toBottomOf="@+id/btnCommerceCancel" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

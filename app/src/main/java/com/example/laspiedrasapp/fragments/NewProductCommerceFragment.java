@@ -90,13 +90,15 @@ public class NewProductCommerceFragment extends DialogFragment {
                 // Obtengo los datos ingresados
                 String product_name = binding.tvCommerceProductName.getText().toString();
                 String product_price = binding.tvCommerceProductPrice.getText().toString();
-                if( isValid(product_name,product_price) ){// Me fijo que los datos sean validos
+                String product_category = binding.tvEditCommerceProductCategory.getText().toString();
+                if( isValid(product_name,product_price, product_category) ){// Me fijo que los datos sean validos
                     // Hay que ver si tiene internet y avisar
                     String key = mDatabase.child(PRODUCT_COMMERCE_COLLECTION).push().getKey(); // Obtengo el id del producto que voy a subir
                     // Creo los datos que se van a subir
                     CommerceProductModel commerceProductModel = new CommerceProductModel();// Creo el modelo del producto del comercio
                     commerceProductModel.setName(product_name);
                     commerceProductModel.setPrice(product_price);
+                    commerceProductModel.setCategory(product_category);
                     commerceProductModel.setId(key);
                     commerceProductModel.setOwnerId(userId);
                     mDatabase.child(PRODUCT_COMMERCE_COLLECTION).child(key).setValue(commerceProductModel);// Guardo los datos en la coleccion con un identificador unico
@@ -118,9 +120,13 @@ public class NewProductCommerceFragment extends DialogFragment {
 
     }
 
-    private boolean isValid(String product_name, String product_price) {
+    private boolean isValid(String product_name, String product_price, String product_category) {
         return true;
     }
+
+    /*private boolean isValid(String productName, String product_name, String product_price, String product_category) {
+        return true;
+    }*/
 
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {

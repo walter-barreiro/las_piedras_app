@@ -65,8 +65,9 @@ public class NewProductFragment extends  DialogFragment {
                 // Extraigo los datos del producto
                 String product_name = binding.tvProductName.getText().toString();
                 String product_price = binding.tvProductPrice.getText().toString();
+                String product_category = binding.tvEdiProductCategory.getText().toString();
                 // Me fijo que los datos sean validos
-                if( isValid(product_name,product_price) ){
+                if( isValid(product_name,product_price, product_category) ){
                     // Hay que ver si tiene internet y avisar
                     //---
                     String key = mDatabase.child("products").push().getKey(); // Obtengo el id del producto que voy a subir
@@ -78,6 +79,7 @@ public class NewProductFragment extends  DialogFragment {
                         profileProductModel.setProduct_image_url(String.valueOf(uri));
                         profileProductModel.setProduct_name(product_name);
                         profileProductModel.setProduct_price(product_price);
+                        profileProductModel.setProduct_category(product_category);
                         profileProductModel.setProduct_id(key);
                         profileProductModel.setProduct_userId(userId);
                         mDatabase.child("products").child(key).setValue(profileProductModel);// Guardo los datos en la coleccion con un identificador unico
@@ -124,7 +126,7 @@ public class NewProductFragment extends  DialogFragment {
         }
         super.onActivityResult(requestCode, resultCode, data);
     }
-    private boolean isValid(String product_name, String product_price) {
+    private boolean isValid(String productName, String product_name, String product_price) {
         return true;
     }
 

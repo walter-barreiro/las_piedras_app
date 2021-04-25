@@ -51,7 +51,7 @@ public class ProfileProductAdapter  extends RecyclerView.Adapter<ProfileProductA
     public void setItems(List<ProfileProductModel> items) {mData = items;}
 
     public class ViewHolder extends RecyclerView.ViewHolder{
-        TextView name, price;
+        TextView name, price, category;
         ImageView image;
 
         ViewHolder(View itemView){
@@ -59,6 +59,7 @@ public class ProfileProductAdapter  extends RecyclerView.Adapter<ProfileProductA
             // Aca van todos los view
             name = itemView.findViewById(R.id.tvName);
             price = itemView.findViewById(R.id.tvItemProductPrice);
+            category = itemView.findViewById(R.id.tvEdiProductCategory);
             image = itemView.findViewById(R.id.ivItemProductProfile);
         }
 
@@ -66,6 +67,7 @@ public class ProfileProductAdapter  extends RecyclerView.Adapter<ProfileProductA
             // Aca va lo que se hace con los view
             name.setText(item.getProduct_name());
             price.setText(item.getProduct_price());
+//            category.setText(item.getProduct_category());
 //            image.setImageURI(item.getProduct_image());
 //            Picasso.with(context).load(item.getProduct_image_url()).into(image);
             Glide.with(context).load(item.getProduct_image_url()).into(image);
