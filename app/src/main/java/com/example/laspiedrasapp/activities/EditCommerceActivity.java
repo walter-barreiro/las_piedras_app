@@ -222,7 +222,7 @@ public class EditCommerceActivity extends AppCompatActivity {
                             latlang.put("latitud",location.getLatitude());
                             latlang.put("longitud", location.getLongitude());
 
-                            Toast.makeText(EditCommerceActivity.this, "Uicación guardada: ", Toast.LENGTH_LONG).show();;
+                            Toast.makeText(EditCommerceActivity.this, "Ubicación guardada con exito!", Toast.LENGTH_LONG).show();;
                         }
                     }
                 });
