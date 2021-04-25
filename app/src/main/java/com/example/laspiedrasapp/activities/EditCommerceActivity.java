@@ -1,15 +1,19 @@
 package com.example.laspiedrasapp.activities;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -21,17 +25,22 @@ import com.example.laspiedrasapp.models.BusinessModel;
 import com.example.laspiedrasapp.models.CommerceModel;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.tasks.Continuation;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 public class EditCommerceActivity extends AppCompatActivity {
     private FirebaseAuth mAuth; // Para poder obtener el id del usuario
@@ -40,6 +49,9 @@ public class EditCommerceActivity extends AppCompatActivity {
     ActivityEditCommerceBinding binding;
     private FusedLocationProviderClient fusedLocationClient;
     private CommerceModel commerceModel;
+    private Map<String,Object> latlang = new HashMap<>();
+    private StorageReference ref;
+    private ProgressDialog progressDialog;
 
 
 
@@ -57,6 +69,8 @@ public class EditCommerceActivity extends AppCompatActivity {
         storageReference = FirebaseStorage.getInstance().getReference(); // Para guardar las fotos de perfil en storage
         userId= mAuth.getCurrentUser().getUid(); // Obtengo el id del usuario logeado
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
+
+        progressDialog = new ProgressDialog(EditCommerceActivity.this);
 
         setContentView(view);
 
@@ -115,27 +129,42 @@ public class EditCommerceActivity extends AppCompatActivity {
         String description = binding.tinputCommcerceDescription.getText().toString();
         //---
 
+        progressDialog.show();
         if( isValid(name,description) ){ // Me fijo que los datos sean validos
             // Hay que ver si tiene internet y avisar
             //---
-            CommerceModel commerceModel = new CommerceModel();// creo la clase Profile con los parametros
-            commerceModel.setName(name);
-            commerceModel.setDescription(description);
-            commerceModel.setOwnerId(userId);
-            mDatabase.child("shops").child(userId).child("name").setValue(commerceModel.getName());// Guardo los datos en la coleccion
-            mDatabase.child("shops").child(userId).child("ownerId").setValue(commerceModel.getOwnerId());// Guardo los datos en la coleccion
-            mDatabase.child("shops").child(userId).child("description").setValue(commerceModel.getDescription());// Guardo los datos en la coleccion
+            if(!latlang.isEmpty()){
+                mDatabase.child("shops").child(userId).child("coordinates").setValue(latlang);
+            }
+            mDatabase.child("shops").child(userId).child("name").setValue(name);// Guardo los datos en la coleccion
+            mDatabase.child("shops").child(userId).child("ownerId").setValue(userId);// Guardo los datos en la coleccion
+            mDatabase.child("shops").child(userId).child("description").setValue(description);// Guardo los datos en la coleccion
             mDatabase.child("users").child(userId).child("commerce").setValue("created");
             // Guardo el  banner si fue cambiado o agregado
             if (resultUri!=null){
-                final StorageReference ref = storageReference.child("shops_banners").child(userId);
-                ref.putFile(resultUri).addOnSuccessListener(taskSnapshot -> ref.getDownloadUrl().addOnSuccessListener(uri -> {
-                    // Guardo los datos en el perfil del usuario
-                    mDatabase.child("shops").child(userId).child("banner_url").setValue(String.valueOf(uri));// Guardo los datos en la coleccion
-                }));
+                ref = storageReference.child("shops_banners").child(userId);
+                UploadTask uploadTask = ref.putFile(resultUri);
+                Task<Uri> uriTask = uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
+                    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+                    @Override
+                    public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
+                        if (!task.isSuccessful()){
+                            throw Objects.requireNonNull(task.getException());
+                        }
+                        return ref.getDownloadUrl();
+                    }
+                }).addOnCompleteListener(new OnCompleteListener<Uri>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Uri> task) {
+                        Uri downloaduri = task.getResult(); // Url de la foto
+                        mDatabase.child("shops").child(userId).child("banner_url").setValue(String.valueOf(downloaduri));// Guardo los datos en la coleccion
+                        finish();
+                    }
+                });
+
+            } else {
+                finish();
             }
-            // Ahora tengo que salir de la actividad
-            finish();
         } else {
             Toast.makeText(this, "Debe completar todos los campos", Toast.LENGTH_SHORT).show();
         }
@@ -190,10 +219,8 @@ public class EditCommerceActivity extends AppCompatActivity {
                         if (location != null) {
                             Log.e("Latitud: ", + location.getLatitude() + "Longitud: " + location.getLongitude());
 
-                            Map<String,Object> latlang = new HashMap<>();
                             latlang.put("latitud",location.getLatitude());
                             latlang.put("longitud", location.getLongitude());
-                            mDatabase.child("shops").child(userId).child("coordinates").setValue(latlang);
 
                             Toast.makeText(EditCommerceActivity.this, "Uicación guardada: ", Toast.LENGTH_LONG).show();;
                         }
