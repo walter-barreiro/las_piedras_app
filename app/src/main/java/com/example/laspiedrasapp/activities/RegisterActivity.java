@@ -54,8 +54,8 @@ public class RegisterActivity extends AppCompatActivity {
      //INSTANCIAMOS FirebaseAuth EN "mAuth"
         mAuth = FirebaseAuth.getInstance();
      //SE REFERENCIAN  LOS EDIT TEXT DEL LAYOUT CON SUS CORRESPONDIENTES VARIABLES
-        mEditTextEmail = (EditText) findViewById(R.id.editTextEmail);
-        mEditTextPassword = (EditText) findViewById(R.id.editTextPassword);
+        mEditTextEmail = (EditText) findViewById(R.id.textInputEditTextCorreo);
+        mEditTextPassword = (EditText) findViewById(R.id.textInputEditTextContrasena);
         mButtonRegister = (Button) findViewById(R.id.btnRegister);
         mAlredyHaveAccount = (TextView) findViewById(R.id.alredyHaveAccount);
         mButtonSignIn = findViewById(R.id.btnSignin);
