@@ -53,7 +53,7 @@ public class AdapterProductoFiltrado extends RecyclerView.Adapter<AdapterProduct
         holder.nombre.setText(pr.getProduct_name());
         holder.precio.setText(pr.getProduct_price());
         holder.descripcion.setText(pr.getProduct_description());
-        holder.categoria.setText(pr.getProduct_category());
+        holder.category.setText(pr.getProduct_category());
         holder.stock.setText(pr.getProduct_stock());
         Glide.with(holder.image.getContext()).load(pr.getProduct_image_url()).into(holder.image);
 
@@ -75,7 +75,7 @@ public class AdapterProductoFiltrado extends RecyclerView.Adapter<AdapterProduct
         final TextView nombre;
         final TextView precio;
         final TextView descripcion;
-        final TextView categoria;
+        final TextView category;
         final TextView stock;
         final ImageView image;
 
@@ -84,7 +84,7 @@ public class AdapterProductoFiltrado extends RecyclerView.Adapter<AdapterProduct
             nombre = itemView.findViewById(R.id.nombre_p);
             precio = itemView.findViewById(R.id.precio_p);
             descripcion = itemView.findViewById(R.id.descripcion_p);
-            categoria = itemView.findViewById(R.id.categoria_p);
+            category = itemView.findViewById(R.id.categoria_p);
             stock = itemView.findViewById(R.id.stock_p);
             image = itemView.findViewById(R.id.image_p);
 

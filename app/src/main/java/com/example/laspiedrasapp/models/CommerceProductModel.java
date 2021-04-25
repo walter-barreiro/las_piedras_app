@@ -13,12 +13,13 @@ public class CommerceProductModel implements Serializable {
     private String description;
     private String imgUrl;
     private String ownerId;
+    private String category;
 
     public CommerceProductModel() {
 
     }
 
-    public CommerceProductModel(String id, String userId, String name, String price, String description, String imgUrl, String ownerId) {
+    public CommerceProductModel(String id, String userId, String name, String price, String description, String imgUrl, String ownerId, String category) {
         this.id = id;
         this.userId = userId;
         this.name = name;
@@ -26,6 +27,7 @@ public class CommerceProductModel implements Serializable {
         this.description = description;
         this.imgUrl = imgUrl;
         this.ownerId = ownerId;
+        this.category = category;
     }
 
     public String getOwnerId() {
@@ -82,5 +84,13 @@ public class CommerceProductModel implements Serializable {
 
     public void setImgUrl(String imgUrl) {
         this.imgUrl = imgUrl;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
     }
 }

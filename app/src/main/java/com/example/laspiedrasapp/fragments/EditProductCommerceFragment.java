@@ -72,6 +72,7 @@ public class EditProductCommerceFragment extends DialogFragment {
 
         binding.tvEditProductCommerceName.setText(commerceProductModel.getName());
         binding.tvEditProductCommercePrice.setText(commerceProductModel.getPrice());
+        binding.tvEditProductCategory.setText(commerceProductModel.getCategory());
         Glide.with(getContext()).load(commerceProductModel.getImgUrl()).into(binding.ivEditProductCommrece);
 
         productId = commerceProductModel.getId();
@@ -100,10 +101,12 @@ public class EditProductCommerceFragment extends DialogFragment {
                 // Obtengo los datos ingresados
                 String product_name = binding.tvEditProductCommerceName.getText().toString();
                 String product_price = binding.tvEditProductCommercePrice.getText().toString();
-                if( isValid(product_name,product_price) ){// Me fijo que los datos sean validos
+                String product_category = binding.tvEditProductCategory.getText().toString();
+                if( isValid(product_name,product_price, product_category) ){// Me fijo que los datos sean validos
                     // Hay que ver si tiene internet y avisar
                     mDatabase.child(PRODUCT_COLLECTION).child(productId).child("name").setValue(product_name);// Guardo los datos en la coleccion con un identificador unico
                     mDatabase.child(PRODUCT_COLLECTION).child(productId).child("price").setValue(product_price);// Guardo los datos en la coleccion con un identificador unico
+                    mDatabase.child(PRODUCT_COLLECTION).child(productId).child("category").setValue(product_category);
                     if(photoChanged){
                         final StorageReference ref = storageReference.child(productId);
                         ref.putFile(resultUri).addOnSuccessListener(taskSnapshot -> ref.getDownloadUrl().addOnSuccessListener(uri -> {
@@ -129,8 +132,8 @@ public class EditProductCommerceFragment extends DialogFragment {
         });
     }
 
-    private boolean isValid(String product_name, String product_price) {
-        return true;
+    private boolean isValid(String product_name, String product_price, String product_category) {
+        return !product_name.isEmpty() && !product_price.isEmpty() && product_category.isEmpty() ;
     }
 
 

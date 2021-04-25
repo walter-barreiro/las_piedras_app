@@ -45,4 +45,5 @@ public class CommerceModel implements Serializable {
 
     public String getOwnerId() { return ownerId; }
     public void setOwnerId(String ownerId) { this.ownerId = ownerId; }
+
 }

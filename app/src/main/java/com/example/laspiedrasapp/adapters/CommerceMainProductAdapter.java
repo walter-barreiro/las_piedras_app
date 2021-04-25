@@ -31,6 +31,7 @@ public class CommerceMainProductAdapter extends FirebaseRecyclerAdapter<Commerce
     {
         holder.name.setText(model.getName());
         holder.price.setText(model.getPrice());
+        holder.category.setText(model.getCategory());
         Glide.with(holder.imgUrl.getContext()).load(model.getImgUrl()).into(holder.imgUrl);
         holder.imgUrl.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -57,13 +58,14 @@ public class CommerceMainProductAdapter extends FirebaseRecyclerAdapter<Commerce
     class myviewholder extends RecyclerView.ViewHolder
     {
         ImageView imgUrl;
-        TextView name,price ;
+        TextView name,price, category ;
         public myviewholder(@NonNull View itemView)
         {
             super(itemView);
             imgUrl=(ImageView) itemView.findViewById(R.id.ivItemProductCommerce);
             name=(TextView)itemView.findViewById(R.id.tvProductCommerceName);
             price=(TextView)itemView.findViewById(R.id.tvItemProductCommercePrice);
+            category = itemView.findViewById(R.id.tvItemProductCommerceCategory);
 
         }
     }

@@ -52,7 +52,7 @@ public class CommerceProductAdapter extends RecyclerView.Adapter<CommerceProduct
     public void setItems(List<CommerceProductModel> items) {mData = items;}
 
     public class ViewHolder extends RecyclerView.ViewHolder{
-        TextView name, price;
+        TextView name, price, category;
         ImageView image;
 
         ViewHolder(View itemView){
@@ -60,12 +60,14 @@ public class CommerceProductAdapter extends RecyclerView.Adapter<CommerceProduct
             // Aca van todos los view
             name = itemView.findViewById(R.id.tvProductCommerceName);
             price = itemView.findViewById(R.id.tvItemProductCommercePrice);
+            category = itemView.findViewById(R.id.tvItemProductCommerceCategory);
             image = itemView.findViewById(R.id.ivItemProductCommerce);
         }
 
         void bindData(final CommerceProductModel item){
             // Aca va lo que se hace con los view
             name.setText(item.getName());
+            category.setText(item.getCategory());
             price.setText(item.getPrice());
             Glide.with(context).load(item.getImgUrl()).into(image);
             itemView.setOnClickListener(new View.OnClickListener() {

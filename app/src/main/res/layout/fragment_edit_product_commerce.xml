@@ -21,6 +21,19 @@ tools:context=".fragments.EditProductCommerceFragment">
         app:layout_constraintTop_toBottomOf="@+id/tvEditProductCommerceImage" />
 
     <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/tvEditProductCategory"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:hint="Categoria"
+        android:textColor="@color/black"
+        android:textSize="18dp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@+id/tvEditProductCommerceName"
+        app:layout_constraintStart_toStartOf="@+id/tvEditProductCommerceName"
+        app:layout_constraintTop_toBottomOf="@+id/tvEditProductCommerceName" />
+
+    <com.google.android.material.textfield.TextInputEditText
         android:id="@+id/tvEditProductCommercePrice"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -29,17 +42,17 @@ tools:context=".fragments.EditProductCommerceFragment">
         android:textSize="16dp"
         android:textStyle="bold"
         android:textColor="@color/black"
-        app:layout_constraintEnd_toEndOf="@+id/tvEditProductCommerceName"
-        app:layout_constraintStart_toStartOf="@+id/tvEditProductCommerceName"
-        app:layout_constraintTop_toBottomOf="@+id/tvEditProductCommerceName" />
+        app:layout_constraintEnd_toEndOf="@+id/tvEditProductCategory"
+        app:layout_constraintStart_toStartOf="@+id/tvEditProductCategory"
+        app:layout_constraintTop_toBottomOf="@+id/tvEditProductCategory" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btnEditCommerceSave"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="32dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="8dp"
         android:text="Guardar"
-        android:background="@drawable/bt_pf"
         android:textColor="@color/colorWhite"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/tvEditProductCommercePrice"
@@ -49,7 +62,9 @@ tools:context=".fragments.EditProductCommerceFragment">
         android:id="@+id/btnEditCommerceDelete"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/bt_pf"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="4dp"
         android:text="Eliminar"
         android:textColor="@color/colorWhite"
         app:layout_constraintEnd_toEndOf="@+id/tvEditProductCommercePrice"
@@ -60,9 +75,9 @@ tools:context=".fragments.EditProductCommerceFragment">
         android:id="@+id/btnEditCommerceCancel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
         android:text="Cancelar"
-        android:background="@drawable/bt_pf"
         android:textColor="@color/colorWhite"
         app:layout_constraintEnd_toStartOf="@+id/tvEditProductCommercePrice"
         app:layout_constraintStart_toStartOf="parent"

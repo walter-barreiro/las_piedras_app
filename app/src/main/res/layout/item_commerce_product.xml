@@ -37,6 +37,15 @@ xmlns:app="http://schemas.android.com/apk/res-auto">
             android:textStyle="bold"/>
 
         <TextView
+            android:id="@+id/tvItemProductCommerceCategory"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Categoria"
+            android:textSize="16dp"
+            android:textColor="@color/black"
+            android:textStyle="bold"/>
+
+        <TextView
             android:id="@+id/tvItemProductCommercePrice"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
