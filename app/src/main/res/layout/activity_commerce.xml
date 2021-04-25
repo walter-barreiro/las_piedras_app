@@ -23,7 +23,6 @@
         android:layout_marginTop="24dp"
         android:text="Editar"
         android:textColor="@color/colorWhite"
-        android:background="@drawable/input_bg"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/ivCommcerceBanner"
         app:layout_constraintTop_toBottomOf="@+id/ivCommcerceBanner" />
@@ -32,7 +31,7 @@
         android:id="@+id/tvCommcerceName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         android:textSize="18dp"
         app:layout_constraintEnd_toEndOf="@+id/btnCommerceEdit"
         app:layout_constraintStart_toStartOf="@+id/btnCommerceEdit"
@@ -42,37 +41,17 @@
         android:id="@+id/tvCommcerceDescription"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         android:textSize="14dp"
         app:layout_constraintEnd_toEndOf="@+id/tvCommcerceName"
         app:layout_constraintStart_toStartOf="@+id/tvCommcerceName"
         app:layout_constraintTop_toBottomOf="@+id/tvCommcerceName" />
 
-    <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/mtvCommcerceAvailability"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:textSize="18dp"
-        app:layout_constraintEnd_toEndOf="@+id/tvCommcerceDescription"
-        app:layout_constraintStart_toStartOf="@+id/tvCommcerceDescription"
-        app:layout_constraintTop_toBottomOf="@+id/tvCommcerceDescription" />
-
-    <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/mtvCommerceLocation"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:textSize="18dp"
-        app:layout_constraintEnd_toEndOf="@+id/mtvCommcerceAvailability"
-        app:layout_constraintStart_toStartOf="@+id/mtvCommcerceAvailability"
-        app:layout_constraintTop_toBottomOf="@+id/mtvCommcerceAvailability" />
-
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tlCommerce"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="8dp"
         app:layout_constraintEnd_toEndOf="@+id/btn_commerce_location"
         app:layout_constraintStart_toStartOf="@+id/btn_commerce_location"
         app:layout_constraintTop_toBottomOf="@+id/btn_commerce_location">
@@ -83,7 +62,6 @@
         android:id="@+id/vp2Commerce"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tlCommerce"
         app:layout_constraintVertical_bias="0.0"
@@ -93,15 +71,14 @@
         android:id="@+id/btn_commerce_location"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:background="@drawable/btn_bg"
+        android:layout_marginTop="8dp"
         android:text="Ver Ubicación"
         android:textColor="@color/colorWhite"
         android:textSize="10sp"
         android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="@+id/mtvCommerceLocation"
-        app:layout_constraintStart_toStartOf="@+id/mtvCommerceLocation"
-        app:layout_constraintTop_toBottomOf="@+id/mtvCommerceLocation" />
+        app:layout_constraintEnd_toEndOf="@+id/tvCommcerceDescription"
+        app:layout_constraintStart_toStartOf="@+id/tvCommcerceDescription"
+        app:layout_constraintTop_toBottomOf="@+id/tvCommcerceDescription" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -51,41 +51,34 @@
         android:id="@+id/btnEditSave"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="4dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="8dp"
+        android:layout_marginEnd="32dp"
         android:text="Guardar"
         android:textColor="@color/colorWhite"
-        android:textSize="8sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/btnEditDelete"
-        app:layout_constraintTop_toBottomOf="@+id/tvEditProductPrice" />
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="@+id/btnEditDelete"
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btnEditCancel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="4dp"
+        android:layout_marginStart="32dp"
         android:text="Cancelar"
         android:textColor="@color/colorWhite"
-        android:textSize="8sp"
-        app:layout_constraintEnd_toStartOf="@+id/btnEditDelete"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvEditProductPrice" />
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="@+id/btnEditDelete"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btnEditDelete"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="24dp"
         android:text="Eliminar"
         android:textColor="@color/colorWhite"
-        android:textSize="8sp"
-        app:layout_constraintEnd_toEndOf="@+id/tvEditProductPrice"
-        app:layout_constraintHorizontal_bias="0.622"
-        app:layout_constraintStart_toStartOf="@+id/tvEditProductPrice"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toStartOf="@+id/btnEditSave"
+        app:layout_constraintStart_toEndOf="@+id/btnEditCancel"
         app:layout_constraintTop_toBottomOf="@+id/tvEditProductPrice" />
 
     <TextView
