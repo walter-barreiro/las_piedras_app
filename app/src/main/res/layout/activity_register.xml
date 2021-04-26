@@ -7,29 +7,29 @@
     android:background="@drawable/bb4"
     tools:context=".activities.RegisterActivity">
 
+    <TextView
+        android:id="@+id/login"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="32dp"
+        android:text="Registro"
+        android:textColor="@color/colorWhite"
+        android:textSize="36sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <LinearLayout
         android:id="@+id/linearLayout3"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="32dp"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:layout_editor_absoluteX="16dp">
-
-        <TextView
-            android:id="@+id/login"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="Registro"
-            android:textColor="@color/colorWhite"
-            android:textSize="36sp"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.13" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/login"
+        app:layout_constraintVertical_bias="0.069"
+        tools:layout_editor_absoluteX="0dp">
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/textInputLayoutCorreo"
@@ -46,20 +46,16 @@
             app:endIconMode="clear_text"
             app:helperText="Obligatorio*"
             app:helperTextTextColor="@color/red"
-            app:hintTextColor="@color/black"
             app:startIconDrawable="@drawable/ic_email">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/textInputEditTextCorreo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@drawable/input_bg"
                 android:maxLength="51"
-                android:textColor="@color/black"
-                android:textColorHint="@color/black"
-                android:textSize="14sp"
-                android:textStyle="bold"
-                app:hintTextColor="@color/colorBlack"
-                android:background="@color/colorWhite"/>
+                android:textSize="16sp"
+                android:textStyle="bold" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -78,20 +74,16 @@
             app:endIconMode="password_toggle"
             app:helperText="Obligatorio*"
             app:helperTextTextColor="@color/red"
-            app:hintTextColor="@color/black"
             app:startIconDrawable="@drawable/ic_security">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/textInputEditTextContrasena"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@drawable/input_bg"
                 android:maxLength="21"
-                android:textColor="@color/black"
-                android:textColorHint="@color/black"
-                android:textSize="14sp"
-                android:textStyle="bold"
-                app:hintTextColor="@color/black"
-                android:background="@color/colorWhite"/>
+                android:textSize="16sp"
+                android:textStyle="bold" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -111,20 +103,16 @@
             app:endIconMode="password_toggle"
             app:helperText="Obligatorio*"
             app:helperTextTextColor="@color/red"
-            app:hintTextColor="@color/black"
             app:startIconDrawable="@drawable/ic_security">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/textInputEditTextContrasena2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@drawable/input_bg"
                 android:maxLength="21"
-                android:textColor="@color/black"
-                android:textColorHint="@color/black"
-                android:textSize="14sp"
-                android:textStyle="bold"
-                app:hintTextColor="@color/black"
-                android:background="@color/colorWhite"/>
+                android:textSize="16sp"
+                android:textStyle="bold" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -144,32 +132,32 @@
             app:layout_constraintStart_toStartOf="@+id/btnRegister"
             app:layout_constraintTop_toBottomOf="@+id/btnRegister" />
 
-        <Button
-            android:id="@+id/btnRegister"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="24dp"
-            android:gravity="fill_horizontal"
-            android:text="Registro"
-            android:textColor="@color/colorWhite"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="@+id/editTextConformPassword"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="@+id/editTextConformPassword"
-            app:layout_constraintTop_toBottomOf="@+id/editTextConformPassword" />
-
-        <com.google.android.gms.common.SignInButton
-            android:id="@+id/btnSignin"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="32dp"
-            app:layout_constraintEnd_toEndOf="@+id/btnRegister"
-            app:layout_constraintStart_toStartOf="@+id/btnRegister"
-            app:layout_constraintTop_toBottomOf="@+id/alredyHaveAccount" />
-
     </LinearLayout>
+
+    <Button
+        android:id="@+id/btnRegister"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="32dp"
+        android:text="Registro"
+        android:textColor="@color/colorWhite"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/linearLayout3"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout3" />
+
+    <com.google.android.gms.common.SignInButton
+        android:id="@+id/btnSignin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="32dp"
+        app:layout_constraintEnd_toEndOf="@+id/btnRegister"
+        app:layout_constraintStart_toStartOf="@+id/btnRegister"
+        app:layout_constraintTop_toBottomOf="@+id/btnRegister" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
