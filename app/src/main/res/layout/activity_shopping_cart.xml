@@ -42,7 +42,6 @@ tools:context=".activities.ShoppingCartActivity">
     android:layout_height="wrap_content"
     android:layout_marginStart="32dp"
     android:layout_marginTop="32dp"
-    android:background="@drawable/bt_pf"
     android:onClick="BotonPagar"
     android:text="Pagar"
     android:textColor="@color/colorWhite"

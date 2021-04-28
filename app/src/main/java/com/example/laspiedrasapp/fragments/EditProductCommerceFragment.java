@@ -72,7 +72,7 @@ public class EditProductCommerceFragment extends DialogFragment {
 
         binding.tvEditProductCommerceName.setText(commerceProductModel.getName());
         binding.tvEditProductCommercePrice.setText(commerceProductModel.getPrice());
-        binding.tvEditProductCategory.setText(commerceProductModel.getCategory());
+        binding.tvEditProductCommerceCategory.setText(commerceProductModel.getCategory());
         Glide.with(getContext()).load(commerceProductModel.getImgUrl()).into(binding.ivEditProductCommrece);
 
         productId = commerceProductModel.getId();
@@ -101,7 +101,7 @@ public class EditProductCommerceFragment extends DialogFragment {
                 // Obtengo los datos ingresados
                 String product_name = binding.tvEditProductCommerceName.getText().toString();
                 String product_price = binding.tvEditProductCommercePrice.getText().toString();
-                String product_category = binding.tvEditProductCategory.getText().toString();
+                String product_category = binding.tvEditProductCommerceCategory.getText().toString();
                 if( isValid(product_name,product_price, product_category) ){// Me fijo que los datos sean validos
                     // Hay que ver si tiene internet y avisar
                     mDatabase.child(PRODUCT_COLLECTION).child(productId).child("name").setValue(product_name);// Guardo los datos en la coleccion con un identificador unico
@@ -135,7 +135,6 @@ public class EditProductCommerceFragment extends DialogFragment {
     private boolean isValid(String product_name, String product_price, String product_category) {
         return !product_name.isEmpty() && !product_price.isEmpty() && product_category.isEmpty() ;
     }
-
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {

@@ -21,7 +21,7 @@ tools:context=".fragments.EditProductCommerceFragment">
         app:layout_constraintTop_toBottomOf="@+id/tvEditProductCommerceImage" />
 
     <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/tvEditProductCategory"
+        android:id="@+id/tvEditProductCommerceCategory"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
@@ -42,9 +42,9 @@ tools:context=".fragments.EditProductCommerceFragment">
         android:textSize="16dp"
         android:textStyle="bold"
         android:textColor="@color/black"
-        app:layout_constraintEnd_toEndOf="@+id/tvEditProductCategory"
-        app:layout_constraintStart_toStartOf="@+id/tvEditProductCategory"
-        app:layout_constraintTop_toBottomOf="@+id/tvEditProductCategory" />
+        app:layout_constraintEnd_toEndOf="@+id/tvEditProductCommerceCategory"
+        app:layout_constraintStart_toStartOf="@+id/tvEditProductCommerceCategory"
+        app:layout_constraintTop_toBottomOf="@+id/tvEditProductCommerceCategory" />
 
     <TextView
         android:id="@+id/tvEditProductCommerceImage"
@@ -76,11 +76,12 @@ tools:context=".fragments.EditProductCommerceFragment">
         android:id="@+id/btnEditCommerceCancel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
+        android:layout_marginStart="16dp"
         android:text="Cancelar"
         android:textColor="@color/colorWhite"
         android:textSize="12sp"
         app:layout_constraintBottom_toBottomOf="@+id/btnEditCommerceDelete"
+        app:layout_constraintEnd_toStartOf="@+id/btnEditCommerceDelete"
         app:layout_constraintStart_toStartOf="parent" />
 
     <com.google.android.material.button.MaterialButton
@@ -99,11 +100,12 @@ tools:context=".fragments.EditProductCommerceFragment">
         android:id="@+id/btnEditCommerceSave"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="24dp"
+        android:layout_marginEnd="16dp"
         android:text="Guardar"
         android:textColor="@color/colorWhite"
         android:textSize="12sp"
         app:layout_constraintBottom_toBottomOf="@+id/btnEditCommerceDelete"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/btnEditCommerceDelete" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

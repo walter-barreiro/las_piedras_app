@@ -10,72 +10,81 @@
         android:id="@+id/ivBusinessImage"
         android:layout_width="117dp"
         android:layout_height="118dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="24dp"
         android:src="@drawable/ic_launcher_background"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:shapeAppearanceOverlay="@style/round_image" />
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/tvProfesion"
-        android:layout_marginLeft="16dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
         android:text="Profesión"
         android:textSize="18dp"
-        app:layout_constraintStart_toEndOf="@+id/ivBusinessImage"
-        app:layout_constraintTop_toTopOf="@+id/ivBusinessImage" />
+        app:layout_constraintEnd_toEndOf="@+id/ivBusinessImage"
+        app:layout_constraintStart_toStartOf="@+id/ivBusinessImage"
+        app:layout_constraintTop_toBottomOf="@+id/ivBusinessImage" />
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/tvName"
-        android:layout_marginTop="8dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
         android:text="Nombre completo"
         android:textSize="14dp"
+        app:layout_constraintEnd_toEndOf="@+id/tvProfesion"
         app:layout_constraintStart_toStartOf="@+id/tvProfesion"
         app:layout_constraintTop_toBottomOf="@+id/tvProfesion" />
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/tvLocation"
-        android:layout_marginTop="8dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
         android:text="Ubicación"
         android:textSize="14dp"
-        app:layout_constraintStart_toStartOf="@+id/tvProfesion"
+        app:layout_constraintEnd_toEndOf="@+id/tvName"
+        app:layout_constraintStart_toStartOf="@+id/tvName"
         app:layout_constraintTop_toBottomOf="@+id/tvName" />
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/tvDescription"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
         android:text="Descripción"
         android:textSize="14dp"
-        app:layout_constraintStart_toStartOf="@+id/ivBusinessImage"
-        app:layout_constraintTop_toBottomOf="@+id/ivBusinessImage" />
+        app:layout_constraintEnd_toEndOf="@+id/tvLocation"
+        app:layout_constraintStart_toStartOf="@+id/tvLocation"
+        app:layout_constraintTop_toBottomOf="@+id/tvLocation" />
+
 
     <Button
         android:id="@+id/btnEditBusiness"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
         android:background="@drawable/input_bg"
         android:text="Editar"
         android:textColor="@color/colorWhite"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintEnd_toEndOf="@+id/tvDescription"
+        app:layout_constraintHorizontal_bias="0.553"
+        app:layout_constraintStart_toStartOf="@+id/tvDescription"
+        app:layout_constraintTop_toBottomOf="@+id/tvDescription" />
 
     <View
         android:id="@+id/divider2"
         android:layout_width="match_parent"
         android:layout_height="1dp"
+        android:layout_marginTop="16dp"
         android:background="?android:attr/listDivider"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvDescription" />
-
+        app:layout_constraintTop_toBottomOf="@+id/btnEditBusiness" />
 
     <RelativeLayout
 

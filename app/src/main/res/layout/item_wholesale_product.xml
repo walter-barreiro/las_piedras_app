@@ -85,7 +85,6 @@
                 android:id="@+id/btnLessWholesale"
                 android:layout_width="63dp"
                 android:layout_height="wrap_content"
-                android:background="@drawable/bt_pf"
                 android:text="-"
                 android:textColor="@color/colorWhite"/>
             <TextView
@@ -101,8 +100,7 @@
                 android:layout_width="63dp"
                 android:layout_height="wrap_content"
                 android:text="+"
-                android:textColor="@color/colorWhite"
-                android:background="@drawable/bt_pf"/>
+                android:textColor="@color/colorWhite"/>
 
             <Button
                 android:id="@+id/btnItemWholesaleAddToCart"
@@ -111,8 +109,7 @@
                 android:layout_height="wrap_content"
                 android:text="Agregar al carrito"
                 android:textSize="10dp"
-                android:textColor="@color/colorWhite"
-                android:background="@drawable/bt_pf"/>
+                android:textColor="@color/colorWhite"/>
         </LinearLayout>
     </LinearLayout>
 

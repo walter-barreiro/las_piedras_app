@@ -136,7 +136,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="32dp"
-        android:background="@drawable/bt_pf"
         android:text="Agregar ubicacion"
         android:textColor="@color/colorWhite"
         app:layout_constraintBottom_toBottomOf="parent"

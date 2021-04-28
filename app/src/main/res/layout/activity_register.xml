@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bb4"
+    android:background="@drawable/bg"
     tools:context=".activities.RegisterActivity">
 
     <TextView
@@ -12,10 +12,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="160dp"
         android:text="Registro"
-        android:textColor="@color/colorWhite"
-        android:textSize="36sp"
+        android:textColor="@color/colorBlack"
+        android:textSize="28sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -28,7 +28,7 @@
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/login"
-        app:layout_constraintVertical_bias="0.069"
+        app:layout_constraintVertical_bias="0.0"
         tools:layout_editor_absoluteX="0dp">
 
         <com.google.android.material.textfield.TextInputLayout
@@ -37,7 +37,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="32dp"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="8dp"
             android:layout_marginEnd="32dp"
             android:hint="Correo Electrónico"
             app:counterEnabled="true"
@@ -52,7 +52,6 @@
                 android:id="@+id/textInputEditTextCorreo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/input_bg"
                 android:maxLength="51"
                 android:textSize="16sp"
                 android:textStyle="bold" />
@@ -64,7 +63,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="32dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="14dp"
             android:layout_marginEnd="32dp"
             android:hint="Contraseña"
             android:textStyle="bold"
@@ -80,7 +79,6 @@
                 android:id="@+id/textInputEditTextContrasena"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/input_bg"
                 android:maxLength="21"
                 android:textSize="16sp"
                 android:textStyle="bold" />
@@ -93,7 +91,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="32dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="14dp"
             android:layout_marginEnd="32dp"
             android:hint="Repetir Contraseña"
             android:textStyle="bold"
@@ -109,7 +107,6 @@
                 android:id="@+id/textInputEditTextContrasena2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/input_bg"
                 android:maxLength="21"
                 android:textSize="16sp"
                 android:textStyle="bold" />
@@ -139,7 +136,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="32dp"
         android:text="Registro"
         android:textColor="@color/colorWhite"
@@ -155,7 +152,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="16dp"
         app:layout_constraintEnd_toEndOf="@+id/btnRegister"
         app:layout_constraintStart_toStartOf="@+id/btnRegister"
         app:layout_constraintTop_toBottomOf="@+id/btnRegister" />

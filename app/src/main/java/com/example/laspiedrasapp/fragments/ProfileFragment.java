@@ -73,7 +73,7 @@ public class ProfileFragment extends Fragment {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists()){
-                    binding.name.setText(snapshot.child("name").getValue().toString());
+                       binding.name.setText(snapshot.child("name").getValue().toString());
 
                     if (snapshot.child("verified").exists()){
                         if ( snapshot.child("verified").getValue().toString() == "true" ){
