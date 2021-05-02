@@ -133,7 +133,7 @@ public class EditProductCommerceFragment extends DialogFragment {
     }
 
     private boolean isValid(String product_name, String product_price, String product_category) {
-        return !product_name.isEmpty() && !product_price.isEmpty() && product_category.isEmpty() ;
+        return !product_name.isEmpty() && !product_price.isEmpty() && !product_category.isEmpty() ;
     }
 
     @Override
